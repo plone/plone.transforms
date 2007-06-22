@@ -21,15 +21,13 @@ class Transform(object):
     title = None
     description = None
 
-    def __init__(self, inputs=(), output=(), title=None, description=None):
-        self.inputs = inputs
-        self.output = output
-        self.title = title
-        self.description = description
-
-    def convert(self, data, **kwargs):
+    def convert(self, data):
         """
         The convert method takes some data in one of the input formats and
         returns it in the output format.
+        
+        The data argument takes an object providing Python's iterator protocol.
+        In case of textual data, the data has to be Unicode. The same applies
+        to the return value.
         """
-        return data
+        pass
