@@ -1,6 +1,7 @@
 from zope.interface import implements
 
 from plone.transforms.interfaces.transform import ITransform
+from plone.transforms.message import PloneMessageFactory as _
 
 
 class Transform(object):
@@ -18,7 +19,9 @@ class Transform(object):
     inputs = ()
     output = ()
 
-    title = None
+    name = u'plone.transforms.transform.Transform'
+    title = _(u'title_skeleton_transform',
+              default=u'A skeleton transform.')
     description = None
 
     def convert(self, data):

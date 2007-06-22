@@ -11,6 +11,8 @@ class ITransform(Interface):
     output = Attribute("Mimetype this transform outputs. Mimetypes syntax "
                        "follows rfc2045 / rfc4288.")
 
+    name = Attribute("A unique name for the transform.")
+
     title = Attribute("The title of the transform.")
 
     description = Attribute("A description of the transform.")
