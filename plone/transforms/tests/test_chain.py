@@ -80,6 +80,75 @@ def testEmptyChain():
     """
 
 
+def testBrokenChain():
+    """
+    First we create and register a new transform chain:
+
+      >>> chain = TestChain()
+      >>> chain.name = u'BrokenChain'
+      >>> chain.title = u'Broken chain'
+
+    Then put in two transforms:
+
+      >>> identity = ('plone.transforms.interfaces.ITransform',
+      ...             'plone.transforms.identity.IdentityTransform')
+      >>> broken = ('plone.transforms.tests.IBrokenTransform',
+      ...           'broken_transform')
+
+      >>> chain.append(identity)
+      >>> chain.append(broken)
+
+    And register the new chain:
+
+      >>> gsm = getGlobalSiteManager()
+      >>> gsm.registerUtility(chain,
+      ...     ITransformChain,
+      ...     name='BrokenChain')
+
+    Set up some test text:
+
+      >>> text = u"Some simple test text."
+      >>> data = (chr for chr in text)
+
+    Now transform the data:
+
+      >>> try:
+      ...     result = chain.transform(data)
+      ... except ValueError, error:
+      ...     pass
+
+      >>> error
+      <exceptions.ValueError instance at ...>
+
+      >>> error.args
+      (u"The transform chain 'BrokenChain' includes a transform for
+      the interface 'plone.transforms.tests.IBrokenTransform' but this
+      could not be imported.",)
+
+    Try again with a correct interface but without a registered transform:
+
+      >>> invalid = ('plone.transforms.interfaces.ITransform',
+      ...            'invalid_transform')
+
+      >>> chain[-1] = invalid 
+
+    Now transform the data:
+
+      >>> try:
+      ...     result = chain.transform(data)
+      ... except ValueError, error:
+      ...     pass
+
+      >>> error
+      <exceptions.ValueError instance at ...>
+
+      >>> error.args
+      (u"The transform chain 'BrokenChain' includes a transform for
+      the interface 'plone.transforms.interfaces.ITransform' with the name
+      'invalid_transform'. The transform could not be found.",)
+    """
+
+
 def testIdenticalChain():
     """
     First we create a new transform chain:
