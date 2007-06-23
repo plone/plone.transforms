@@ -142,7 +142,7 @@ def testReversingChain():
     Put in one transforms:
 
       >>> reverse = ('plone.transforms.interfaces.ITransform', 
-      ...             'plone.transforms.test_chain.ReverseTransform')
+      ...            'plone.transforms.test_chain.ReverseTransform')
 
       >>> chain.append(reverse)
 
