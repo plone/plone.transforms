@@ -1,0 +1,10 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+  xmlns:zcml="http://namespaces.zope.org/zcml">
+
+  <utility
+      provides="..interfaces.ITransform"
+      factory=".markdown_html.MarkdownTransform"
+      name="plone.transforms.text.markdown_html.MarkdownTransform"
+      permission="zope.Public" />
+
+</configure>

@@ -1,5 +1,7 @@
 <configure xmlns="http://namespaces.zope.org/zope">
 
+  <include package=".text" />
+
   <utility
       provides=".interfaces.ITransform"
       factory=".identity.IdentityTransform"
