@@ -191,6 +191,84 @@ def testReversingChain():
     """
 
 
+def testReversingSplitChain():
+    """
+    First we need to load ReverseTransform and SplitTransform:
+
+      >>> XMLConfig('configure.zcml', plone.transforms.tests)()
+
+    Then create a new transform chain:
+
+      >>> chain = TestChain()
+      >>> chain.name = u'ReverseSplitChain'
+      >>> chain.title = u'Reversing and splitting chain'
+
+    Put in one transforms:
+
+      >>> reverse = ('plone.transforms.interfaces.ITransform', 
+      ...            'plone.transforms.test_chain.ReverseTransform')
+
+      >>> split = ('plone.transforms.interfaces.IMultipleOutputTransform',
+      ...          'plone.transforms.test_transform.SplitTransform')
+
+      >>> chain.append(reverse)
+      >>> chain.append(split)
+
+    And register the new chain:
+
+      >>> gsm = getGlobalSiteManager()
+      >>> gsm.registerUtility(chain,
+      ...     ITransformChain,
+      ...     name='ReverseSplitChain')
+
+    Make sure we got the right chain:
+
+      >>> chain = queryUtility(ITransformChain,
+      ...            name='ReverseSplitChain')
+      >>> type(chain)
+      <class 'plone.transforms.tests.test_chain.TestChain'>
+      >>> chain.title
+      u'Reversing and splitting chain'
+      >>> len(chain)
+      2
+
+    Set up some test text and turn it into a generator:
+
+      >>> text = u"ABCDEFG"
+      >>> data = (chr for chr in text)
+
+    Now transform the data and check the result:
+
+      >>> result = chain.transform(data)
+      >>> result
+      {'default': <generator object at ...>, 'second': <generator object at ...}
+
+      >>> default = result.get('default')
+      >>> u''.join(default)
+      u'GECA'
+
+      >>> second = result.get('second')
+      >>> u''.join(second)
+      u'FDB'
+
+    Reverse the order of the two transforms in the chain:
+    
+      >>> chain.reverse()
+    
+    And transform the text again:
+    
+      >>> text = u"ABCDEFG"
+      >>> data = (chr for chr in text)
+
+      >>> result = chain.transform(data)
+      >>> result
+      <generator object at ...>
+      
+      >>> u''.join(result)
+      u'GECA'
+    """
+
+
 def test_suite():
     return unittest.TestSuite((
         DocTestSuite('plone.transforms.chain'),

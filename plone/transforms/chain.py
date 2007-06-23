@@ -2,6 +2,7 @@ from zope.component import queryUtility
 from zope.dottedname.resolve import resolve
 from zope.interface import implements
 
+from plone.transforms.interfaces import IMultipleOutputTransform
 from plone.transforms.interfaces import ITransformChain
 from plone.transforms.message import PloneMessageFactory as _
 
@@ -67,9 +68,15 @@ class TransformChain(list):
         In case of textual data, the data has to be Unicode. The same applies
         to the return value.
         """
+        old_transform = None
         for transform_spec in self:
             interface_name, name = transform_spec
             interface = resolve(interface_name)
             transform = queryUtility(interface, name=name)
+            # If we have a chain where we get the result of a multi-output
+            # transform we need to look at the default output of the transform
+            if IMultipleOutputTransform.providedBy(old_transform):
+                data = data.get('default')
             data = transform.transform(data)
+            old_transform = transform
         return data
