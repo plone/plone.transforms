@@ -10,5 +10,4 @@ from zope.testing.doctestunit import DocTestSuite
 def test_suite():
     return unittest.TestSuite((
         DocTestSuite('plone.transforms.transform'),
-        DocTestSuite('plone.transforms.chain'),
         ))
