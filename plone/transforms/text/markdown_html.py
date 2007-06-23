@@ -31,11 +31,12 @@ class MarkdownTransform(Transform):
     implements(ITransform)
 
     name = u'plone.transforms.text.markdown_html.MarkdownTransform'
+
     title = _(u'title_markdown_transform',
-              default=u'Markdown to HTML transform')
+        default=u'Markdown to HTML transform')
+
     description = _(u'description_markdown_transform',
-                  default=u"A transform which transforms any markdown text "
-                           "into HTML.")
+        default=u"A transform which transforms any markdown text into HTML.")
 
     inputs  = ("text/x-web-markdown",)
     output = "text/html"
