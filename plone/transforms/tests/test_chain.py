@@ -9,6 +9,7 @@ import plone.transforms
 from plone.transforms.interfaces import ITransform
 from plone.transforms.interfaces import ITransformChain
 from plone.transforms.chain import TransformChain
+from plone.transforms.transform import Transform
 
 import zope.component
 from zope.component import getGlobalSiteManager
@@ -23,6 +24,17 @@ class TestChain(TransformChain):
 
     name = u"test"
     title = u"Test chain"
+
+
+class ReverseTransform(Transform):
+
+    name = u"plone.transforms.test_chain.ReverseTransform"
+    title = u"Reversing transform."
+
+    def transform(self, data):
+        temp = [d for d in data]
+        temp.reverse()
+        return (d for d in temp)
 
 
 def configurationSetUp(self):
@@ -107,17 +119,75 @@ def testIdenticalChain():
       >>> text = u"Some simple test text."
       >>> data = (chr for chr in text)
 
-    Now transform the data:
+    Now transform the data and check the result:
 
       >>> result = chain.transform(data)
-
-    Check the result:
-
-      >>> result
-      <generator object at ...>
-
       >>> u''.join(result) == text
       True
+    """
+
+
+def testReversingChain():
+    """
+    First we need to load the ReverseTransform:
+
+      >>> XMLConfig('configure.zcml', plone.transforms.tests)()
+
+    Then create a new transform chain:
+
+      >>> chain = TestChain()
+      >>> chain.name = u'ReverseChain'
+      >>> chain.title = u'Reversing chain'
+
+    Put in one transforms:
+
+      >>> reverse = ('plone.transforms.interfaces.ITransform', 
+      ...             'plone.transforms.test_chain.ReverseTransform')
+
+      >>> chain.append(reverse)
+
+    And register the new chain:
+
+      >>> gsm = getGlobalSiteManager()
+      >>> gsm.registerUtility(chain,
+      ...     ITransformChain,
+      ...     name='ReverseChain')
+
+    Make sure we got the right chain:
+
+      >>> chain = queryUtility(ITransformChain,
+      ...            name='ReverseChain')
+      >>> type(chain)
+      <class 'plone.transforms.tests.test_chain.TestChain'>
+      >>> chain.title
+      u'Reversing chain'
+      >>> len(chain)
+      1
+
+    Set up some test text and turn it into a generator which fullfils the
+    iterator protocol:
+
+      >>> text = u"ABCDE"
+      >>> data = (chr for chr in text)
+
+    Now transform the data and check the result:
+
+      >>> result = chain.transform(data)
+      >>> u''.join(result)
+      u'EDCBA'
+
+    Add another reverse transform to the chain:
+
+      >>> chain.append(reverse)
+
+    And transform the text again:
+
+      >>> text = u"ABCDE"
+      >>> data = (chr for chr in text)
+
+      >>> result = chain.transform(data)
+      >>> u''.join(result)
+      u'ABCDE'
     """
 
 
