@@ -2,7 +2,7 @@ from zope.component import queryUtility
 from zope.dottedname.resolve import resolve
 from zope.interface import implements
 
-from plone.transforms.interfaces.chain import ITransformChain
+from plone.transforms.interfaces import ITransformChain
 from plone.transforms.message import PloneMessageFactory as _
 
 
@@ -58,9 +58,9 @@ class TransformChain(list):
             return None
         return last.output
 
-    def convert(self, data):
+    def transform(self, data):
         """
-        The convert method takes some data in one of the input formats and
+        The transform method takes some data in one of the input formats and
         returns it in the output format.
         
         The data argument takes an object providing Python's iterator protocol.
@@ -71,5 +71,5 @@ class TransformChain(list):
             interface_name, name = transform_spec
             interface = resolve(interface_name)
             transform = queryUtility(interface, name=name)
-            data = transform.convert(data)
+            data = transform.transform(data)
         return data

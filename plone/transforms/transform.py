@@ -1,6 +1,6 @@
 from zope.interface import implements
 
-from plone.transforms.interfaces.transform import ITransform
+from plone.transforms.interfaces import ITransform
 from plone.transforms.message import PloneMessageFactory as _
 
 
@@ -24,9 +24,9 @@ class Transform(object):
               default=u'A skeleton transform.')
     description = None
 
-    def convert(self, data):
+    def transform(self, data):
         """
-        The convert method takes some data in one of the input formats and
+        The transform method takes some data in one of the input formats and
         returns it in the output format.
         
         The data argument takes an object providing Python's iterator protocol.

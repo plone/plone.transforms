@@ -17,9 +17,9 @@ class ITransform(Interface):
 
     description = Attribute("A description of the transform.")
 
-    def convert(data):
+    def transform(data):
         """
-        The convert method takes some data in one of the input formats and
+        The transform method takes some data in one of the input formats and
         returns it in the output format.
         
         The data argument takes an object providing Python's iterator protocol.
