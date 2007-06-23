@@ -1,4 +1,5 @@
 from zope.component import queryUtility
+from zope.dottedname.resolve import resolve
 from zope.interface import implements
 
 from plone.transforms.interfaces.chain import ITransformChain
@@ -8,7 +9,8 @@ from plone.transforms.message import PloneMessageFactory as _
 class TransformChain(list):
     """A transform chain is an utility with optional configuration information.
     
-    It stores a list of (interface, name) tuples which identify transforms.
+    It stores a list of (interface_name, name) tuples which identify transforms.
+    The interface_name must be the full dotted path to an actual interface.
 
     Let's make sure that this implementation actually fulfills the API.
 
@@ -33,8 +35,11 @@ class TransformChain(list):
         if len(self) == 0:
             # If the chain is empty, we don't know our input formats.
             return None
-        interface, name = self[0]
+        interface_name, name = self[0]
+        interface = resolve(interface_name)
         first = queryUtility(interface, name=name)
+        if first is None:
+            return None
         return first.inputs
 
     @property
@@ -46,8 +51,11 @@ class TransformChain(list):
         if len(self) == 0:
             # If the chain is empty, we don't know our output format.
             return None
-        interface, name = self[-1]
+        interface_name, name = self[-1]
+        interface = resolve(interface_name)
         last = queryUtility(interface, name=name)
+        if last is None:
+            return None
         return last.output
 
     def convert(self, data):
@@ -60,6 +68,8 @@ class TransformChain(list):
         to the return value.
         """
         for transform_spec in self:
-            transform = queryUtility(transform_spec[0], name=transform_spec[1])
+            interface_name, name = transform_spec
+            interface = resolve(interface_name)
+            transform = queryUtility(interface, name=name)
             data = transform.convert(data)
         return data
