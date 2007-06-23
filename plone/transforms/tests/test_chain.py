@@ -5,12 +5,6 @@
 
 import unittest
 
-import plone.transforms
-from plone.transforms.interfaces import ITransform
-from plone.transforms.interfaces import ITransformChain
-from plone.transforms.chain import TransformChain
-from plone.transforms.transform import Transform
-
 import zope.component
 from zope.component import getGlobalSiteManager
 from zope.component import queryUtility
@@ -18,6 +12,12 @@ from zope.component.testing import setUp, tearDown
 from zope.configuration.xmlconfig import XMLConfig
 from zope.testing import doctest
 from zope.testing.doctestunit import DocTestSuite
+
+import plone.transforms
+from plone.transforms.interfaces import ITransform
+from plone.transforms.interfaces import ITransformChain
+from plone.transforms.chain import TransformChain
+from plone.transforms.transform import Transform
 
 
 class TestChain(TransformChain):

@@ -5,10 +5,6 @@
 
 import unittest
 
-import plone.transforms
-from plone.transforms.interfaces import IMultipleOutputTransform
-from plone.transforms.transform import MultipleOutputTransform
-
 import zope.component
 from zope.component import getGlobalSiteManager
 from zope.component import queryUtility
@@ -16,6 +12,10 @@ from zope.component.testing import setUp, tearDown
 from zope.configuration.xmlconfig import XMLConfig
 from zope.testing import doctest
 from zope.testing.doctestunit import DocTestSuite
+
+import plone.transforms
+from plone.transforms.interfaces import IMultipleOutputTransform
+from plone.transforms.transform import MultipleOutputTransform
 
 
 class TestTransform(MultipleOutputTransform):
