@@ -8,4 +8,9 @@
       name="plone.transforms.identity.IdentityTransform"
       permission="zope.Public" />
 
+  <utility
+      provides=".interfaces.ITransformEngine"
+      factory=".engine.TransformEngine"
+      permission="zope.Public" />
+
 </configure>

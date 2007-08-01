@@ -19,7 +19,7 @@ class Transform(object):
     implements(ITransform)
 
     inputs = ()
-    output = ()
+    output = None
 
     name = u'plone.transforms.transform.Transform'
     title = _(u'title_skeleton_transform',
@@ -51,7 +51,7 @@ class MultipleOutputTransform(object):
     implements(IMultipleOutputTransform)
 
     inputs = ()
-    output = ()
+    output = None
 
     name = u'plone.transforms.transform.MultipleOutputTransform'
     title = _(u'title_skeleton_multiple_output_transform',
