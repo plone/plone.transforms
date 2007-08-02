@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-    Transform engine tests.
+    Transform registration tests.
 """
 
 import unittest
@@ -13,7 +13,7 @@ from zope.testing import doctest
 from zope.testing.doctestunit import DocTestSuite
 
 import plone.transforms
-from plone.transforms.interfaces import ITransformEngine
+from plone.transforms.interfaces import ILocalEngineRegistration
 
 
 def configurationSetUp(self):
@@ -22,33 +22,27 @@ def configurationSetUp(self):
     XMLConfig('configure.zcml', plone.transforms)()
 
 
-def testTransformEngineInstallation():
+def testLocalEngineRegistration():
     """
-    Try to get the global transform engine:
+    Make a new local engine registration:
 
-      >>> engine = queryUtility(ITransformEngine, name='plone.transforms.default')
-      >>> engine
-      <plone.transforms.engine.TransformEngine object at ...>
+      >>> from plone.transforms.registration import LocalEngineRegistration
 
-    Set up some test text and turn it into a generator:
+      >>> interface_name = 'plone.transforms.interfaces.ILocalEngineRegistration'
 
-      >>> text = u"Some simple test text."
-      >>> data = (chr for chr in text)
+      >>> registration = LocalEngineRegistration(interface_name)
 
-    Try to transform the data:
+      >>> registration
+      <plone.transforms.registration.LocalEngineRegistration object at ...>
 
-      >>> result = engine.transform(data, None, None)
-      >>> result
-      <plone.transforms.transform.TransformResult object at ...>
-
-      >>> u''.join(result.data)
-      u'Some simple test text.'
+      >>> registration.interface_name is interface_name
+      True
     """
 
 
 def test_suite():
     return unittest.TestSuite((
-        DocTestSuite('plone.transforms.engine'),
+        DocTestSuite('plone.transforms.registration'),
         DocTestSuite(setUp=configurationSetUp,
                      tearDown=tearDown,
                      optionflags=doctest.ELLIPSIS | 

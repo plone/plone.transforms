@@ -46,7 +46,7 @@ class Transform(object):
 
     implements(ITransform)
 
-    inputs = ()
+    inputs = (None, )
     output = None
 
     name = u'plone.transforms.transform.Transform'

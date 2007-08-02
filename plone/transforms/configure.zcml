@@ -11,6 +11,7 @@
   <utility
       provides=".interfaces.ITransformEngine"
       factory=".engine.TransformEngine"
+      name="plone.transforms.default"
       permission="zope.Public" />
 
 </configure>
