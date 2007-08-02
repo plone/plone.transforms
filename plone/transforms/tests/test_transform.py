@@ -14,17 +14,18 @@ from zope.testing import doctest
 from zope.testing.doctestunit import DocTestSuite
 
 import plone.transforms
-from plone.transforms.interfaces import IMultipleOutputTransform
-from plone.transforms.transform import MultipleOutputTransform
+from plone.transforms.interfaces import ITransform
+from plone.transforms.transform import Transform
+from plone.transforms.transform import TransformResult
 
 
-class TestTransform(MultipleOutputTransform):
+class TestTransform(Transform):
 
     name = u"TestTransform"
     title = u"Test transform."
 
 
-class SplitTransform(MultipleOutputTransform):
+class SplitTransform(Transform):
 
     name = u"plone.transforms.test_transform.SplitTransform"
     title = u"Splitting transform."
@@ -40,7 +41,9 @@ class SplitTransform(MultipleOutputTransform):
                 break
         first = (f for f in first)
         second = (s for s in second)
-        return {'default' : first, 'second' : second}
+        result = TransformResult(first)
+        result.subobjects['second'] = second
+        return result
 
 
 def configurationSetUp(self):
@@ -55,10 +58,10 @@ def testEmptyTransform():
 
       >>> gsm = getGlobalSiteManager()
       >>> gsm.registerUtility(TestTransform(),
-      ...     IMultipleOutputTransform,
+      ...     ITransform,
       ...     name='TestTransform')
 
-      >>> util = queryUtility(IMultipleOutputTransform,
+      >>> util = queryUtility(ITransform,
       ...            name='TestTransform')
       >>> util
       <plone.transforms.tests.test_transform.TestTransform object at ...>
@@ -75,10 +78,12 @@ def testEmptyTransform():
     Check the result:
 
       >>> result
-      {'default': <generator object at ...}
+      <plone.transforms.transform.TransformResult object at ...>
 
-      >>> default = result.get('default')
-      >>> u''.join(default) == text
+      >>> result.data
+      <generator object at ...>
+
+      >>> u''.join(result.data) == text
       True
     """
 
@@ -89,7 +94,7 @@ def testSplitTransform():
 
       >>> XMLConfig('configure.zcml', plone.transforms.tests)()
 
-      >>> util = queryUtility(IMultipleOutputTransform,
+      >>> util = queryUtility(ITransform,
       ...            name='plone.transforms.test_transform.SplitTransform')
       >>> util
       <plone.transforms.tests.test_transform.SplitTransform object at ...>
@@ -106,13 +111,12 @@ def testSplitTransform():
     Check the result:
 
       >>> result
-      {'default': <generator object at ...>, 'second': <generator object at ...}
+      <plone.transforms.transform.TransformResult object at ...>
 
-      >>> default = result.get('default')
-      >>> u''.join(default)
+      >>> u''.join(result.data)
       u'ACEGI'
 
-      >>> second = result.get('second')
+      >>> second = result.subobjects['second']
       >>> u''.join(second)
       u'BDFH'
     """

@@ -1,9 +1,37 @@
 from zope.interface import implements
 
 from plone.transforms.interfaces import ITransform
-from plone.transforms.interfaces import IMultipleOutputTransform
+from plone.transforms.interfaces import ITransformResult
 
 from plone.transforms.message import PloneMessageFactory as _
+
+
+class TransformResult(object):
+    """Data stream, is the result of a transform.
+    
+    The data argument takes an object providing Python's iterator protocol.
+    In case of textual data, the data has to be Unicode. The same applies
+    to the data return value and the values in the subobjects
+
+    Let's make sure that this implementation actually fulfills the API.
+
+      >>> from zope.interface.verify import verifyClass
+      >>> verifyClass(ITransformResult, TransformResult)
+      True
+    """
+
+    implements(ITransformResult)
+
+    data = None
+    metadata = {}
+    subobjects = {}
+
+    def __init__(self, data, metadata=None, subobjects=None):
+        self.data = data
+        if subobjects is not None:
+            self.subobjects = subobjects
+        if metadata is not None:
+            self.metadata = metadata
 
 
 class Transform(object):
@@ -35,34 +63,4 @@ class Transform(object):
         In case of textual data, the data has to be Unicode. The same applies
         to the return value.
         """
-        return data
-
-
-class MultipleOutputTransform(object):
-    """A transform which has multiple output streams.
-
-    Let's make sure that this implementation actually fulfills the API.
-
-      >>> from zope.interface.verify import verifyClass
-      >>> verifyClass(IMultipleOutputTransform, MultipleOutputTransform)
-      True
-    """
-
-    implements(IMultipleOutputTransform)
-
-    inputs = ()
-    output = None
-
-    name = u'plone.transforms.transform.MultipleOutputTransform'
-    title = _(u'title_skeleton_multiple_output_transform',
-              default=u'A skeleton multiple output transform.')
-    description = None
-
-    def transform(self, data):
-        """
-        The transform method takes some data in one of the input formats.
-        
-        It returns a dict of named output streams, with a default output stream
-        named 'default'.
-        """
-        return {'default' : data}
+        return TransformResult(data)

@@ -18,6 +18,7 @@ from plone.transforms.interfaces import ITransform
 from plone.transforms.interfaces import ITransformChain
 from plone.transforms.chain import TransformChain
 from plone.transforms.transform import Transform
+from plone.transforms.transform import TransformResult
 
 
 class TestChain(TransformChain):
@@ -34,7 +35,8 @@ class ReverseTransform(Transform):
     def transform(self, data):
         temp = [d for d in data]
         temp.reverse()
-        return (d for d in temp)
+        result = (d for d in temp)
+        return TransformResult(result)
 
 
 def configurationSetUp(self):
@@ -73,9 +75,12 @@ def testEmptyChain():
     Check the result:
 
       >>> result
+      <plone.transforms.transform.TransformResult object at ...>
+
+      >>> result.data
       <generator object at ...>
 
-      >>> u''.join(result) == text
+      >>> u''.join(result.data) == text
       True
     """
 
@@ -191,7 +196,7 @@ def testIdenticalChain():
     Now transform the data and check the result:
 
       >>> result = chain.transform(data)
-      >>> u''.join(result) == text
+      >>> u''.join(result.data) == text
       True
     """
 
@@ -242,7 +247,7 @@ def testReversingChain():
     Now transform the data and check the result:
 
       >>> result = chain.transform(data)
-      >>> u''.join(result)
+      >>> u''.join(result.data)
       u'EDCBA'
 
     Add another reverse transform to the chain:
@@ -255,7 +260,7 @@ def testReversingChain():
       >>> data = (chr for chr in text)
 
       >>> result = chain.transform(data)
-      >>> u''.join(result)
+      >>> u''.join(result.data)
       u'ABCDE'
     """
 
@@ -277,7 +282,7 @@ def testReversingSplitChain():
       >>> reverse = ('plone.transforms.interfaces.ITransform', 
       ...            'plone.transforms.test_chain.ReverseTransform')
 
-      >>> split = ('plone.transforms.interfaces.IMultipleOutputTransform',
+      >>> split = ('plone.transforms.interfaces.ITransform',
       ...          'plone.transforms.test_transform.SplitTransform')
 
       >>> chain.append(reverse)
@@ -310,13 +315,13 @@ def testReversingSplitChain():
 
       >>> result = chain.transform(data)
       >>> result
-      {'default': <generator object at ...>, 'second': <generator object at ...}
+      <plone.transforms.transform.TransformResult object at ...>
 
-      >>> default = result.get('default')
+      >>> default = result.data
       >>> u''.join(default)
       u'GECA'
 
-      >>> second = result.get('second')
+      >>> second = result.subobjects['second']
       >>> u''.join(second)
       u'FDB'
 
@@ -331,9 +336,12 @@ def testReversingSplitChain():
 
       >>> result = chain.transform(data)
       >>> result
+      <plone.transforms.transform.TransformResult object at ...>
+
+      >>> result.data
       <generator object at ...>
-      
-      >>> u''.join(result)
+
+      >>> u''.join(result.data)
       u'GECA'
     """
 

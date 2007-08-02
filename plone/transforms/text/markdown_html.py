@@ -10,6 +10,7 @@ from zope.interface import implements
 from plone.transforms.interfaces import ITransform
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.transform import Transform
+from plone.transforms.transform import TransformResult
 
 HAS_MARKDOWN = True
 try:
@@ -43,4 +44,5 @@ class MarkdownTransform(Transform):
 
     def transform(self, data):
         html = markdown(u''.join(data).encode('utf-8'))
-        return (d for d in html.decode('utf-8'))
+        result = (d for d in html.decode('utf-8'))
+        return TransformResult(result)

@@ -43,9 +43,12 @@ def testMarkdownTransform():
     And check the result:
 
       >>> result
+      <plone.transforms.transform.TransformResult object at ...>
+
+      >>> result.data
       <generator object at ...>
 
-      >>> u''.join(result)
+      >>> u''.join(result.data)
       u'\\n<p>Some simple test text.\\n</p>\\n\\n\\n'
     """
 

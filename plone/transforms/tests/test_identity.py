@@ -39,6 +39,7 @@ def testIdentityTransform():
     Now transform the data:
 
       >>> result = util.transform(data)
+      >>> result = result.data
 
     Check that we get back an object implementing the iterator protocol:
 

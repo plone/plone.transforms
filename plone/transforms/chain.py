@@ -2,9 +2,9 @@ from zope.component import queryUtility
 from zope.dottedname.resolve import resolve
 from zope.interface import implements
 
-from plone.transforms.interfaces import IMultipleOutputTransform
 from plone.transforms.interfaces import ITransformChain
 from plone.transforms.message import PloneMessageFactory as _
+from plone.transforms.transform import TransformResult
 
 
 class TransformChain(list):
@@ -80,15 +80,13 @@ class TransformChain(list):
                                  % (self.name, interface_name))
             interface = resolve(interface_name)
             transform = queryUtility(interface, name=name)
-            # If we have a chain where we get the result of a multi-output
-            # transform we need to look at the default output of the transform
-            if IMultipleOutputTransform.providedBy(old_transform):
-                data = data.get('default')
             if transform is None:
                 raise ValueError("The transform chain '%s' includes a "
                                  "transform for the interface '%s' with the "
                                  "name '%s'. The transform could not be found."
                                  % (self.name, interface_name, name))
-            data = transform.transform(data)
+            result = transform.transform(data)
+            # Get the main data from the result
+            data = result.data
             old_transform = transform
-        return data
+        return TransformResult(data)

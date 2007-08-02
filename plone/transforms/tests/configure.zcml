@@ -7,7 +7,7 @@
       permission="zope.Public" />
 
   <utility
-      provides="..interfaces.IMultipleOutputTransform"
+      provides="..interfaces.ITransform"
       factory=".test_transform.SplitTransform"
       name="plone.transforms.test_transform.SplitTransform"
       permission="zope.Public" />
