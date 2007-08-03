@@ -1,0 +1,10 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+  xmlns:zcml="http://namespaces.zope.org/zcml">
+
+  <utility
+      provides="..interfaces.ICommandTransform"
+      factory=".pdf_html.PDFTransform"
+      name="plone.transforms.text.pdf_html.PDFTransform"
+      permission="zope.Public" />
+
+</configure>

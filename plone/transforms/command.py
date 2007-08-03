@@ -1,3 +1,4 @@
+import os
 import tempfile
 
 from zope.interface import implements
@@ -38,15 +39,35 @@ class CommandTransform(PersistentTransform):
         """Create a temporary directory, copy input in a file there
         return the path of the tmp dir and of the input file.
         """
-        filehandle = tempfile.NamedTemporaryFile()
-        filehandle.writelines(data)
-        return filehandle
+        filehandle, tmpname = tempfile.mkstemp(text=False)
+        # write data to tmp using a file descriptor
+        data = ''.join(data)
+        if isinstance(data, unicode):
+            data = data.encode('utf-8')
+        os.write(filehandle, data)
+        # close it so the other process can read it
+        os.close(filehandle)
+        return tmpname
+
+    def extractOutput(self, stdout):
+        return stdout.read()
 
     def transform(self, data):
         """
         The transform method takes some data in one of the input formats and
         returns it in the output format.
         """
-        filehandle = self.initialize_tmpfile(data)
+        tmpname = self.initialize_tmpfile(data)
         # do some stuff
-        return TransformResult(filehandle)
+        commandline = "%s %s" % (self.command, self.args)
+        commandline = commandline % { 'infile' : tmpname }
+
+        child_stdin, child_stdout = os.popen4(commandline, 'b')
+
+        status = child_stdin.close()
+        out = self.extractOutput(child_stdout)
+        child_stdout.close()
+
+        os.unlink(tmpname)
+
+        return TransformResult((c for c in out))

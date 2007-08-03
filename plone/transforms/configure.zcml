@@ -1,8 +1,10 @@
 <configure xmlns="http://namespaces.zope.org/zope">
 
-  <include package=".text" />
+  <include package=".binary" />
 
   <include package=".browser" />
+
+  <include package=".text" />
 
   <utility
       provides=".interfaces.ITransform"

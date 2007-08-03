@@ -43,10 +43,10 @@ def testCommandTransform():
       <plone.transforms.transform.TransformResult object at ...>
 
       >>> result.data
-      <open file '<fdopen>', mode 'w+b' at ...>
+      <generator object at ...>
 
-      >>> u''.join(result.data)
-      u''
+      >>> 'None: command not found' in u''.join(result.data)
+      True
     """
 
 
