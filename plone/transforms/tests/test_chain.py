@@ -5,21 +5,19 @@
 
 import unittest
 
-import zope.app.publisher.browser
-import zope.component
 from zope.component import getGlobalSiteManager
 from zope.component import queryUtility
-from zope.component.testing import setUp, tearDown
-from zope.configuration.xmlconfig import XMLConfig
+from zope.component.testing import tearDown
 from zope.testing import doctest
 from zope.testing.doctestunit import DocTestSuite
 
-import plone.transforms
 from plone.transforms.interfaces import ITransform
 from plone.transforms.interfaces import ITransformChain
 from plone.transforms.chain import TransformChain
 from plone.transforms.transform import Transform
 from plone.transforms.transform import TransformResult
+
+from plone.transforms.tests.utils import configurationSetUp
 
 
 class TestChain(TransformChain):
@@ -38,13 +36,6 @@ class ReverseTransform(Transform):
         temp.reverse()
         result = (d for d in temp)
         return TransformResult(result)
-
-
-def configurationSetUp(self):
-    setUp()
-    XMLConfig('meta.zcml', zope.component)()
-    XMLConfig('meta.zcml', zope.app.publisher.browser)()
-    XMLConfig('configure.zcml', plone.transforms)()
 
 
 def testEmptyChain():
@@ -207,6 +198,8 @@ def testReversingChain():
     """
     First we need to load the ReverseTransform:
 
+      >>> from zope.configuration.xmlconfig import XMLConfig
+      >>> import plone.transforms.tests
       >>> XMLConfig('configure.zcml', plone.transforms.tests)()
 
     Then create a new transform chain:
@@ -271,6 +264,8 @@ def testReversingSplitChain():
     """
     First we need to load ReverseTransform and SplitTransform:
 
+      >>> from zope.configuration.xmlconfig import XMLConfig
+      >>> import plone.transforms.tests
       >>> XMLConfig('configure.zcml', plone.transforms.tests)()
 
     Then create a new transform chain:

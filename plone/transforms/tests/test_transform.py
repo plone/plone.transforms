@@ -5,20 +5,18 @@
 
 import unittest
 
-import zope.app.publisher.browser
-import zope.component
 from zope.component import getGlobalSiteManager
 from zope.component import queryUtility
-from zope.component.testing import setUp, tearDown
-from zope.configuration.xmlconfig import XMLConfig
+from zope.component.testing import tearDown
 from zope.testing import doctest
 from zope.testing.doctestunit import DocTestSuite
 
-import plone.transforms
 from plone.transforms.interfaces import ITransform
 from plone.transforms.transform import PersistentTransform
 from plone.transforms.transform import Transform
 from plone.transforms.transform import TransformResult
+
+from plone.transforms.tests.utils import configurationSetUp
 
 
 class TestTransform(Transform):
@@ -52,13 +50,6 @@ class SplitTransform(Transform):
         result = TransformResult(first)
         result.subobjects['second'] = second
         return result
-
-
-def configurationSetUp(self):
-    setUp()
-    XMLConfig('meta.zcml', zope.component)()
-    XMLConfig('meta.zcml', zope.app.publisher.browser)()
-    XMLConfig('configure.zcml', plone.transforms)()
 
 
 def testEmptyTransform():
@@ -137,6 +128,8 @@ def testSplitTransform():
     """
     First we load a new transform:
 
+      >>> from zope.configuration.xmlconfig import XMLConfig
+      >>> import plone.transforms.tests
       >>> XMLConfig('configure.zcml', plone.transforms.tests)()
 
       >>> util = queryUtility(ITransform,

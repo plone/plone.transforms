@@ -7,28 +7,21 @@ import unittest
 
 from os.path import join, abspath, dirname
 
-import zope.app.publisher.browser
-import zope.component
 from zope.component import queryUtility
-from zope.component.testing import setUp, tearDown
-from zope.configuration.xmlconfig import XMLConfig
+from zope.component.testing import tearDown
 from zope.testing import doctest
 from zope.testing.doctestunit import DocTestSuite
 
-import plone.transforms
 from plone.transforms.interfaces import ITransform
+
+from plone.transforms.tests.utils import configurationSetUp
+
 
 PREFIX = abspath(dirname(__file__))
 
 def input_file_path(name):
     return join(PREFIX, 'input', name)
 
-
-def configurationSetUp(self):
-    setUp()
-    XMLConfig('meta.zcml', zope.component)()
-    XMLConfig('meta.zcml', zope.app.publisher.browser)()
-    XMLConfig('configure.zcml', plone.transforms)()
 
 def testPDFTransform():
     """

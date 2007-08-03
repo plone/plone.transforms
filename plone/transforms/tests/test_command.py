@@ -5,24 +5,15 @@
 
 import unittest
 
-import zope.app.publisher.browser
-import zope.component
 from zope.component import queryUtility
-from zope.component.testing import setUp, tearDown
-from zope.configuration.xmlconfig import XMLConfig
+from zope.component.testing import tearDown
 from zope.testing import doctest
 from zope.testing.doctestunit import DocTestSuite
 
-import plone.transforms
 from plone.transforms.command import CommandTransform
 from plone.transforms.interfaces import ICommandTransform
 
-
-def configurationSetUp(self):
-    setUp()
-    XMLConfig('meta.zcml', zope.component)()
-    XMLConfig('meta.zcml', zope.app.publisher.browser)()
-    XMLConfig('configure.zcml', plone.transforms)()
+from plone.transforms.tests.utils import configurationSetUp
 
 
 def testCommandTransform():
