@@ -43,6 +43,8 @@ class MarkdownTransform(Transform):
     output = "text/html"
 
     def transform(self, data):
+        if not HAS_MARKDOWN:
+            return None
         html = markdown(u''.join(data).encode('utf-8'))
         result = (d for d in html.decode('utf-8'))
         return TransformResult(result)
