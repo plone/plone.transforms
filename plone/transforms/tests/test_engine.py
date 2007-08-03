@@ -26,7 +26,7 @@ def testTransformEngineInstallation():
     """
     Try to get the global transform engine:
 
-      >>> engine = queryUtility(ITransformEngine, name='plone.transforms.default')
+      >>> engine = queryUtility(ITransformEngine)
       >>> engine
       <plone.transforms.engine.TransformEngine object at ...>
 
