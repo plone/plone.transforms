@@ -15,6 +15,7 @@ from zope.testing.doctestunit import DocTestSuite
 
 import plone.transforms
 from plone.transforms.interfaces import ITransform
+from plone.transforms.transform import PersistentTransform
 from plone.transforms.transform import Transform
 from plone.transforms.transform import TransformResult
 
@@ -23,6 +24,12 @@ class TestTransform(Transform):
 
     name = u"TestTransform"
     title = u"Test transform."
+
+
+class TestPersistentTransform(PersistentTransform):
+
+    name = u"TestPersistentTransform"
+    title = u"Persistent test transform."
 
 
 class SplitTransform(Transform):
@@ -65,6 +72,42 @@ def testEmptyTransform():
       ...            name='TestTransform')
       >>> util
       <plone.transforms.tests.test_transform.TestTransform object at ...>
+
+    Set up some test text and turn it into a generator:
+
+      >>> text = u"Some simple test text."
+      >>> data = (chr for chr in text)
+
+    Now transform the data:
+
+      >>> result = util.transform(data)
+
+    Check the result:
+
+      >>> result
+      <plone.transforms.transform.TransformResult object at ...>
+
+      >>> result.data
+      <generator object at ...>
+
+      >>> u''.join(result.data) == text
+      True
+    """
+
+
+def testEmptyPersistentTransform():
+    """
+    First we create and register a new transform:
+
+      >>> gsm = getGlobalSiteManager()
+      >>> gsm.registerUtility(TestPersistentTransform(),
+      ...     ITransform,
+      ...     name='TestPersistentTransform')
+
+      >>> util = queryUtility(ITransform,
+      ...            name='TestPersistentTransform')
+      >>> util
+      <plone.transforms.tests.test_transform.TestPersistentTransform object at ...>
 
     Set up some test text and turn it into a generator:
 
