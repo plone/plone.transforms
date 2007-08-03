@@ -31,6 +31,9 @@ class CommandTransform(PersistentTransform):
               default=u'A skeleton command transform.')
     description = None
 
+    command = None
+    args = None
+
     def initialize_tmpfile(self, data):
         """Create a temporary directory, copy input in a file there
         return the path of the tmp dir and of the input file.
@@ -44,9 +47,6 @@ class CommandTransform(PersistentTransform):
         The transform method takes some data in one of the input formats and
         returns it in the output format.
         """
-        try:
-            filehandle = self.initialize_tmpfile(data)
-            # do some stuff
-            return TransformResult(iter(filehandle))
-        finally:
-            filehandle.close()
+        filehandle = self.initialize_tmpfile(data)
+        # do some stuff
+        return TransformResult(filehandle)
