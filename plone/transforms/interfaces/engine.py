@@ -18,9 +18,7 @@ class ITransformEngine(Interface):
 
     def transform(data, input_mimetype, output_mimetype):
         """
-        The transform method takes some data in the input format and returns
-        it in the output format.
-
-        When no transform or transformation chain for the given input and
-        output mimetype can be found a ValueError is raised.
+        The transform method takes some data in one of the input formats.
+        It returns either an ITransformResult in the output format or None
+        if an error occurred.
         """

@@ -16,8 +16,9 @@ class ITransformChain(ITransform):
 
     def transform(data):
         """
-        The transform method takes some data in one of the input formats and
-        returns it in the output format.
+        The transform method takes some data in one of the input formats.
+        It returns either an ITransformResult in the output format or None
+        if an error occurred.
         
         The data argument takes an object providing Python's iterator protocol.
         In case of textual data, the data has to be Unicode. The same applies

@@ -35,6 +35,7 @@ class ITransform(Interface):
 
     def transform(data):
         """
-        The transform method takes some data in one of the input formats and
-        returns an ITransformResult in the output format.
+        The transform method takes some data in one of the input formats.
+        It returns either an ITransformResult in the output format or None
+        if an error occurred.
         """

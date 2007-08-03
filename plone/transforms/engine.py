@@ -1,3 +1,4 @@
+from logging import DEBUG
 from persistent import Persistent
 
 from zope.component import getSiteManager
@@ -5,6 +6,8 @@ from zope.interface import implements
 
 from plone.transforms.interfaces import ITransform
 from plone.transforms.interfaces import ITransformEngine
+
+from plone.transforms.log import log
 
 
 class TransformEngine(object):
@@ -37,11 +40,9 @@ class TransformEngine(object):
 
     def transform(self, data, input_mimetype, output_mimetype):
         """
-        The transform method takes some data in the input format and returns
-        it in the output format.
-
-        When no transform or transformation chain for the given input and
-        output mimetype can be found a ValueError is raised.
+        The transform method takes some data in one of the input formats.
+        It returns either an ITransformResult in the output format or None
+        if an error occurred.
         """
         available = self.available_transforms()
         available_inputs = [spec[0] for spec in available]
@@ -50,9 +51,10 @@ class TransformEngine(object):
         # Is the input and output format available?
         if (input_mimetype not in available_inputs or
             output_mimetype not in available_outputs):
-            raise ValueError("No transforms could be found to transform the "
-                             "'%s' format into the '%s' format."
-                             % (input_mimetype, output_mimetype))
+            log(DEBUG, "No transforms could be found to transform the "
+                       "'%s' format into the '%s' format." %
+                       (input_mimetype, output_mimetype))
+            return None
 
         # Special behavior for filters, which have an identical input and
         # output encoding
@@ -78,9 +80,10 @@ class TransformEngine(object):
             # paths.sort(key=len)
             return paths[0].transform(data)
 
-        raise ValueError("No transforms could be found to transform the '%s' "
-                         "format into the '%s' format."
-                         % (input_mimetype, output_mimetype))
+        log(DEBUG, "No transforms could be found to transform the '%s' "
+                   "format into the '%s' format." %
+                   (input_mimetype, output_mimetype))
+        return None
 
 
 class PersistentTransformEngine(Persistent, TransformEngine):
