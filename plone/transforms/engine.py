@@ -74,7 +74,8 @@ class TransformEngine(object):
 
         # Sort by path length
         if len(paths) > 0:
-            paths.sort(key=len)
+            # XXX We only have a simple list of transforms right now.
+            # paths.sort(key=len)
             return paths[0].transform(data)
 
         raise ValueError("No transforms could be found to transform the '%s' "
