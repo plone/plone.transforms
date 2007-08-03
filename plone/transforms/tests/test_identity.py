@@ -5,6 +5,7 @@
 
 import unittest
 
+import zope.app.publisher.browser
 import zope.component
 from zope.component import queryUtility
 from zope.component.testing import setUp, tearDown
@@ -19,6 +20,7 @@ from plone.transforms.interfaces import ITransform
 def configurationSetUp(self):
     setUp()
     XMLConfig('meta.zcml', zope.component)()
+    XMLConfig('meta.zcml', zope.app.publisher.browser)()
     XMLConfig('configure.zcml', plone.transforms)()
 
 def testIdentityTransform():

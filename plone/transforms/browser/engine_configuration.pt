@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xml:lang="en" lang="en">
+
+<metal:block use-macro="context/prefs_main_template/macros/master">
+
+<metal:block metal:fill-slot="top_slot"
+             tal:define="dummy python:request.set('disable_border', 1)" />
+
+<body>
+
+    <div metal:fill-slot="prefs_configlet_main">
+
+        <form action="./config-transform.html" method="post">
+
+            <input type="submit" value="Submit"/>
+
+            <input type="hidden"
+                   name="submitted"
+                   value="True"/>
+
+        </form>
+
+    </div>
+
+</body>
+</metal:block>
+</html>

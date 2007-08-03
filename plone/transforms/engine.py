@@ -1,3 +1,5 @@
+from persistent import Persistent
+
 from zope.component import getSiteManager
 from zope.interface import implements
 
@@ -78,3 +80,9 @@ class TransformEngine(object):
         raise ValueError("No transforms could be found to transform the '%s' "
                          "format into the '%s' format."
                          % (input_mimetype, output_mimetype))
+
+
+class PersistentTransformEngine(Persistent, TransformEngine):
+
+    def __init__(self):
+      self.selected_transforms = {}

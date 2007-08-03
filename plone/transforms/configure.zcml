@@ -2,6 +2,8 @@
 
   <include package=".text" />
 
+  <include package=".browser" />
+
   <utility
       provides=".interfaces.ITransform"
       factory=".identity.IdentityTransform"
