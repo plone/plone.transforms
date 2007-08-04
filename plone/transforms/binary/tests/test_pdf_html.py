@@ -48,10 +48,28 @@ def testPDFCommandTransform():
       <plone.transforms.transform.TransformResult object at ...>
 
       >>> result.data
+      <iterator object at ...>
 
+      >>> 'Plone is awesome' in u''.join(result.data)
+      True
 
-      result.subobjects
-      
+    We got four subobjects:
+
+      >>> len(result.subobjects)
+      4
+
+    Two of them are images:
+
+      >>> images = [f for f in result.subobjects.keys() if f.endswith('png')]
+      >>> len(images)
+      2
+
+      >>> image1 = result.subobjects[images[0]]
+      >>> image1
+      <iterator object at ...>
+
+      >>> ''.join(image1).startswith('\x89PNG')
+      True
     """
 
 

@@ -43,7 +43,11 @@ class PDFCommandTransform(CommandTransform):
         it into the default data.
         """
         result = self.prepare_transform(data)
-        
+        htmls = [f for f in result.subobjects.keys() if f.endswith('html')]
+        html = htmls[0]
+        text = ''.join(result.subobjects[html]).decode('utf-8', 'ignore')
+        del result.subobjects[html]
+        result.data = iter(html_bodyfinder(text))
         return result
 
 

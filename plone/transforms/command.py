@@ -93,12 +93,12 @@ class CommandTransform(PersistentTransform):
             for tmpfile in os.listdir(tmpdirpath):
                 tmp = os.path.join(tmpdirpath, tmpfile)
                 fd = file(tmp, 'rb')
-                subobjects[tmpfile] = fd.read()
+                subobjects[tmpfile] = iter(fd.read())
                 fd.close()
                 os.unlink(tmp)
 
             result = TransformResult(None)
-            result.subobject = subobjects
+            result.subobjects = subobjects
         finally:
             shutil.rmtree(tmpdirpath)
 
