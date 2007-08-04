@@ -31,7 +31,7 @@ class PDFTransform(PipeTransform):
     output = "text/html"
 
     command = 'pdftohtml'
-    args = "%(infile)s -noframes -stdout -enc UTF-8"
+    args = "%(infile)s -q -noframes -stdout -enc UTF-8"
     use_stdin = False
 
     def extractOutput(self, stdout):
