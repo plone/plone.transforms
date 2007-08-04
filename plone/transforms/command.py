@@ -54,11 +54,14 @@ class CommandTransform(PersistentTransform):
         for chunk in data:
             os.write(fd, chunk.encode('utf-8')) 
 
-    def initialize_tmpfile(self, data):
+    def initialize_tmpfile(self, data, dir=None):
         """Create a temporary directory, copy input in a file there
         return the path of the tmp file.
         """
-        fd, tmpfilepath = tempfile.mkstemp(text=False)
+        if dir is None:
+            fd, tmpfilepath = tempfile.mkstemp(text=False)
+        else:
+            fd, tmpfilepath = tempfile.mkstemp(text=False, dir=dir)
         # write data to tmp using a file descriptor
         self.write(fd, data)
         # close it so the other process can read it
@@ -73,29 +76,31 @@ class CommandTransform(PersistentTransform):
         if self.command is None:
             return None
 
-        tmpfilepath = self.initialize_tmpfile(data)
-        tmpdirpath = tempfile.mkdtemp()
+        try:
+            tmpdirpath = tempfile.mkdtemp()
+            tmpfilepath = self.initialize_tmpfile(data, dir=tmpdirpath)
 
-        commandline = 'cd "%s" && %s %s' % (
-            tmpfilepath, self.command, self.args)
+            commandline = 'cd "%s" && %s %s' % (
+                tmpdirpath, self.command, self.args)
 
-        commandline = commandline % { 'infile' : tmpfilepath }
-        if os.name=='posix':
-            commandline = commandline + ' 2>error_log 1>/dev/null'
+            commandline = commandline % { 'infile' : tmpfilepath }
+            if os.name=='posix':
+                commandline = commandline + ' 2>error_log 1>/dev/null'
 
-        os.system(commandline)
+            os.system(commandline)
 
-        subobjects = {}
-        for tmpfile in os.listdir(tmpdirpath):
-            tmp = os.path.join(tmpfilepath, tmpfilepath)
-            subobjects[tmpfile] = file(tmp, 'rb').read()
-            os.unlink(tmp)
+            subobjects = {}
+            for tmpfile in os.listdir(tmpdirpath):
+                tmp = os.path.join(tmpdirpath, tmpfile)
+                fd = file(tmp, 'rb')
+                subobjects[tmpfile] = fd.read()
+                fd.close()
+                os.unlink(tmp)
 
-        result = TransformResult(None)
-        result.subobject = subobjects
-
-        os.unlink(tmpfilepath)
-        shutil.rmtree(tmpdirpath)
+            result = TransformResult(None)
+            result.subobject = subobjects
+        finally:
+            shutil.rmtree(tmpdirpath)
 
         return result
 
