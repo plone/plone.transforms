@@ -36,7 +36,7 @@ def testPDFTransform():
 
       >>> filename = input_file_path('test_pdf_html.pdf')
       >>> handle = file(filename, 'rb')
-      >>> text = (c for c in handle.read())
+      >>> text =  iter(handle.read())
       >>> handle.close()
 
     Now transform the data:
@@ -49,7 +49,7 @@ def testPDFTransform():
       <plone.transforms.transform.TransformResult object at ...>
 
       >>> result.data
-      <generator object at ...>
+      <iterator object at ...>
 
       >>> beginning = "<A name=1></a>test_pdf_html.py<br>\\n2007-08-03<br>\\n# -*- coding: UTF-8"
       >>> beginning in ''.join(result.data)

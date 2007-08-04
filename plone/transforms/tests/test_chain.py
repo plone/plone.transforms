@@ -34,8 +34,7 @@ class ReverseTransform(Transform):
     def transform(self, data):
         temp = [d for d in data]
         temp.reverse()
-        result = (d for d in temp)
-        return TransformResult(result)
+        return TransformResult((c for c in temp))
 
 
 def testEmptyChain():
@@ -55,11 +54,10 @@ def testEmptyChain():
       >>> chain.name
       u'test'
 
-    Set up some test text and turn it into a generator which fullfils the
+    Set up some test text and turn it into a iterator which fullfils the
     iterator protocol:
 
-      >>> text = u"Some simple test text."
-      >>> data = (chr for chr in text)
+      >>> data = iter(u'Some simple test text.')
 
     Now transform the data:
 
@@ -71,10 +69,10 @@ def testEmptyChain():
       <plone.transforms.transform.TransformResult object at ...>
 
       >>> result.data
-      <generator object at ...>
+      <iterator object at ...>
 
-      >>> u''.join(result.data) == text
-      True
+      >>> u''.join(result.data)
+      u'Some simple test text.'
     """
 
 
@@ -105,8 +103,7 @@ def testBrokenChain():
 
     Set up some test text:
 
-      >>> text = u"Some simple test text."
-      >>> data = (chr for chr in text)
+      >>> data = iter(u'Some simple test text.')
 
     Now transform the data:
 
@@ -180,17 +177,16 @@ def testIdenticalChain():
       >>> len(chain)
       2
 
-    Set up some test text and turn it into a generator which fullfils the
+    Set up some test text and turn it into a iterator which fullfils the
     iterator protocol:
 
-      >>> text = u"Some simple test text."
-      >>> data = (chr for chr in text)
+      >>> data = iter(u'Some simple test text.')
 
     Now transform the data and check the result:
 
       >>> result = chain.transform(data)
-      >>> u''.join(result.data) == text
-      True
+      >>> u''.join(result.data)
+      u'Some simple test text.'
     """
 
 
@@ -233,11 +229,10 @@ def testReversingChain():
       >>> len(chain)
       1
 
-    Set up some test text and turn it into a generator which fullfils the
+    Set up some test text and turn it into a iterator which fullfils the
     iterator protocol:
 
-      >>> text = u"ABCDE"
-      >>> data = (chr for chr in text)
+      >>> data = iter(u"ABCDE")
 
     Now transform the data and check the result:
 
@@ -251,8 +246,7 @@ def testReversingChain():
 
     And transform the text again:
 
-      >>> text = u"ABCDE"
-      >>> data = (chr for chr in text)
+      >>> data = iter(u"ABCDE")
 
       >>> result = chain.transform(data)
       >>> u''.join(result.data)
@@ -303,10 +297,9 @@ def testReversingSplitChain():
       >>> len(chain)
       2
 
-    Set up some test text and turn it into a generator:
+    Set up some test text and turn it into a iterator:
 
-      >>> text = u"ABCDEFG"
-      >>> data = (chr for chr in text)
+      >>> data = iter(u"ABCDEFG")
 
     Now transform the data and check the result:
 
@@ -328,8 +321,7 @@ def testReversingSplitChain():
     
     And transform the text again:
     
-      >>> text = u"ABCDEFG"
-      >>> data = (chr for chr in text)
+      >>> data = iter(u"ABCDEFG")
 
       >>> result = chain.transform(data)
       >>> result

@@ -22,10 +22,9 @@ def testCommandTransform():
 
       >>> command = CommandTransform()
 
-    Set up some test text and turn it into a generator:
+    Set up some test text and turn it into a iterator:
 
-      >>> text = u"Some simple test text."
-      >>> data = (chr for chr in text)
+      >>> data = iter(u"Some simple test text.")
 
     Try to transform the data:
 
@@ -34,7 +33,7 @@ def testCommandTransform():
       <plone.transforms.transform.TransformResult object at ...>
 
       >>> result.data
-      <generator object at ...>
+      <iterator object at ...>
 
       >>> 'None: command not found' in u''.join(result.data)
       True

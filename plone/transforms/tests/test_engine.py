@@ -23,10 +23,9 @@ def testTransformEngineInstallation():
       >>> engine
       <plone.transforms.engine.TransformEngine object at ...>
 
-    Set up some test text and turn it into a generator:
+    Set up some test text and turn it into a iterator:
 
-      >>> text = u"Some simple test text."
-      >>> data = (chr for chr in text)
+      >>> data = iter(u"Some simple test text.")
 
     Try to transform the data:
 

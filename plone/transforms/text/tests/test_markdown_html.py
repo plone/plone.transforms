@@ -27,8 +27,7 @@ def testMarkdownTransform():
 
     Set up some test text:
 
-      >>> text = u"Some simple test text."
-      >>> data = (chr for chr in text)
+      >>> data = iter(u"Some simple test text.")
 
     Now transform the data:
 
@@ -40,7 +39,7 @@ def testMarkdownTransform():
       <plone.transforms.transform.TransformResult object at ...>
 
       >>> result.data
-      <generator object at ...>
+      <iterator object at ...>
 
       >>> u''.join(result.data)
       u'\\n<p>Some simple test text.\\n</p>\\n\\n\\n'

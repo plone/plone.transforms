@@ -24,11 +24,10 @@ def testIdentityTransform():
       >>> util
       <plone.transforms.identity.IdentityTransform object at ...>
 
-    Set up some test text and turn it into a generator which fullfils the
+    Set up some test text and turn it into a iterator which fullfils the
     iterator protocol:
 
-      >>> text = u"Some simple test text."
-      >>> data = (chr for chr in text)
+      >>> data = iter(u'Some simple test text.')
 
     Now transform the data:
 
@@ -43,15 +42,15 @@ def testIdentityTransform():
       >>> hasattr(result, '__iter__')
       True
 
-    In this case we got a generator:
+    In this case we got a iterator:
 
       >>> result
-      <generator object at ...>
+      <iterator object at ...>
 
     And make sure we got back the identical text:
 
-      >>> u''.join(result) == text
-      True
+      >>> u''.join(result)
+      u'Some simple test text.'
     """
 
 

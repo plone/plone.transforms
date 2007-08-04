@@ -70,4 +70,4 @@ class CommandTransform(PersistentTransform):
 
         os.unlink(tmpname)
 
-        return TransformResult((c for c in out))
+        return TransformResult(iter(out))

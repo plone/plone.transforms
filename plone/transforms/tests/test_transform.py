@@ -45,10 +45,8 @@ class SplitTransform(Transform):
                 second.append(data.next())
             except StopIteration:
                 break
-        first = (f for f in first)
-        second = (s for s in second)
-        result = TransformResult(first)
-        result.subobjects['second'] = second
+        result = TransformResult(iter(first))
+        result.subobjects['second'] = iter(second)
         return result
 
 
@@ -66,10 +64,9 @@ def testEmptyTransform():
       >>> util
       <plone.transforms.tests.test_transform.TestTransform object at ...>
 
-    Set up some test text and turn it into a generator:
+    Set up some test text and turn it into a iterator:
 
-      >>> text = u"Some simple test text."
-      >>> data = (chr for chr in text)
+      >>> data = iter(u'Some simple test text.')
 
     Now transform the data:
 
@@ -81,10 +78,10 @@ def testEmptyTransform():
       <plone.transforms.transform.TransformResult object at ...>
 
       >>> result.data
-      <generator object at ...>
+      <iterator object at ...>
 
-      >>> u''.join(result.data) == text
-      True
+      >>> u''.join(result.data)
+      u'Some simple test text.'
     """
 
 
@@ -102,10 +99,9 @@ def testEmptyPersistentTransform():
       >>> util
       <plone.transforms.tests.test_transform.TestPersistentTransform object at ...>
 
-    Set up some test text and turn it into a generator:
+    Set up some test text and turn it into a iterator:
 
-      >>> text = u"Some simple test text."
-      >>> data = (chr for chr in text)
+      >>> data = iter(u'Some simple test text.')
 
     Now transform the data:
 
@@ -117,10 +113,10 @@ def testEmptyPersistentTransform():
       <plone.transforms.transform.TransformResult object at ...>
 
       >>> result.data
-      <generator object at ...>
+      <iterator object at ...>
 
-      >>> u''.join(result.data) == text
-      True
+      >>> u''.join(result.data)
+      u'Some simple test text.'
     """
 
 
@@ -137,10 +133,9 @@ def testSplitTransform():
       >>> util
       <plone.transforms.tests.test_transform.SplitTransform object at ...>
 
-    Set up some test text and turn it into a generator:
+    Set up some test text and turn it into a iterator:
 
-      >>> text = u"ABCDEFGHI"
-      >>> data = (chr for chr in text)
+      >>> data = iter(u"ABCDEFGHI")
 
     Now transform the data:
 
