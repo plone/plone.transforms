@@ -2,9 +2,15 @@
   xmlns:zcml="http://namespaces.zope.org/zcml">
 
   <utility
+      provides="..interfaces.ICommandTransform"
+      factory=".pdf_html.PDFCommandTransform"
+      name="plone.transforms.text.pdf_html.PDFCommandTransform"
+      permission="zope.Public" />
+
+  <utility
       provides="..interfaces.IPipeTransform"
-      factory=".pdf_html.PDFTransform"
-      name="plone.transforms.text.pdf_html.PDFTransform"
+      factory=".pdf_html.PDFPipeTransform"
+      name="plone.transforms.text.pdf_html.PDFPipeTransform"
       permission="zope.Public" />
 
 </configure>

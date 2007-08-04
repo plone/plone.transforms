@@ -22,21 +22,53 @@ PREFIX = abspath(dirname(__file__))
 def input_file_path(name):
     return join(PREFIX, 'input', name)
 
-
-def testPDFTransform():
+def testPDFCommandTransform():
     """
     First we get the transform utility.
 
       >>> util = queryUtility(ITransform,
-      ...            name='plone.transforms.text.pdf_html.PDFTransform')
+      ...            name='plone.transforms.text.pdf_html.PDFCommandTransform')
       >>> util
-      <plone.transforms.binary.pdf_html.PDFTransform object at ...>
+      <plone.transforms.binary.pdf_html.PDFCommandTransform object at ...>
+
+    Set up some test text:
+
+      >>> filename = input_file_path('test_pdf_html_complex.pdf')
+      >>> handle = file(filename, 'rb')
+      >>> text = iter(handle.read())
+      >>> handle.close()
+
+    Now transform the data:
+
+      >>> result = util.transform(text)
+
+    And check the result:
+
+      >>> result
+      <plone.transforms.transform.TransformResult object at ...>
+
+      >>> result.data
+
+
+      result.subobjects
+      
+    """
+
+
+def testPDFPipeTransform():
+    """
+    First we get the transform utility.
+
+      >>> util = queryUtility(ITransform,
+      ...            name='plone.transforms.text.pdf_html.PDFPipeTransform')
+      >>> util
+      <plone.transforms.binary.pdf_html.PDFPipeTransform object at ...>
 
     Set up some test text:
 
       >>> filename = input_file_path('test_pdf_html.pdf')
       >>> handle = file(filename, 'rb')
-      >>> text =  iter(handle.read())
+      >>> text = iter(handle.read())
       >>> handle.close()
 
     Now transform the data:
