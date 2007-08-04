@@ -1,6 +1,8 @@
 """
-HTML to Text
+HTML to text transform
 """
+import re
+
 from zope.interface import implements
 
 from plone.transforms.interfaces import ITransform
@@ -8,7 +10,14 @@ from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.transform import Transform
 from plone.transforms.transform import TransformResult
 
-import re
+SCRIPT_RE = re.compile('<script [^>]>.*</script>(?im)')
+STYLE_RE = re.compile('<style [^>]>.*</style>(?im)')
+HEAD_RE = re.compile('<head [^>]>.*</head>(?im)')
+TEXTFORMAT_RE = re.compile('(?im)</?(font|em|i|strong|b)(?=\W)[^>]*>')
+TAG_RE = re.compile('<[^>]*>(?i)(?m)')
+
+FILTERS = frozenset((SCRIPT_RE, STYLE_RE, HEAD_RE, TEXTFORMAT_RE, TAG_RE))
+
 
 class HtmlToTextTransform(Transform):
     """A transform which transforms HTML into Text.
@@ -35,13 +44,7 @@ class HtmlToTextTransform(Transform):
 
     def transform(self, data):
         # TODO convert entites with htmlentitydefs.name2codepoint ?
-        for convertion_chain in ( 
-                       '<script [^>]>.*</script>(?im)',
-                       '<style [^>]>.*</style>(?im)',
-                       '<head [^>]>.*</head>(?im)',
-                       '(?im)</?(font|em|i|strong|b)(?=\W)[^>]*>',
-                       '<[^>]*>(?i)(?m)',
-                       ) :
-            r = re.compile( convertion_chain )
-            data = r.sub(u' ', u''.join(data))
+        data = u''.join(data)
+        for regex in FILTERS:
+            data = regex.sub(u' ', data)
         return TransformResult(iter(data))
