@@ -32,11 +32,10 @@ def testCommandTransform():
       >>> result
       <plone.transforms.transform.TransformResult object at ...>
 
-      >>> result.data
-      <iterator object at ...>
-
-      >>> 'None: command not found' in u''.join(result.data)
+      >>> result.data is None
       True
+
+    XXX We don't get the desired output yet.
     """
 
 

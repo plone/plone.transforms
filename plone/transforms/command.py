@@ -1,4 +1,5 @@
 import os
+import shutil
 import tempfile
 
 from zope.interface import implements
@@ -55,33 +56,50 @@ class CommandTransform(PersistentTransform):
 
     def initialize_tmpfile(self, data):
         """Create a temporary directory, copy input in a file there
-        return the path of the tmp dir and of the input file.
+        return the path of the tmp file.
         """
-        fd, tmpname = tempfile.mkstemp(text=False)
+        fd, tmpfilepath = tempfile.mkstemp(text=False)
         # write data to tmp using a file descriptor
         self.write(fd, data)
         # close it so the other process can read it
         os.close(fd)
-        return tmpname
+        return tmpfilepath
 
-    def extractOutput(self, stdout):
-        return stdout.read()
-
-    def transform(self, data):
+    def prepare_transform(self, data):
         """
         The transform method takes some data in one of the input formats and
         returns it in the output format.
         """
-        tmpname = self.initialize_tmpfile(data)
-        commandline = "%s %s" % (self.command, self.args)
-        commandline = commandline % { 'infile' : tmpname }
+        tmpfilepath = self.initialize_tmpfile(data)
+        tmpdirpath = tempfile.mkdtemp()
 
-        child_stdin, child_stdout = os.popen4(commandline, 'b')
+        commandline = 'cd "%s" && %s %s' % (
+            tmpfilepath, self.command, self.args)
 
-        status = child_stdin.close()
-        out = self.extractOutput(child_stdout)
-        child_stdout.close()
+        commandline = commandline % { 'infile' : tmpfilepath }
+        if os.name=='posix':
+            commandline = commandline + ' 2>error_log 1>/dev/null'
 
-        os.unlink(tmpname)
+        os.system(commandline)
 
-        return TransformResult(iter(out))
+        subobjects = {}
+        for tmpfile in os.listdir(tmpdirpath):
+            tmp = os.path.join(tmpfilepath, tmpfilepath)
+            subobjects[tmpfile] = file(tmp, 'rb').read()
+            os.unlink(tmp)
+
+        result = TransformResult(None)
+        result.subobject = subobjects
+
+        os.unlink(tmpfilepath)
+        shutil.rmtree(tmpdirpath)
+
+        return result
+
+    def transform(self, data):
+        """Prepare the transform result and hand back everything as subobjects.
+        You can then pick the default content from the result object and put
+        it into the default data.
+        """
+        result = self.prepare_transform(data)
+        return result
