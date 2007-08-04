@@ -53,10 +53,10 @@ def testPDFCommandTransform():
       >>> 'Plone is awesome' in u''.join(result.data)
       True
 
-    We got four subobjects:
+    We got two subobjects:
 
       >>> len(result.subobjects)
-      4
+      2
 
     Two of them are images:
 

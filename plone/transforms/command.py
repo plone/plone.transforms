@@ -92,6 +92,8 @@ class CommandTransform(PersistentTransform):
             subobjects = {}
             for tmpfile in os.listdir(tmpdirpath):
                 tmp = os.path.join(tmpdirpath, tmpfile)
+                if tmp == tmpfilepath or tmp.endswith('error_log'):
+                    continue
                 fd = file(tmp, 'rb')
                 subobjects[tmpfile] = iter(fd.read())
                 fd.close()
@@ -100,6 +102,7 @@ class CommandTransform(PersistentTransform):
             result = TransformResult(None)
             result.subobjects = subobjects
         finally:
+            os.unlink(tmpfilepath)
             shutil.rmtree(tmpdirpath)
 
         return result
