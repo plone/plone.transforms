@@ -35,16 +35,27 @@ class CommandTransform(PersistentTransform):
     command = None
     args = None
 
+    def writeBinary(self, fd, firstchunk, data):
+        os.write(fd, firstchunk)
+        for chunk in data:
+            os.write(fd, chunk)
+
+    def writeText(self, fd, firstchunk, data):
+        os.write(fd, firstchunk.encode('utf-8'))
+        for chunk in data:
+            os.write(fd, chunk.encode('utf-8')) 
+
     def initialize_tmpfile(self, data):
         """Create a temporary directory, copy input in a file there
         return the path of the tmp dir and of the input file.
         """
         filehandle, tmpname = tempfile.mkstemp(text=False)
         # write data to tmp using a file descriptor
-        data = ''.join(data)
-        if isinstance(data, unicode):
-            data = data.encode('utf-8')
-        os.write(filehandle, data)
+        firstchunk = data.next()
+        if isinstance(firstchunk, unicode):
+            self.writeText(filehandle, firstchunk, data)
+        else:
+            self.writeBinary(filehandle, firstchunk, data)
         # close it so the other process can read it
         os.close(filehandle)
         return tmpname

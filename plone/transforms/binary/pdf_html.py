@@ -8,7 +8,7 @@ from plone.transforms.utils import html_bodyfinder
 
 
 class PDFTransform(CommandTransform):
-    """A transform which transforms markdown text into HTML.
+    """A transform which transforms pdf into HTML.
 
     Let's make sure that this implementation actually fulfills the API.
 
@@ -34,4 +34,4 @@ class PDFTransform(CommandTransform):
     args = "%(infile)s -noframes -stdout -enc UTF-8"
 
     def extractOutput(self, stdout):
-        return html_bodyfinder(stdout.read())
+        return html_bodyfinder(stdout.read()).decode('utf-8', 'ignore')
