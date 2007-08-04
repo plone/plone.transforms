@@ -3,6 +3,12 @@
 
   <utility
       provides="..interfaces.ITransform"
+      factory=".html_body.HtmlBodyTransform"
+      name="plone.transforms.text.html_body.HtmlBodyTransform"
+      permission="zope.Public" />
+
+  <utility
+      provides="..interfaces.ITransform"
       factory=".html_text.HtmlToTextTransform"
       name="plone.transforms.text.html_text.HtmlToTextTransform"
       permission="zope.Public" />

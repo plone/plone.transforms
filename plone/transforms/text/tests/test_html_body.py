@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-    Tests for the HTML to text transform.
+    Tests for the HTML body extractor.
 """
 
 import unittest
@@ -15,20 +15,19 @@ from plone.transforms.interfaces import ITransform
 from plone.transforms.tests.utils import configurationSetUp
 
 
-def testHtmlTextTransform():
-    r"""
+def testHtmlBodyTransform():
+    """
     First we get the transform utility.
 
       >>> util = queryUtility(ITransform,
-      ...            name='plone.transforms.text.html_text.HtmlToTextTransform')
+      ...            name='plone.transforms.text.html_body.HtmlBodyTransform')
       >>> util
-      <plone.transforms.text.html_text.HtmlToTextTransform object at ...>
+      <plone.transforms.text.html_body.HtmlBodyTransform object at ...>
 
     Set up some test text:
 
-      >>> text = unicode("\n<html><head><title>Stupid title</title></head><body>"
-      ... "<p>Some simple test text héhé.\n</p>\n\n\n</body></html>", 'utf-8')
-      >>> data = iter(text)
+      >>> data = iter(u"<html><head><title>Stupid title</title></head>"
+      ...              "<body><p>Some simple test text.\\n</p></body></html>")
 
     Now transform the data:
 
@@ -43,14 +42,14 @@ def testHtmlTextTransform():
       <iterator object at ...>
 
       >>> text = u''.join(result.data)
-      >>> text.strip()
-      u'Stupid title   Some simple test text h\xe9h\xe9.'
+      >>> text
+      u'<p>Some simple test text.\\n</p>'
     """
 
 
 def test_suite():
     suite = unittest.TestSuite((
-        DocTestSuite('plone.transforms.text.html_text'),
+        DocTestSuite('plone.transforms.text.html_body'),
         ))
     suite.addTest(
         DocTestSuite(setUp=configurationSetUp,
