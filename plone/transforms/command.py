@@ -92,6 +92,7 @@ class CommandTransform(PersistentTransform):
             subobjects = {}
             for tmpfile in os.listdir(tmpdirpath):
                 tmp = os.path.join(tmpdirpath, tmpfile)
+                # Exclude the original file and the error_log from the result
                 if tmp == tmpfilepath or tmp.endswith('error_log'):
                     continue
                 fd = file(tmp, 'rb')
