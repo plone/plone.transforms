@@ -11,14 +11,14 @@ from plone.transforms.transform import TransformResult
 from plone.transforms.message import PloneMessageFactory as _
 
 
-class CommandTransform(PersistentTransform):
+class PipeTransform(PersistentTransform):
     """A persistent transform which runs a transform based on a command line
-    tool.
+    tool and handles input and output through pipes.
 
     Let's make sure that this implementation actually fulfills the API.
 
       >>> from zope.interface.verify import verifyClass
-      >>> verifyClass(ICommandTransform, CommandTransform)
+      >>> verifyClass(ICommandTransform, PipeTransform)
       True
     """
 
@@ -27,9 +27,9 @@ class CommandTransform(PersistentTransform):
     inputs = (None, )
     output = None
 
-    name = u'plone.transforms.transform.CommandTransform'
-    title = _(u'title_skeleton_command_transform',
-              default=u'A skeleton command transform.')
+    name = u'plone.transforms.transform.PipeTransform'
+    title = _(u'title_skeleton_pipe_transform',
+              default=u'A skeleton pipe transform.')
     description = None
 
     command = None

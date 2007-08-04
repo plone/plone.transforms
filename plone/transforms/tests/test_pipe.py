@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-    Command transform tests.
+    Pipe transform tests.
 """
 
 import unittest
@@ -10,17 +10,17 @@ from zope.component.testing import tearDown
 from zope.testing import doctest
 from zope.testing.doctestunit import DocTestSuite
 
-from plone.transforms.command import CommandTransform
+from plone.transforms.pipe import PipeTransform
 from plone.transforms.interfaces import ICommandTransform
 
 from plone.transforms.tests.utils import configurationSetUp
 
 
-def testCommandTransform():
+def testPipeTransform():
     """
-    Create a new command transform:
+    Create a new pipe transform:
 
-      >>> command = CommandTransform()
+      >>> transform = PipeTransform()
 
     Set up some test text and turn it into a iterator:
 
@@ -28,7 +28,7 @@ def testCommandTransform():
 
     Try to transform the data:
 
-      >>> result = command.transform(data)
+      >>> result = transform.transform(data)
       >>> result
       <plone.transforms.transform.TransformResult object at ...>
 
@@ -42,7 +42,7 @@ def testCommandTransform():
 
 def test_suite():
     return unittest.TestSuite((
-        DocTestSuite('plone.transforms.command'),
+        DocTestSuite('plone.transforms.pipe'),
         DocTestSuite(setUp=configurationSetUp,
                      tearDown=tearDown,
                      optionflags=doctest.ELLIPSIS | 

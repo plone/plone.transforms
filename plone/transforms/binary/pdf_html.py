@@ -2,12 +2,12 @@ from zope.interface import implements
 
 from plone.transforms.interfaces import ICommandTransform
 from plone.transforms.message import PloneMessageFactory as _
-from plone.transforms.command import CommandTransform
+from plone.transforms.pipe import PipeTransform
 from plone.transforms.transform import TransformResult
 from plone.transforms.utils import html_bodyfinder
 
 
-class PDFTransform(CommandTransform):
+class PDFTransform(PipeTransform):
     """A transform which transforms pdf into HTML.
 
     Let's make sure that this implementation actually fulfills the API.
