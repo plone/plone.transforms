@@ -29,13 +29,8 @@ def testCommandTransform():
     Try to transform the data:
 
       >>> result = transform.transform(data)
-      >>> result
-      <plone.transforms.transform.TransformResult object at ...>
-
-      >>> result.data is None
+      >>> result is None
       True
-
-    XXX We don't get the desired output yet.
     """
 
 

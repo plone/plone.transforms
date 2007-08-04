@@ -70,6 +70,9 @@ class CommandTransform(PersistentTransform):
         The transform method takes some data in one of the input formats and
         returns it in the output format.
         """
+        if self.command is None:
+            return None
+
         tmpfilepath = self.initialize_tmpfile(data)
         tmpdirpath = tempfile.mkdtemp()
 

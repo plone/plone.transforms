@@ -29,13 +29,7 @@ def testPipeTransform():
     Try to transform the data:
 
       >>> result = transform.transform(data)
-      >>> result
-      <plone.transforms.transform.TransformResult object at ...>
-
-      >>> result.data
-      <iterator object at ...>
-
-      >>> 'None: command not found' in u''.join(result.data)
+      >>> result is None
       True
     """
 

@@ -44,6 +44,9 @@ class PipeTransform(CommandTransform):
         The transform method takes some data in one of the input formats and
         returns it in the output format.
         """
+        if self.command is None:
+            return None
+
         if not self.use_stdin:
             tmpname = self.initialize_tmpfile(data)
             commandline = "%s %s" % (self.command, self.args)
