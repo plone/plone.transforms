@@ -1,6 +1,6 @@
 from zope.interface import implements
 
-from plone.transforms.interfaces import ICommandTransform
+from plone.transforms.interfaces import IPipeTransform
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.pipe import PipeTransform
 from plone.transforms.transform import TransformResult
@@ -13,11 +13,11 @@ class PDFTransform(PipeTransform):
     Let's make sure that this implementation actually fulfills the API.
 
       >>> from zope.interface.verify import verifyClass
-      >>> verifyClass(ICommandTransform, PDFTransform)
+      >>> verifyClass(IPipeTransform, PDFTransform)
       True
     """
 
-    implements(ICommandTransform)
+    implements(IPipeTransform)
 
     name = u'plone.transforms.binary.pdf_html.PDFTransform'
 
@@ -32,6 +32,7 @@ class PDFTransform(PipeTransform):
 
     command = 'pdftohtml'
     args = "%(infile)s -noframes -stdout -enc UTF-8"
+    use_stdin = False
 
     def extractOutput(self, stdout):
         return html_bodyfinder(stdout.read()).decode('utf-8', 'ignore')

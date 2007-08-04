@@ -11,7 +11,7 @@ from zope.testing import doctest
 from zope.testing.doctestunit import DocTestSuite
 
 from plone.transforms.pipe import PipeTransform
-from plone.transforms.interfaces import ICommandTransform
+from plone.transforms.interfaces import IPipeTransform
 
 from plone.transforms.tests.utils import configurationSetUp
 
