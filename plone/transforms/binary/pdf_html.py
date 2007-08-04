@@ -42,16 +42,9 @@ class PDFCommandTransform(CommandTransform):
         You can then pick the default content from the result object and put
         it into the default data.
         """
-        result = self.prepare_transform(data)
-        # Figure out the filenames of the html files in the subobjects
-        htmls = [f for f in result.subobjects.keys() if f.endswith('html')]
-        # Take the first one as the primary data
-        html = htmls[0]
-        # Only use the content of the body as the return value
-        text = ''.join(result.subobjects[html]).decode('utf-8', 'ignore')
+        result = self.prepare_transform(data, infile_data_suffix='.html')
+        text = ''.join(result.data).decode('utf-8', 'ignore')
         result.data = iter(html_bodyfinder(text))
-        # Remove the primary html data from the subobjects
-        del result.subobjects[html]
         return result
 
 

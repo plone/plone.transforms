@@ -68,7 +68,7 @@ class CommandTransform(PersistentTransform):
         os.close(fd)
         return tmpfilepath
 
-    def prepare_transform(self, data):
+    def prepare_transform(self, data, infile_data_suffix=False):
         """
         The transform method takes some data in one of the input formats and
         returns it in the output format.
@@ -79,6 +79,8 @@ class CommandTransform(PersistentTransform):
         try:
             tmpdirpath = tempfile.mkdtemp()
             tmpfilepath = self.initialize_tmpfile(data, dir=tmpdirpath)
+            if infile_data_suffix:
+                primaryname = os.path.basename(tmpfilepath) + infile_data_suffix
 
             commandline = 'cd "%s" && %s %s' % (
                 tmpdirpath, self.command, self.args)
@@ -88,20 +90,21 @@ class CommandTransform(PersistentTransform):
                 commandline = commandline + ' 2>error_log 1>/dev/null'
 
             os.system(commandline)
+            result = TransformResult(None)
 
-            subobjects = {}
             for tmpfile in os.listdir(tmpdirpath):
                 tmp = os.path.join(tmpdirpath, tmpfile)
                 # Exclude the original file and the error_log from the result
                 if tmp == tmpfilepath or tmp.endswith('error_log'):
                     continue
                 fd = file(tmp, 'rb')
-                subobjects[tmpfile] = iter(fd.read())
+                # Should we use the infile as the primary output?
+                if infile_data_suffix and primaryname == tmpfile:
+                    result.data = iter(fd.read())
+                else:
+                    result.subobjects[tmpfile] = iter(fd.read())
                 fd.close()
                 os.unlink(tmp)
-
-            result = TransformResult(None)
-            result.subobjects = subobjects
         finally:
             os.unlink(tmpfilepath)
             shutil.rmtree(tmpdirpath)
