@@ -43,5 +43,5 @@ class HtmlToTextTransform(Transform):
                        '<[^>]*>(?i)(?m)',
                        ) :
             r = re.compile( convertion_chain )
-            data = r.sub(' ', u''.join(data))
+            data = r.sub(u' ', u''.join(data))
         return TransformResult(iter(data))
