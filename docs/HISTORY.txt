@@ -10,6 +10,10 @@ plone.transforms - 0.1 Unreleased
       
       Also thanks to Google for its Summer of Code project which sponsored
       hannosch for his work.
+
+      Special kudos to Benjamin Saller, Sidnei da Silva and Sylvain Thénault
+      for the PortalTransforms product which this work has been heavily based
+      upon.
       [drjnut, hannosch, nouri, tbenita]
 
     - Initial package structure.
