@@ -1,0 +1,56 @@
+TODO
+====
+
+    - Consider moving the command_available into a Generic available argument
+      on the base transform. When the markdown library is not available this
+      is pretty much the same use-case.
+
+    - Consider using popen3 instead of popen4 for the command transform and
+      handle the error data separately.
+
+    - Port the PILTransform base transform class.
+
+    - Port the xslt base transform class.
+
+    - Write an iterator based version of the html_bodyfinder, so the pdf to
+      html transforms don't need to load the whole file into memory.
+
+    - Make the configuration screen for the engine and enhance the transform
+      finding algorithm.
+
+    - Add an example of a TTW configurable transform and provide a base helper
+      class for those (probably schema and formlib-based).
+
+    - Add but comment out the (optional) dependencies in the setup.py.
+
+    - Investigate the performance and memory implications of using character
+      based iterators. Consider using cStringIO or StringIO instead of
+      iter(string) for return values or some other specialized class.
+
+    - Figure out a way to use a NamedTemporayFile or 'NamedTemporayDirectory'
+      for returning subobjects, so these don't need to be loaded into memory.
+      Some self cleaning temporary directory (on close and garbage collection)
+      would be nice.
+
+    - Reconsider passing a desired filename argument to the command transforms,
+      make the infile_data_suffix argument more clever or powerful.
+
+    - Look into distinguishing transforms based on more than the mimetypes.
+      For example the pdf to html transforms exist both with subobjects and
+      without subobjects support. You might want to use both of them in the
+      same portal for different tasks, without needing to rely on the exact
+      utility name - might be yagni as well.
+
+    - Make a new plone.app.transforms package which has GenericSetup export/
+      import handlers for the engine configuration.
+
+    - Port and make more transforms ;)
+
+Not directly package related tasks
+----------------------------------
+
+    - Make PortalTransforms into a wrapper around plone.transforms and use it
+      directly from Archetypes.
+
+    - Look into MimetypesRegistry and consider rewriting it as a Zope3
+      component as well.
