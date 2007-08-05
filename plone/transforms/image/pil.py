@@ -34,7 +34,8 @@ class PILTransform(PersistentTransform):
               default=u'A skeleton PIL transform.')
     description = None
 
-    inputs = (None, )
+    inputs = ('image/x-ms-bmp', 'image/gif', 'image/jpeg', 'image/pcx',
+              'image/png', 'image/x-portable-pixmap', 'image/tiff')
     output = None
 
     available = False
