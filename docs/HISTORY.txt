@@ -5,16 +5,18 @@ Changelog for plone.transforms
 plone.transforms - 0.1 Unreleased
 
     - Initial design and work. Lots of work has been done on the Pastisprint
-      in Aix-en-Provence in August 2007. Thx to atReal and tbenita for
+      in Aix-en-Provence in August 2007. Thx to atReal and Thierry Benita for
       organizing it and his whole family for hosting us.
-      
+
+      Special thanks to 'Focus-man' and his special powers which let us focus
+      on the work ;)
+
       Also thanks to Google for its Summer of Code project which sponsored
       hannosch for his work.
 
-      Special kudos to Benjamin Saller, Sidnei da Silva and Sylvain Thénault
-      for the PortalTransforms product which this work has been heavily based
-      upon.
-      [drjnut, hannosch, nouri, tbenita]
+      Kudos to Benjamin Saller, Sidnei da Silva and Sylvain Thénault for the
+      PortalTransforms product which this work has been heavily based upon.
+      [drjnut, hannosch, nouri, tbenita, tiazma]
 
     - Initial package structure.
       [zopeskel]
