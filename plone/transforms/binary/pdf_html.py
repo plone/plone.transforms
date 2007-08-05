@@ -5,7 +5,6 @@ from plone.transforms.interfaces import ICommandTransform
 from plone.transforms.interfaces import IPipeTransform
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.pipe import PipeTransform
-from plone.transforms.transform import TransformResult
 from plone.transforms.utils import html_bodyfinder
 
 

@@ -1,5 +1,3 @@
-from zope.interface import Attribute, Interface
-
 from plone.transforms.interfaces.transform import ITransform
 
 

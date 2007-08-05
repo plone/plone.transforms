@@ -7,12 +7,9 @@ import unittest
 
 from os.path import join, abspath, dirname
 
-from zope.component import queryUtility
 from zope.component.testing import tearDown
 from zope.testing import doctest
 from zope.testing.doctestunit import DocTestSuite
-
-from plone.transforms.interfaces import ITransform
 
 from plone.transforms.tests.utils import configurationSetUp
 
@@ -25,6 +22,9 @@ def input_file_path(name):
 def testPDFCommandTransform():
     """
     First we get the transform utility.
+
+      >>> from zope.component import queryUtility
+      >>> from plone.transforms.interfaces import ITransform
 
       >>> util = queryUtility(ITransform,
       ...            name='plone.transforms.text.pdf_html.PDFCommandTransform')
@@ -76,6 +76,9 @@ def testPDFCommandTransform():
 def testPDFPipeTransform():
     """
     First we get the transform utility.
+
+      >>> from zope.component import queryUtility
+      >>> from plone.transforms.interfaces import ITransform
 
       >>> util = queryUtility(ITransform,
       ...            name='plone.transforms.text.pdf_html.PDFPipeTransform')

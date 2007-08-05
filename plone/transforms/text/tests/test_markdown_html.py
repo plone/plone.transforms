@@ -5,13 +5,9 @@
 
 import unittest
 
-from zope.component import queryUtility
 from zope.component.testing import tearDown
 from zope.testing import doctest
 from zope.testing.doctestunit import DocTestSuite
-
-from plone.transforms.interfaces import ITransform
-from plone.transforms.text.markdown_html import HAS_MARKDOWN
 
 from plone.transforms.tests.utils import configurationSetUp
 
@@ -19,6 +15,9 @@ from plone.transforms.tests.utils import configurationSetUp
 def testMarkdownTransform():
     """
     First we get the transform utility.
+
+      >>> from zope.component import queryUtility
+      >>> from plone.transforms.interfaces import ITransform
 
       >>> util = queryUtility(ITransform,
       ...            name='plone.transforms.text.markdown_html.MarkdownTransform')
@@ -35,6 +34,9 @@ def testMarkdownTransform():
 
     And check the result:
 
+      >>> util.available
+      True
+
       >>> result
       <plone.transforms.transform.TransformResult object at ...>
 
@@ -50,12 +52,11 @@ def test_suite():
     suite = unittest.TestSuite((
         DocTestSuite('plone.transforms.text.markdown_html'),
         ))
-    if HAS_MARKDOWN:
-        suite.addTest(
-            DocTestSuite(setUp=configurationSetUp,
-                         tearDown=tearDown,
-                         optionflags=doctest.ELLIPSIS | 
-                            doctest.NORMALIZE_WHITESPACE))
+    suite.addTest(
+        DocTestSuite(setUp=configurationSetUp,
+                     tearDown=tearDown,
+                     optionflags=doctest.ELLIPSIS | 
+                        doctest.NORMALIZE_WHITESPACE))
     return suite
 
 if __name__ == '__main__':
