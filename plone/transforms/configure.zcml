@@ -4,6 +4,8 @@
 
   <include package=".browser" />
 
+  <include package=".image" />
+
   <include package=".text" />
 
   <utility
