@@ -7,4 +7,10 @@
       name="plone.transforms.image.gif.GifTransform"
       permission="zope.Public" />
 
+  <utility
+      provides="..interfaces.IPILTransform"
+      factory=".jpeg.JpegTransform"
+      name="plone.transforms.image.jpeg.JpegTransform"
+      permission="zope.Public" />
+
 </configure>
