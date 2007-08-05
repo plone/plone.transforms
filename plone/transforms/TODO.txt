@@ -1,8 +1,6 @@
 TODO
 ====
 
-    - Port the PILTransform base transform class.
-
     - Port the xslt base transform class.
 
     - Write an iterator based version of the html_bodyfinder, so the pdf to
