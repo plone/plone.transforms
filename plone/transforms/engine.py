@@ -6,7 +6,6 @@ from zope.interface import implements
 
 from plone.transforms.interfaces import ITransform
 from plone.transforms.interfaces import ITransformEngine
-
 from plone.transforms.log import log
 
 
