@@ -1,3 +1,4 @@
+import re
 from StringIO import StringIO
 
 from zope.interface import implements
@@ -8,6 +9,12 @@ from plone.transforms.interfaces import IPipeTransform
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.pipe import PipeTransform
 from plone.transforms.utils import html_bodyfinder
+
+REGEXES = (
+    (re.compile('((left|top|right|bottom)[ \t]*:[ \t]*[0-9]+)[ \t]*([;"])'),
+     r"\1px\3"
+    ),
+)
 
 
 class PDFCommandTransform(CommandTransform):
@@ -38,6 +45,11 @@ class PDFCommandTransform(CommandTransform):
     command = 'pdftohtml'
     args = "%(infile)s -q -c -noframes -enc UTF-8"
 
+    def fixBrokenStyles(self, html):
+        for rex, subtxt in REGEXES:
+            html = rex.sub(subtxt, html)
+        return html
+
     def transform(self, data):
         """Prepare the transform result and hand back everything as subobjects.
         You can then pick the default content from the result object and put
@@ -45,6 +57,8 @@ class PDFCommandTransform(CommandTransform):
         """
         result = self.prepare_transform(data, infile_data_suffix='.html')
         text = ''.join(result.data).decode('utf-8', 'ignore')
+        # workaround because of bug in pdftohtml
+        text = self.fixBrokenStyles(text)
         result.data = StringIO(html_bodyfinder(text))
         return result
 
