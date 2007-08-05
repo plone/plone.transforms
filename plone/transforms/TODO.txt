@@ -1,9 +1,6 @@
 TODO
 ====
 
-    - Consider using popen3 instead of popen4 for the command transform and
-      handle the error data separately.
-
     - Port the PILTransform base transform class.
 
     - Port the xslt base transform class.

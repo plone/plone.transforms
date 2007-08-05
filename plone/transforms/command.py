@@ -110,12 +110,14 @@ class CommandTransform(PersistentTransform):
             for tmpfile in os.listdir(tmpdirpath):
                 tmp = os.path.join(tmpdirpath, tmpfile)
                 # Exclude the original file and the error_log from the result
-                if tmp == tmpfilepath or tmp.endswith('error_log'):
+                if tmp == tmpfilepath:
                     continue
                 fd = file(tmp, 'rb')
                 # Should we use the infile as the primary output?
                 if infile_data_suffix and primaryname == tmpfile:
                     result.data = iter(fd.read())
+                elif tmp.endswith('error_log'):
+                    result.errors = fd.read()
                 else:
                     result.subobjects[tmpfile] = iter(fd.read())
                 fd.close()

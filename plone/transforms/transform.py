@@ -26,9 +26,11 @@ class TransformResult(object):
     data = None
     metadata = {}
     subobjects = {}
+    errors = None
 
-    def __init__(self, data, metadata=None, subobjects=None):
+    def __init__(self, data, metadata=None, subobjects=None, errors=None):
         self.data = data
+        self.errors = errors
         if subobjects is not None:
             self.subobjects = subobjects
         if metadata is not None:

@@ -54,7 +54,7 @@ class PipeTransform(CommandTransform):
             commandline = "%s %s" % (self.command, self.args)
             commandline = commandline % { 'infile' : tmpname }
 
-        child_stdin, child_stdout = os.popen4(commandline, 'b')
+        child_stdin, child_stdout, child_stderr = os.popen3(commandline, 'b')
 
         if self.use_stdin:
             self.write(child_stdin, data)
@@ -66,4 +66,8 @@ class PipeTransform(CommandTransform):
         if not self.use_stdin:
             os.unlink(tmpname)
 
-        return TransformResult(iter(out))
+        # Add the errors to the transform result
+        result = TransformResult(iter(out))
+        result.errors = child_stderr.read()
+        child_stderr.close()
+        return result
