@@ -1,14 +1,11 @@
 import os
-import tempfile
 
 from zope.interface import implements
 
-from plone.transforms.interfaces import IPipeTransform
-
 from plone.transforms.command import CommandTransform
-from plone.transforms.transform import TransformResult
-
+from plone.transforms.interfaces import IPipeTransform
 from plone.transforms.message import PloneMessageFactory as _
+from plone.transforms.transform import TransformResult
 
 
 class PipeTransform(CommandTransform):
@@ -36,6 +33,11 @@ class PipeTransform(CommandTransform):
     args = None
     use_stdin = False
 
+    command_available = False
+
+    def __init__(self):
+        super(PipeTransform, self).__init__()
+
     def extractOutput(self, stdout):
         return stdout.read()
 
@@ -44,7 +46,7 @@ class PipeTransform(CommandTransform):
         The transform method takes some data in one of the input formats and
         returns it in the output format.
         """
-        if self.command is None:
+        if not self.command_available:
             return None
 
         if not self.use_stdin:

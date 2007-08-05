@@ -8,10 +8,6 @@ class IPipeTransform(ICommandTransform):
     and output pipes.
     """
 
-    command = Attribute("The name of the command line tool.")
-
-    args = Attribute("The arguments for the command line tool.")
-
     use_stdin = Attribute("Boolean indicating if the input should be written"
                           "to a temporary file or directly passed into stdin.")
 

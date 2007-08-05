@@ -11,6 +11,9 @@ class ICommandTransform(ITransform):
 
     args = Attribute("The arguments for the command line tool.")
 
+    command_available = Attribute("A boolean indicating if the command is "
+                                  "available and accessible.")
+
     def initialize_tmpfile(data):
         """Create a temporary directory, copy input in a file there
         return the filehandle to the file.

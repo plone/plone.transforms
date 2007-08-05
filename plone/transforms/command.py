@@ -1,3 +1,4 @@
+from logging import DEBUG
 import os
 import shutil
 import tempfile
@@ -5,11 +6,11 @@ import tempfile
 from zope.interface import implements
 
 from plone.transforms.interfaces import ICommandTransform
-
+from plone.transforms.log import log
+from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.transform import PersistentTransform
 from plone.transforms.transform import TransformResult
-
-from plone.transforms.message import PloneMessageFactory as _
+from plone.transforms.utils import bin_search
 
 
 class CommandTransform(PersistentTransform):
@@ -35,6 +36,19 @@ class CommandTransform(PersistentTransform):
 
     command = None
     args = None
+
+    command_available = False
+
+    def __init__(self):
+        if self.command is None:
+            log(DEBUG, "There was no command given for the %s transform." %
+                        self.name)
+        else:
+            if bin_search(self.command):
+                self.command_available = True
+            else:
+                log(DEBUG, "The binary %s could not be found, while trying "
+                           "to use the %s transform." % (self.command, self.name))
 
     def write(self, fd, data):
         # write data to tmp using a file descriptor
@@ -70,10 +84,10 @@ class CommandTransform(PersistentTransform):
 
     def prepare_transform(self, data, infile_data_suffix=False):
         """
-        The transform method takes some data in one of the input formats and
-        returns it in the output format.
+        The method takes some data in one of the input formats and returns
+        a TransformResult with data in the output format.
         """
-        if self.command is None:
+        if not self.command_available:
             return None
 
         try:
