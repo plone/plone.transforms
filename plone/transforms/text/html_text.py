@@ -42,6 +42,8 @@ class HtmlToTextTransform(Transform):
     inputs  = ("text/html",)
     output = "text/plain"
 
+    available = True
+
     def transform(self, data):
         # TODO convert entites with htmlentitydefs.name2codepoint ?
         data = u''.join(data)

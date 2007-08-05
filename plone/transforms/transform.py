@@ -55,6 +55,11 @@ class Transform(object):
               default=u'A skeleton transform.')
     description = None
 
+    available = True
+
+    def __init__(self):
+        super(Transform, self).__init__()
+
     def transform(self, data):
         """
         The transform method takes some data in one of the input formats and
@@ -83,10 +88,15 @@ class PersistentTransform(Persistent):
     inputs = (None, )
     output = None
 
-    name = u'plone.transforms.transform.PersitentTransform'
+    name = u'plone.transforms.transform.PersistentTransform'
     title = _(u'title_skeleton_transform',
               default=u'A skeleton transform.')
     description = None
+
+    available = True
+
+    def __init__(self):
+        super(PersistentTransform, self).__init__()
 
     def transform(self, data):
         """

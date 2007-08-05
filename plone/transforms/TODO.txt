@@ -1,10 +1,6 @@
 TODO
 ====
 
-    - Consider moving the command_available into a Generic available argument
-      on the base transform. When the markdown library is not available this
-      is pretty much the same use-case.
-
     - Consider using popen3 instead of popen4 for the command transform and
       handle the error data separately.
 

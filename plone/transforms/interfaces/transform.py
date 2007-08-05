@@ -33,6 +33,8 @@ class ITransform(Interface):
 
     description = Attribute("A description of the transform.")
 
+    available = Attribute("A boolean indicating if the transform is available.")
+
     def transform(data):
         """
         The transform method takes some data in one of the input formats.

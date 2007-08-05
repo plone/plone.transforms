@@ -26,26 +26,27 @@ class CommandTransform(PersistentTransform):
 
     implements(ICommandTransform)
 
-    inputs = (None, )
-    output = None
-
     name = u'plone.transforms.transform.CommandTransform'
     title = _(u'title_skeleton_command_transform',
               default=u'A skeleton command transform.')
     description = None
 
+    inputs = (None, )
+    output = None
+
+    available = False
+
     command = None
     args = None
 
-    command_available = False
-
     def __init__(self):
+        super(CommandTransform, self).__init__()
         if self.command is None:
             log(DEBUG, "There was no command given for the %s transform." %
                         self.name)
         else:
             if bin_search(self.command):
-                self.command_available = True
+                self.available = True
             else:
                 log(DEBUG, "The binary %s could not be found, while trying "
                            "to use the %s transform." % (self.command, self.name))
@@ -69,8 +70,8 @@ class CommandTransform(PersistentTransform):
             os.write(fd, chunk.encode('utf-8')) 
 
     def initialize_tmpfile(self, data, dir=None):
-        """Create a temporary directory, copy input in a file there
-        return the path of the tmp file.
+        """Create a temporary file and copy input into it.
+        Returns the path of the tmp file.
         """
         if dir is None:
             fd, tmpfilepath = tempfile.mkstemp(text=False)
@@ -87,7 +88,7 @@ class CommandTransform(PersistentTransform):
         The method takes some data in one of the input formats and returns
         a TransformResult with data in the output format.
         """
-        if not self.command_available:
+        if not self.available:
             return None
 
         try:

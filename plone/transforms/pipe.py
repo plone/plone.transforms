@@ -29,11 +29,11 @@ class PipeTransform(CommandTransform):
               default=u'A skeleton pipe transform.')
     description = None
 
+    available = False
+
     command = None
     args = None
     use_stdin = False
-
-    command_available = False
 
     def __init__(self):
         super(PipeTransform, self).__init__()
@@ -46,7 +46,7 @@ class PipeTransform(CommandTransform):
         The transform method takes some data in one of the input formats and
         returns it in the output format.
         """
-        if not self.command_available:
+        if not self.available:
             return None
 
         if not self.use_stdin:

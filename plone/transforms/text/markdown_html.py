@@ -2,9 +2,9 @@
 Uses the http://www.freewisdom.org/projects/python-markdown/ module to do its
 handy work
 
-Based on work from: Tom Lazar <tom@tomster.org> at the archipelago sprint 2006
-
+Based on work from: Tom Lazar <tom@tomster.org> at the archipelago sprint 2006.
 """
+
 from zope.interface import implements
 
 from plone.transforms.interfaces import ITransform
@@ -42,8 +42,15 @@ class MarkdownTransform(Transform):
     inputs  = ("text/x-web-markdown",)
     output = "text/html"
 
+    available = False
+
+    def __init__(self):
+        super(Transform, self).__init__()
+        if HAS_MARKDOWN:
+            self.available = True
+
     def transform(self, data):
-        if not HAS_MARKDOWN:
+        if not self.available:
             return None
         html = markdown(u''.join(data).encode('utf-8'))
         return TransformResult(iter(html.decode('utf-8')))
