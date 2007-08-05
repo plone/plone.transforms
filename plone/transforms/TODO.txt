@@ -37,6 +37,8 @@ TODO
     - Make a new plone.app.transforms package which has GenericSetup export/
       import handlers for the engine configuration.
 
+    - Re-evaluate security settings.
+
     - Port and make more transforms ;)
 
 Not directly package related tasks
