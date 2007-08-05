@@ -4,6 +4,13 @@ Changelog for plone.transforms
 
 plone.transforms - 0.1 Unreleased
 
+    - Initial design and work. Lots of work has been done on the Pastisprint
+      in Aix-en-Provence in August 2007. Thx to atReal and tbenita for
+      organizing it and his whole family for hosting us.
+      
+      Also thanks to Google for its Summer of Code project which sponsored
+      hannosch for his work.
+      [drjnut, hannosch, nouri, tbenita]
+
     - Initial package structure.
       [zopeskel]
-
