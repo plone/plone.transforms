@@ -1,3 +1,5 @@
+from StringIO import StringIO
+
 from zope.interface import implements
 
 from plone.transforms.command import CommandTransform
@@ -43,7 +45,7 @@ class PDFCommandTransform(CommandTransform):
         """
         result = self.prepare_transform(data, infile_data_suffix='.html')
         text = ''.join(result.data).decode('utf-8', 'ignore')
-        result.data = iter(html_bodyfinder(text))
+        result.data = StringIO(html_bodyfinder(text))
         return result
 
 
@@ -75,4 +77,4 @@ class PDFPipeTransform(PipeTransform):
     use_stdin = False
 
     def extractOutput(self, stdout):
-        return html_bodyfinder(stdout.read()).decode('utf-8', 'ignore')
+        return StringIO(html_bodyfinder(stdout.read()).decode('utf-8', 'ignore'))

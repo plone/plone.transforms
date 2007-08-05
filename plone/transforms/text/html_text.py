@@ -2,6 +2,7 @@
 HTML to text transform
 """
 import re
+from StringIO import StringIO
 
 from zope.interface import implements
 
@@ -49,4 +50,4 @@ class HtmlToTextTransform(Transform):
         data = u''.join(data)
         for regex in FILTERS:
             data = regex.sub(u' ', data)
-        return TransformResult(iter(data))
+        return TransformResult(StringIO(data))

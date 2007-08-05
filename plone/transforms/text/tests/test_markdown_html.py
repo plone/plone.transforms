@@ -41,7 +41,7 @@ def testMarkdownTransform():
       <plone.transforms.transform.TransformResult object at ...>
 
       >>> result.data
-      <iterator object at ...>
+      <StringIO.StringIO instance at ...>
 
       >>> u''.join(result.data)
       u'\\n<p>Some simple test text.\\n</p>\\n\\n\\n'

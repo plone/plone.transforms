@@ -1,4 +1,5 @@
 import os
+from cStringIO import StringIO
 
 from zope.interface import implements
 
@@ -39,7 +40,10 @@ class PipeTransform(CommandTransform):
         super(PipeTransform, self).__init__()
 
     def extractOutput(self, stdout):
-        return stdout.read()
+        out = StringIO()
+        out.writelines(stdout)
+        out.seek(0)
+        return out
 
     def transform(self, data):
         """
@@ -67,7 +71,7 @@ class PipeTransform(CommandTransform):
             os.unlink(tmpname)
 
         # Add the errors to the transform result
-        result = TransformResult(iter(out))
+        result = TransformResult(out)
         result.errors = child_stderr.read()
         child_stderr.close()
         return result

@@ -2,6 +2,8 @@ from logging import DEBUG
 import os
 import shutil
 import tempfile
+from cStringIO import StringIO as cStringIO
+from StringIO import StringIO
 
 from zope.interface import implements
 
@@ -115,11 +117,16 @@ class CommandTransform(PersistentTransform):
                 fd = file(tmp, 'rb')
                 # Should we use the infile as the primary output?
                 if infile_data_suffix and primaryname == tmpfile:
-                    result.data = iter(fd.read())
+                    result.data = StringIO()
+                    result.data.writelines(fd)
+                    result.data.seek(0)
                 elif tmp.endswith('error_log'):
                     result.errors = fd.read()
                 else:
-                    result.subobjects[tmpfile] = iter(fd.read())
+                    sub = cStringIO()
+                    sub.writelines(fd)
+                    sub.seek(0)
+                    result.subobjects[tmpfile] = sub
                 fd.close()
                 os.unlink(tmp)
         finally:

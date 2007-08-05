@@ -34,13 +34,12 @@ def testPDFCommandTransform():
     Set up some test text:
 
       >>> filename = input_file_path('test_pdf_html_complex.pdf')
-      >>> handle = file(filename, 'rb')
-      >>> text = iter(handle.read())
-      >>> handle.close()
+      >>> data = file(filename, 'rb')
 
     Now transform the data:
 
-      >>> result = util.transform(text)
+      >>> result = util.transform(data)
+      >>> data.close()
 
     And check the result:
 
@@ -48,7 +47,7 @@ def testPDFCommandTransform():
       <plone.transforms.transform.TransformResult object at ...>
 
       >>> result.data
-      <iterator object at ...>
+      <StringIO.StringIO instance at ...>
 
       >>> 'Plone is awesome' in u''.join(result.data)
       True
@@ -66,7 +65,7 @@ def testPDFCommandTransform():
 
       >>> image1 = result.subobjects[images[0]]
       >>> image1
-      <iterator object at ...>
+      <cStringIO.StringO object at ...>
 
       >>> ''.join(image1).startswith('\x89PNG')
       True
@@ -88,13 +87,12 @@ def testPDFPipeTransform():
     Set up some test text:
 
       >>> filename = input_file_path('test_pdf_html.pdf')
-      >>> handle = file(filename, 'rb')
-      >>> text = iter(handle.read())
-      >>> handle.close()
+      >>> data = file(filename, 'rb')
 
     Now transform the data:
 
-      >>> result = util.transform(text)
+      >>> result = util.transform(data)
+      >>> data.close()
 
     And check the result:
 
@@ -102,7 +100,7 @@ def testPDFPipeTransform():
       <plone.transforms.transform.TransformResult object at ...>
 
       >>> result.data
-      <iterator object at ...>
+      <StringIO.StringIO instance at ...>
 
       >>> beginning = "<A name=1></a>test_pdf_html.py<br>\\n2007-08-03<br>\\n# -*- coding: UTF-8"
       >>> beginning in ''.join(result.data)

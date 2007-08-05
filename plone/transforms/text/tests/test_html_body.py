@@ -5,6 +5,8 @@
 
 import unittest
 
+from StringIO import StringIO
+
 from zope.component import queryUtility
 from zope.component.testing import tearDown
 from zope.testing import doctest
@@ -26,8 +28,9 @@ def testHtmlBodyTransform():
 
     Set up some test text:
 
-      >>> data = iter(u"<html><head><title>Stupid title</title></head>"
-      ...              "<body><p>Some simple test text.\\n</p></body></html>")
+      >>> data = StringIO(u"<html><head><title>Stupid title</title></head>"
+      ...                  "<body><p>Some simple test text.\\n</p>"
+      ...                  "</body></html>")
 
     Now transform the data:
 
@@ -39,7 +42,7 @@ def testHtmlBodyTransform():
       <plone.transforms.transform.TransformResult object at ...>
 
       >>> result.data
-      <iterator object at ...>
+      <StringIO.StringIO instance at ...>
 
       >>> text = u''.join(result.data)
       >>> text

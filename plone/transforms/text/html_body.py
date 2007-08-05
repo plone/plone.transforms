@@ -2,6 +2,7 @@
 HTML body extractor transform
 """
 from zope.interface import implements
+from StringIO import StringIO
 
 from plone.transforms.interfaces import ITransform
 from plone.transforms.message import PloneMessageFactory as _
@@ -35,4 +36,4 @@ class HtmlBodyTransform(Transform):
 
     def transform(self, data):
         data = u''.join(data)
-        return TransformResult(iter(html_bodyfinder(data)))
+        return TransformResult(StringIO(html_bodyfinder(data)))

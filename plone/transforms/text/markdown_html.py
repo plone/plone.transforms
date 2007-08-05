@@ -5,6 +5,8 @@ handy work
 Based on work from: Tom Lazar <tom@tomster.org> at the archipelago sprint 2006.
 """
 
+from StringIO import StringIO
+
 from zope.interface import implements
 
 from plone.transforms.interfaces import ITransform
@@ -53,4 +55,4 @@ class MarkdownTransform(Transform):
         if not self.available:
             return None
         html = markdown(u''.join(data).encode('utf-8'))
-        return TransformResult(iter(html.decode('utf-8')))
+        return TransformResult(StringIO(html.decode('utf-8')))

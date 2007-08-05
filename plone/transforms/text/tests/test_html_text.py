@@ -4,6 +4,7 @@
 """
 
 import unittest
+from StringIO import StringIO
 
 from zope.component import queryUtility
 from zope.component.testing import tearDown
@@ -28,7 +29,7 @@ def testHtmlTextTransform():
 
       >>> text = unicode("\n<html><head><title>Stupid title</title></head><body>"
       ... "<p>Some simple test text héhé.\n</p>\n\n\n</body></html>", 'utf-8')
-      >>> data = iter(text)
+      >>> data = StringIO(text)
 
     Now transform the data:
 
@@ -40,7 +41,7 @@ def testHtmlTextTransform():
       <plone.transforms.transform.TransformResult object at ...>
 
       >>> result.data
-      <iterator object at ...>
+      <StringIO.StringIO instance at ...>
 
       >>> text = u''.join(result.data)
       >>> text.strip()

@@ -16,10 +16,6 @@ TODO
 
     - Add but comment out the (optional) dependencies in the setup.py.
 
-    - Investigate the performance and memory implications of using character
-      based iterators. Consider using cStringIO or StringIO instead of
-      iter(string) for return values or some other specialized class.
-
     - Figure out a way to use a NamedTemporayFile or 'NamedTemporayDirectory'
       for returning subobjects, so these don't need to be loaded into memory.
       Some self cleaning temporary directory (on close and garbage collection)
