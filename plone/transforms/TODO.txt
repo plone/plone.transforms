@@ -35,6 +35,36 @@ TODO
 
     - Port and make more transforms ;)
 
+      Here's the current list of transforms only available in PortalTransforms
+      right now:
+
+        html_to_text
+        html_to_web_intelligent_plain_text
+        image_to_bmp
+        image_to_html
+        image_to_pcx
+        image_to_png
+        image_to_ppm
+        image_to_tiff
+        lynx_dump
+        office_com
+        office_uno
+        office_wvware
+        pdf_to_text
+        python
+        rest
+        rtf_to_html
+        rtf_to_xml
+        safe_html
+        st
+        text_pre_to_html
+        text_to_html
+        textile_to_html
+        web_intelligent_plain_text_to_html
+        word_to_html
+        build_transforms
+        xml
+
 Not directly package related tasks
 ----------------------------------
 
