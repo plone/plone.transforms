@@ -21,7 +21,7 @@ def input_file_path(name):
 
 def testGifTransform():
     """
-    Create a new gif transform:
+    Create a new transform:
 
       >>> from zope.component import queryUtility
       >>> from plone.transforms.interfaces import IPILTransform
@@ -98,7 +98,7 @@ def testGifTransform():
 
 def test_suite():
     return unittest.TestSuite((
-        DocTestSuite('plone.transforms.image.pil'),
+        DocTestSuite('plone.transforms.image.gif'),
         DocTestSuite(setUp=configurationSetUp,
                      tearDown=tearDown,
                      optionflags=doctest.ELLIPSIS | 

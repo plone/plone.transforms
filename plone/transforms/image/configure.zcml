@@ -3,6 +3,12 @@
 
   <utility
       provides="..interfaces.IPILTransform"
+      factory=".bmp.BmpTransform"
+      name="plone.transforms.image.bmp.BmpTransform"
+      permission="zope.Public" />
+
+  <utility
+      provides="..interfaces.IPILTransform"
       factory=".gif.GifTransform"
       name="plone.transforms.image.gif.GifTransform"
       permission="zope.Public" />
@@ -11,6 +17,30 @@
       provides="..interfaces.IPILTransform"
       factory=".jpeg.JpegTransform"
       name="plone.transforms.image.jpeg.JpegTransform"
+      permission="zope.Public" />
+
+  <utility
+      provides="..interfaces.IPILTransform"
+      factory=".pcx.PcxTransform"
+      name="plone.transforms.image.pcx.PcxTransform"
+      permission="zope.Public" />
+
+  <utility
+      provides="..interfaces.IPILTransform"
+      factory=".png.PngTransform"
+      name="plone.transforms.image.png.PngTransform"
+      permission="zope.Public" />
+
+  <utility
+      provides="..interfaces.IPILTransform"
+      factory=".ppm.PpmTransform"
+      name="plone.transforms.image.ppm.PpmTransform"
+      permission="zope.Public" />
+
+  <utility
+      provides="..interfaces.IPILTransform"
+      factory=".tiff.TiffTransform"
+      name="plone.transforms.image.tiff.TiffTransform"
       permission="zope.Public" />
 
 </configure>

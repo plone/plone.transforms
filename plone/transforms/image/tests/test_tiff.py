@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-    PIL Jpeg transform tests.
+    PIL Tiff transform tests.
 """
 
 import unittest
@@ -19,7 +19,7 @@ def input_file_path(name):
     return join(PREFIX, 'input', name)
 
 
-def testJpegTransform():
+def testTiffTransform():
     """
     Create a new transform:
 
@@ -27,9 +27,9 @@ def testJpegTransform():
       >>> from plone.transforms.interfaces import IPILTransform
 
       >>> transform = queryUtility(IPILTransform,
-      ...     name='plone.transforms.image.jpeg.JpegTransform')
+      ...     name='plone.transforms.image.tiff.TiffTransform')
       >>> transform
-      <plone.transforms.image.jpeg.JpegTransform object at ...>
+      <plone.transforms.image.tiff.TiffTransform object at ...>
 
     Set up some test data:
 
@@ -51,11 +51,11 @@ def testJpegTransform():
       <cStringIO.StringO object at ...>
 
       >>> ''.join(result.data)[0:10]
-      '\\xff\\xd8\\xff\\xe0\\x00\\x10JFIF'
+      'II*\\x00\\x08\\x00\\x00\\x00\\t\\x00'
 
     Set up some more test data:
 
-      >>> filename = input_file_path('logo.png')
+      >>> filename = input_file_path('logo.jpg')
       >>> data = file(filename, 'rb')
 
     Try to transform the data:
@@ -70,13 +70,13 @@ def testJpegTransform():
       True
 
       >>> ''.join(result.data)[0:10]
-      '\\xff\\xd8\\xff\\xe0\\x00\\x10JFIF'
+      'II*\\x00\\x08\\x00\\x00\\x00\\t\\x00'
     """
 
 
 def test_suite():
     return unittest.TestSuite((
-        DocTestSuite('plone.transforms.image.jpeg'),
+        DocTestSuite('plone.transforms.image.tiff'),
         DocTestSuite(setUp=configurationSetUp,
                      tearDown=tearDown,
                      optionflags=doctest.ELLIPSIS | 
