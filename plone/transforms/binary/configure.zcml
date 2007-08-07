@@ -3,6 +3,18 @@
 
   <utility
       provides="..interfaces.ICommandTransform"
+      factory=".doc_html_wv.DocHtmlWvCommandTransform"
+      name="plone.transforms.binary.doc_html_wv.DocHtmlWvCommandTransform"
+      permission="zope.Public" />
+
+  <utility
+      provides="..interfaces.ICommandTransform"
+      factory=".doc_txt_wv.DocTxtWvCommandTransform"
+      name="plone.transforms.binary.doc_txt_wv.DocTxtWvCommandTransform"
+      permission="zope.Public" />
+
+  <utility
+      provides="..interfaces.ICommandTransform"
       factory=".pdf_html.PDFCommandTransform"
       name="plone.transforms.binary.pdf_html.PDFCommandTransform"
       permission="zope.Public" />
@@ -11,6 +23,12 @@
       provides="..interfaces.IPipeTransform"
       factory=".pdf_html.PDFPipeTransform"
       name="plone.transforms.binary.pdf_html.PDFPipeTransform"
+      permission="zope.Public" />
+
+  <utility
+      provides="..interfaces.ICommandTransform"
+      factory=".xls_html_xlhtml.XlsHtmlXlhtmlCommandTransform"
+      name="plone.transforms.binary.xls_html_xlhtml.XlsHtmlXlhtmlCommandTransform"
       permission="zope.Public" />
 
 </configure>
