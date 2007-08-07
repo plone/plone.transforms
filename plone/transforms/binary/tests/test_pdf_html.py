@@ -27,11 +27,11 @@ def testPDFCommandTransform():
       >>> from plone.transforms.interfaces import ITransform
 
       >>> util = queryUtility(ITransform,
-      ...            name='plone.transforms.text.pdf_html.PDFCommandTransform')
+      ...            name='plone.transforms.binary.pdf_html.PDFCommandTransform')
       >>> util
       <plone.transforms.binary.pdf_html.PDFCommandTransform object at ...>
 
-    Set up some test text:
+    Set up some test data:
 
       >>> filename = input_file_path('test_pdf_html_complex.pdf')
       >>> data = file(filename, 'rb')
@@ -80,11 +80,11 @@ def testPDFPipeTransform():
       >>> from plone.transforms.interfaces import ITransform
 
       >>> util = queryUtility(ITransform,
-      ...            name='plone.transforms.text.pdf_html.PDFPipeTransform')
+      ...            name='plone.transforms.binary.pdf_html.PDFPipeTransform')
       >>> util
       <plone.transforms.binary.pdf_html.PDFPipeTransform object at ...>
 
-    Set up some test text:
+    Set up some test data:
 
       >>> filename = input_file_path('test_pdf_html.pdf')
       >>> data = file(filename, 'rb')

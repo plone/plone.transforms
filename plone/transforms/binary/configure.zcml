@@ -4,13 +4,13 @@
   <utility
       provides="..interfaces.ICommandTransform"
       factory=".pdf_html.PDFCommandTransform"
-      name="plone.transforms.text.pdf_html.PDFCommandTransform"
+      name="plone.transforms.binary.pdf_html.PDFCommandTransform"
       permission="zope.Public" />
 
   <utility
       provides="..interfaces.IPipeTransform"
       factory=".pdf_html.PDFPipeTransform"
-      name="plone.transforms.text.pdf_html.PDFPipeTransform"
+      name="plone.transforms.binary.pdf_html.PDFPipeTransform"
       permission="zope.Public" />
 
 </configure>

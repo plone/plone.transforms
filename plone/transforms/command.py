@@ -85,6 +85,7 @@ class CommandTransform(PersistentTransform):
         os.close(fd)
         return tmpfilepath
 
+    # XXX Provide more control arguments, like %(outfile)s
     def prepare_transform(self, data, infile_data_suffix=False):
         """
         The method takes some data in one of the input formats and returns
@@ -104,6 +105,9 @@ class CommandTransform(PersistentTransform):
 
             commandline = commandline % { 'infile' : tmpfilepath }
             if os.name=='posix':
+                # TODO: tbenita suggests to remove 1>/dev/null as some commands
+                # return result in flow. Maybe turn this into another subobject
+                # commandline = commandline + ' 2>error_log'
                 commandline = commandline + ' 2>error_log 1>/dev/null'
 
             os.system(commandline)
