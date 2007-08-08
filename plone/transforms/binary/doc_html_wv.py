@@ -1,10 +1,9 @@
-from StringIO import StringIO
-
 from zope.interface import implements
 
 from plone.transforms.command import CommandTransform
 from plone.transforms.interfaces import ICommandTransform
 from plone.transforms.message import PloneMessageFactory as _
+from plone.transforms.stringiter import StringIter
 from plone.transforms.utils import html_bodyfinder
 
 
@@ -41,5 +40,5 @@ class DocHtmlWvCommandTransform(CommandTransform):
         """
         result = self.prepare_transform(data, infile_data_suffix='.html')
         text = ''.join(result.data).decode('utf-8', 'ignore')
-        result.data = StringIO(html_bodyfinder(text))
+        result.data = StringIter(html_bodyfinder(text))
         return result

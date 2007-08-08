@@ -40,9 +40,6 @@ def testMarkdownTransform():
       >>> result
       <plone.transforms.transform.TransformResult object at ...>
 
-      >>> result.data
-      <StringIO.StringIO instance at ...>
-
       >>> u''.join(result.data)
       u'\\n<p>Some simple test text.\\n</p>\\n\\n\\n'
     """

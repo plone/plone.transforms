@@ -1,10 +1,9 @@
-from StringIO import StringIO
-
 from zope.interface import implements
 
 from plone.transforms.interfaces import IPipeTransform
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.pipe import PipeTransform
+from plone.transforms.stringiter import StringIter
 
 
 class XlsHtmlXlhtmlCommandTransform(PipeTransform):
@@ -37,6 +36,6 @@ class XlsHtmlXlhtmlCommandTransform(PipeTransform):
         """Returns the transform result.
         """
         result = self.prepare_transform(data, infile_data_suffix='.html')
-        text = ''.join(result.data).decode('utf-8', 'ignore')
-        result.data = StringIO(text)
+        text = u''.join(result.data).decode('utf-8', 'ignore')
+        result.data = StringIter(text)
         return result

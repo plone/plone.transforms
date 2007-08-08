@@ -46,9 +46,6 @@ def testPDFCommandTransform():
       >>> result
       <plone.transforms.transform.TransformResult object at ...>
 
-      >>> result.data
-      <StringIO.StringIO instance at ...>
-
       >>> 'Plone is awesome' in u''.join(result.data)
       True
 
@@ -64,9 +61,6 @@ def testPDFCommandTransform():
       2
 
       >>> image1 = result.subobjects[images[0]]
-      >>> image1
-      <cStringIO.StringO object at ...>
-
       >>> ''.join(image1).startswith('\x89PNG')
       True
     """
@@ -98,9 +92,6 @@ def testPDFPipeTransform():
 
       >>> result
       <plone.transforms.transform.TransformResult object at ...>
-
-      >>> result.data
-      <StringIO.StringIO instance at ...>
 
       >>> beginning = "<A name=1></a>test_pdf_html.py<br>\\n2007-08-03<br>\\n# -*- coding: UTF-8"
       >>> beginning in ''.join(result.data)

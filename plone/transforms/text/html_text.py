@@ -2,12 +2,12 @@
 HTML to text transform
 """
 import re
-from StringIO import StringIO
 
 from zope.interface import implements
 
 from plone.transforms.interfaces import ITransform
 from plone.transforms.message import PloneMessageFactory as _
+from plone.transforms.stringiter import StringIter
 from plone.transforms.transform import Transform
 from plone.transforms.transform import TransformResult
 
@@ -50,4 +50,4 @@ class HtmlToTextTransform(Transform):
         data = u''.join(data)
         for regex in FILTERS:
             data = regex.sub(u' ', data)
-        return TransformResult(StringIO(data))
+        return TransformResult(StringIter(data))

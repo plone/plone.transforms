@@ -1,5 +1,4 @@
 import re
-from StringIO import StringIO
 
 from zope.interface import implements
 
@@ -8,6 +7,7 @@ from plone.transforms.interfaces import ICommandTransform
 from plone.transforms.interfaces import IPipeTransform
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.pipe import PipeTransform
+from plone.transforms.stringiter import StringIter
 from plone.transforms.utils import html_bodyfinder
 
 REGEXES = (
@@ -59,7 +59,7 @@ class PDFCommandTransform(CommandTransform):
         text = ''.join(result.data).decode('utf-8', 'ignore')
         # workaround because of bug in pdftohtml
         text = self.fixBrokenStyles(text)
-        result.data = StringIO(html_bodyfinder(text))
+        result.data = StringIter(html_bodyfinder(text))
         return result
 
 
@@ -91,4 +91,4 @@ class PDFPipeTransform(PipeTransform):
     use_stdin = False
 
     def extractOutput(self, stdout):
-        return StringIO(html_bodyfinder(stdout.read()).decode('utf-8', 'ignore'))
+        return StringIter(html_bodyfinder(stdout.read()).decode('utf-8', 'ignore'))

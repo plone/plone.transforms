@@ -5,12 +5,11 @@ handy work
 Based on work from: Tom Lazar <tom@tomster.org> at the archipelago sprint 2006.
 """
 
-from StringIO import StringIO
-
 from zope.interface import implements
 
 from plone.transforms.interfaces import ITransform
 from plone.transforms.message import PloneMessageFactory as _
+from plone.transforms.stringiter import StringIter
 from plone.transforms.transform import Transform
 from plone.transforms.transform import TransformResult
 
@@ -55,4 +54,4 @@ class MarkdownTransform(Transform):
         if not self.available:
             return None
         html = markdown(u''.join(data).encode('utf-8'))
-        return TransformResult(StringIO(html.decode('utf-8')))
+        return TransformResult(StringIter(html))

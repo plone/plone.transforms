@@ -6,12 +6,12 @@
 import unittest
 
 from os.path import abspath, dirname, join
-from StringIO import StringIO
 
 from zope.component.testing import tearDown
 from zope.testing import doctest
 from zope.testing.doctestunit import DocTestSuite
 
+from plone.transforms.stringiter import StringIter
 from plone.transforms.tests.utils import configurationSetUp
 
 PREFIX = abspath(dirname(__file__))
@@ -29,7 +29,7 @@ def testEmptyPILTransform():
 
     Set up some test data:
 
-      >>> data = StringIO("I'm not an image.")
+      >>> data = StringIter("I'm not an image.")
 
     Try to transform the data:
 

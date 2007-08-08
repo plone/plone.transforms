@@ -1,10 +1,9 @@
-from StringIO import StringIO
-
 from zope.interface import implements
 
 from plone.transforms.command import CommandTransform
 from plone.transforms.interfaces import ICommandTransform
 from plone.transforms.message import PloneMessageFactory as _
+from plone.transforms.stringiter import StringIter
 
 
 class DocTxtWvCommandTransform(CommandTransform):
@@ -40,5 +39,5 @@ class DocTxtWvCommandTransform(CommandTransform):
         """
         result = self.prepare_transform(data, infile_data_suffix='.text')
         text = u''.join(result.data).decode('utf-8', 'ignore')
-        result.data = StringIO(text)
+        result.data = StringIter(text)
         return result
