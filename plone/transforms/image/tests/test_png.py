@@ -76,7 +76,6 @@ def testPngTransform():
 
 def test_suite():
     return unittest.TestSuite((
-        DocTestSuite('plone.transforms.image.png'),
         DocTestSuite(setUp=configurationSetUp,
                      tearDown=tearDown,
                      optionflags=doctest.ELLIPSIS | 
