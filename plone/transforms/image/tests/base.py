@@ -1,5 +1,3 @@
-from os.path import abspath, dirname
-
 from zope.component import queryUtility
 
 from plone.transforms.image.tests.layer import PILLayer

@@ -7,7 +7,6 @@ from unittest import TestSuite, makeSuite
 
 from plone.transforms.interfaces import ITransform
 from plone.transforms.tests.base import TransformTestCase
-from plone.transforms.tests.base import TransformTestCase
 from plone.transforms.text.markdown_html import MarkdownTransform
 
 
