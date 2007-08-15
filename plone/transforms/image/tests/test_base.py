@@ -5,8 +5,6 @@
 
 import unittest
 
-from zope.testing.doctestunit import DocTestSuite
-
 from plone.transforms.image.bmp import BmpTransform
 from plone.transforms.image.gif import GifTransform
 from plone.transforms.image.jpeg import JpegTransform
@@ -18,16 +16,8 @@ from plone.transforms.image.tiff import TiffTransform
 from plone.transforms.image.tests.base import input_file_path
 from plone.transforms.image.tests.base import PILTransformTestCase
 
-MODULES = [
-    'plone.transforms.image.bmp',
-    'plone.transforms.image.gif',
-    'plone.transforms.image.jpeg',
-    'plone.transforms.image.pcx',
-    'plone.transforms.image.pil',
-    'plone.transforms.image.png',
-    'plone.transforms.image.ppm',
-    'plone.transforms.image.tiff',
-]
+from plone.transforms.interfaces import IPILTransform
+
 
 TRANSFORMS = [
     dict(name='plone.transforms.image.bmp.BmpTransform',
@@ -67,6 +57,7 @@ for transform in TRANSFORMS:
 
         name = transform['name']
         class_ = transform['class_']
+        interface = IPILTransform
         inputfiles = [input_file_path('logo.' + e) for e in
                       'bmp', 'gif', 'jpg', 'pcx', 'png', 'ppm', 'tiff']
         output = transform['output']
@@ -76,8 +67,6 @@ for transform in TRANSFORMS:
 
 def test_suite():
     suite = unittest.TestSuite()
-    for module in MODULES:
-        suite.addTest(DocTestSuite(module=module))
     for test in tests:
         suite.addTest(unittest.makeSuite(test))
     return suite

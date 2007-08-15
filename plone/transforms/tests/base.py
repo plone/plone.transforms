@@ -36,6 +36,9 @@ class TransformTestCase(TestCase):
         result = util.transform(None)
         self.failUnless(result is None)
 
+        result = util.transform(u'foo')
+        self.failUnless(result is None)
+
     def test_transform(self):
         util = queryUtility(ITransform, name=self.name)
         result = util.transform(self.input_)

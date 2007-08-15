@@ -1,39 +1,26 @@
-from os.path import abspath, dirname, join
-from unittest import TestCase
+from os.path import abspath, dirname
 
 from zope.component import queryUtility
 
 from plone.transforms.image.tests.layer import PILLayer
 from plone.transforms.interfaces import ITransform
 from plone.transforms.interfaces import ITransformResult
+from plone.transforms.tests.base import TransformTestCase
+from plone.transforms.tests.base import input_file_path as ifp
 
-PREFIX = abspath(dirname(__file__))
-
-def input_file_path(name, prefix=PREFIX):
-    return join(PREFIX, 'input', name)
+def input_file_path(name):
+    return ifp(__file__, name)
 
 
-class PILTransformTestCase(TestCase):
+class PILTransformTestCase(TransformTestCase):
 
     layer = PILLayer
 
     name = None
     class_ = None
+    interface = None
     inputfiles = None
     output = None
-
-    def test_registration(self):
-        util = queryUtility(ITransform, name=self.name)
-        self.failIf(util is None)
-        self.failUnless(isinstance(util, self.class_))
-
-    def test_invalid_transform(self):
-        util = queryUtility(ITransform, name=self.name)
-        result = util.transform(None)
-        self.failUnless(result is None)
-
-        result = util.transform(u'foo')
-        self.failUnless(result is None)
 
     def test_transform(self):
         util = queryUtility(ITransform, name=self.name)

@@ -50,6 +50,7 @@ def testEmptyPILTransform():
 
 def test_suite():
     return unittest.TestSuite((
+        DocTestSuite('plone.transforms.image.pil'),
         DocTestSuite(setUp=configurationSetUp,
                      tearDown=tearDown,
                      optionflags=doctest.ELLIPSIS | 
