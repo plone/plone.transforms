@@ -53,6 +53,12 @@ class PILTransform(PersistentTransform):
         if not self.available or not self.format:
             return None
 
+        # Invalid input
+        if data is None or isinstance(data, basestring):
+            log(DEBUG, "Invalid input while transforming an Image in %s." %
+                        self.name)
+            return None
+
         result = TransformResult(None)
 
         try:

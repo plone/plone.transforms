@@ -7,7 +7,7 @@ from zope.configuration.xmlconfig import XMLConfig
 import plone.transforms
 
 
-def configurationSetUp(self):
+def configurationSetUp(arg=None):
     setUp()
     XMLConfig('meta.zcml', zope.component)()
     XMLConfig('meta.zcml', zope.app.publisher.browser)()
