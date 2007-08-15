@@ -23,14 +23,7 @@ except ImportError:
 
 
 class MarkdownTransform(Transform):
-    """A transform which transforms markdown text into HTML.
-
-    Let's make sure that this implementation actually fulfills the API.
-
-      >>> from zope.interface.verify import verifyClass
-      >>> verifyClass(ITransform, MarkdownTransform)
-      True
-    """
+    """A transform which transforms markdown text into HTML."""
 
     implements(ITransform)
 

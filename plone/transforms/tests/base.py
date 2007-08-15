@@ -2,6 +2,7 @@ from os.path import abspath, dirname, join
 from unittest import TestCase
 
 from zope.component import queryUtility
+from zope.interface.verify import verifyClass
 
 from plone.transforms.interfaces import ITransform
 from plone.transforms.interfaces import ITransformResult
@@ -18,8 +19,12 @@ class TransformTestCase(TestCase):
 
     name = None
     class_ = None
+    interface = None
     input_ = None
     output = None
+
+    def test_interface(self):
+        verifyClass(self.interface, self.class_)
 
     def test_registration(self):
         util = queryUtility(ITransform, name=self.name)

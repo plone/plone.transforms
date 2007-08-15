@@ -23,14 +23,7 @@ FILTERS = frozenset((SCRIPT_RE, STYLE_RE, HEAD_RE, TEXTFORMAT_RE, TAG_RE))
 
 
 class HtmlToTextTransform(Transform):
-    """A transform which transforms HTML into Text.
-
-    Let's make sure that this implementation actually fulfills the API.
-
-      >>> from zope.interface.verify import verifyClass
-      >>> verifyClass(ITransform, HtmlToTextTransform)
-      True
-    """
+    """A transform which transforms HTML into Text."""
 
     implements(ITransform)
 

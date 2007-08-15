@@ -15,14 +15,7 @@ from plone.transforms.utils import html_bodyfinder
 
 
 class HtmlBodyTransform(Transform):
-    """A transform which extracts the body of a HTML text.
-
-    Let's make sure that this implementation actually fulfills the API.
-
-      >>> from zope.interface.verify import verifyClass
-      >>> verifyClass(ITransform, HtmlBodyTransform)
-      True
-    """
+    """A transform which extracts the body of a HTML text."""
 
     implements(ITransform)
 
