@@ -55,7 +55,7 @@ class MarkdownTransform(Transform):
     def transform(self, data):
         if not self.available:
             return None
-            # Invalid input
+        # Invalid input
         if data is None or isinstance(data, basestring):
             log(DEBUG, "Invalid input while transforming an Image in %s." %
                         self.name)

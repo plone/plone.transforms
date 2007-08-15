@@ -1,10 +1,13 @@
 """
 HTML body extractor transform
 """
+from logging import DEBUG
+
 from zope.interface import implements
 
 from plone.transforms.interfaces import ITransform
 from plone.transforms.message import PloneMessageFactory as _
+from plone.transforms.log import log
 from plone.transforms.stringiter import StringIter
 from plone.transforms.transform import Transform
 from plone.transforms.transform import TransformResult
@@ -35,5 +38,13 @@ class HtmlBodyTransform(Transform):
     output = "text/html"
 
     def transform(self, data):
+        if not self.available:
+            return None
+        # Invalid input
+        if data is None or isinstance(data, basestring):
+            log(DEBUG, "Invalid input while transforming an Image in %s." %
+                        self.name)
+            return None
+
         data = u''.join(data)
         return TransformResult(StringIter(html_bodyfinder(data)))
