@@ -1,12 +1,19 @@
+import zope.component
+from zope.component.testing import setUp
 from zope.component.testing import tearDown
-from plone.transforms.tests.utils import configurationSetUp
+
+from zope.configuration.xmlconfig import XMLConfig
+
+import plone.transforms.image
 
 
 class PILLayer:
 
     @classmethod
     def setUp(cls):
-        configurationSetUp()
+        setUp()
+        XMLConfig('meta.zcml', zope.component)()
+        XMLConfig('configure.zcml', plone.transforms.image)()
 
     @classmethod
     def tearDown(cls):
