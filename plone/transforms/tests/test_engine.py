@@ -38,6 +38,50 @@ def testTransformEngineInstallation():
     """
 
 
+def testAvailableTransforms():
+    """
+    Get the global transform engine:
+
+      >>> engine = queryUtility(ITransformEngine)
+      >>> engine
+      <plone.transforms.engine.TransformEngine object at ...>
+
+      >>> avail = engine.available_transforms()
+      >>> unavail = engine.unavailable_transforms()
+
+      >>> len(avail) + len(unavail) >= 60
+      True
+  """
+
+
+def testTransformPaths():
+    """
+    Get the global transform engine:
+
+      >>> engine = queryUtility(ITransformEngine)
+      >>> engine
+      <plone.transforms.engine.TransformEngine object at ...>
+
+      >>> engine.find_transform(None, None)
+      <plone.transforms.identity.IdentityTransform object at ...>
+
+      >>> engine.find_transform('application/pdf', 'text/html')
+      <plone.transforms.binary.pdf_html.PDFCommandTransform object at ...>
+
+      >>> engine.find_transform('application/pdf', 'text/plain')
+      <plone.transforms.binary.pdf_html.PDFTextTransform object at ...>
+
+      >>> engine.find_transform('text/html', 'text/plain')
+      <plone.transforms.text.html_text.HtmlToTextTransform object at ...>
+
+      >>> engine.find_transform('image/jpeg', 'image/png')
+      <plone.transforms.image.png.PngTransform object at ...>
+
+      >>> engine.find_transform('image/x-ms-bmp', 'image/gif')
+      <plone.transforms.image.gif.GifTransform object at ...>
+  """
+
+
 def test_suite():
     return unittest.TestSuite((
         DocTestSuite('plone.transforms.engine'),
