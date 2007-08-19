@@ -7,6 +7,7 @@ import unittest
 
 from plone.transforms.binary.pdf_html import PDFCommandTransform
 from plone.transforms.binary.pdf_html import PDFPipeTransform
+from plone.transforms.binary.pdf_html import PDFTextTransform
 
 from plone.transforms.binary.tests.base import input_file_path
 from plone.transforms.binary.tests.base import BinaryTransformTestCase
@@ -30,6 +31,13 @@ TRANSFORMS = [
          output=u"""\n<A name=1></a>test_pdf_html.py<br>\n2007-08-03<br>
 # -*- coding: UTF-8 -*-<br>&quot;&quot;&quot;<br>    Tests for the pdf to html transform.<br>&quot;&quot;&quot;<br>
 """
+        ),
+    dict(name='plone.transforms.binary.pdf_html.PDFTextTransform',
+         class_=PDFTextTransform,
+         inputfile='test_pdf_html.pdf',
+         output=u"""
+  test_pdf_html.py \n2007-08-03 
+# -*- coding: UTF-8 -*- &quot;&quot;&quot;     Tests for the pdf to html transform. &quot;&quot;&quot;"""
         ),
 ]
 

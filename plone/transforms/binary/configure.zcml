@@ -26,6 +26,12 @@
       permission="zope.Public" />
 
   <utility
+      provides="..interfaces.ITransformChain"
+      factory=".pdf_html.PDFTextTransform"
+      name="plone.transforms.binary.pdf_html.PDFTextTransform"
+      permission="zope.Public" />
+
+  <utility
       provides="..interfaces.ICommandTransform"
       factory=".xls_html_xlhtml.XlsHtmlXlhtmlCommandTransform"
       name="plone.transforms.binary.xls_html_xlhtml.XlsHtmlXlhtmlCommandTransform"

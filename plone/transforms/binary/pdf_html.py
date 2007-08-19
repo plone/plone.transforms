@@ -2,9 +2,11 @@ import re
 
 from zope.interface import implements
 
+from plone.transforms.chain import PersistentTransformChain
 from plone.transforms.command import CommandTransform
 from plone.transforms.interfaces import ICommandTransform
 from plone.transforms.interfaces import IPipeTransform
+from plone.transforms.interfaces import ITransformChain
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.pipe import PipeTransform
 from plone.transforms.stringiter import StringIter
@@ -19,14 +21,7 @@ REGEXES = (
 
 class PDFCommandTransform(CommandTransform):
     """A transform which transforms pdf into HTML including the images
-    as subobjects.
-
-    Let's make sure that this implementation actually fulfills the API.
-
-      >>> from zope.interface.verify import verifyClass
-      >>> verifyClass(ICommandTransform, PDFCommandTransform)
-      True
-    """
+    as subobjects."""
 
     implements(ICommandTransform)
 
@@ -67,14 +62,7 @@ class PDFCommandTransform(CommandTransform):
 
 
 class PDFPipeTransform(PipeTransform):
-    """A transform which transforms pdf into HTML.
-
-    Let's make sure that this implementation actually fulfills the API.
-
-      >>> from zope.interface.verify import verifyClass
-      >>> verifyClass(IPipeTransform, PDFPipeTransform)
-      True
-    """
+    """A transform which transforms pdf into HTML."""
 
     implements(IPipeTransform)
 
@@ -95,3 +83,20 @@ class PDFPipeTransform(PipeTransform):
 
     def extractOutput(self, stdout):
         return StringIter(html_bodyfinder(stdout.read()).decode('utf-8', 'ignore'))
+
+
+class PDFTextTransform(PersistentTransformChain):
+    """A transform chain which transforms pdf into text."""
+
+    implements(ITransformChain)
+
+    name = u'plone.transforms.binary.pdf_html.PDFTextTransform'
+    title = _(u'title_pdf_text_transform',
+        default=u'PDF to Text only transform')
+
+    def __init__(self):
+        super(PDFTextTransform, self).__init__()
+        self.append(('plone.transforms.interfaces.IPipeTransform',
+                     u'plone.transforms.binary.pdf_html.PDFPipeTransform'))
+        self.append(('plone.transforms.interfaces.ITransform',
+                     u'plone.transforms.text.html_text.HtmlToTextTransform'))

@@ -14,6 +14,7 @@ class BinaryLayer:
         setUp()
         XMLConfig('meta.zcml', zope.component)()
         XMLConfig('configure.zcml', plone.transforms.binary)()
+        XMLConfig('configure.zcml', plone.transforms.text)()
 
     @classmethod
     def tearDown(cls):
