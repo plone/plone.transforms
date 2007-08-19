@@ -6,6 +6,12 @@ TODO
     - Write an iterator based version of the html_bodyfinder, so the pdf to
       html transforms don't need to load the whole file into memory.
 
+    - Use reversed(iter) (needs __len__ and __getitem__) for the html
+      bodyfinder?
+
+    - benchmark the collections.deque for StringIter. In case this works, it's
+      also nice for html_bodyfinder as it allows both leftpop and rightpop.
+
     - Make the configuration screen for the engine and enhance the transform
       finding algorithm.
 
