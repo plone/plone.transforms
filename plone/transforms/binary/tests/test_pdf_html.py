@@ -5,110 +5,50 @@
 
 import unittest
 
-from os.path import join, abspath, dirname
+from plone.transforms.binary.pdf_html import PDFCommandTransform
+from plone.transforms.binary.pdf_html import PDFPipeTransform
 
-from zope.component.testing import tearDown
-from zope.testing import doctest
-from zope.testing.doctestunit import DocTestSuite
+from plone.transforms.binary.tests.base import input_file_path
+from plone.transforms.binary.tests.base import BinaryTransformTestCase
 
-from plone.transforms.tests.utils import configurationSetUp
-
-
-PREFIX = abspath(dirname(__file__))
-
-def input_file_path(name):
-    return join(PREFIX, 'input', name)
-
-def testPDFCommandTransform():
-    """
-    First we get the transform utility.
-
-      >>> from zope.component import queryUtility
-      >>> from plone.transforms.interfaces import ITransform
-
-      >>> util = queryUtility(ITransform,
-      ...            name='plone.transforms.binary.pdf_html.PDFCommandTransform')
-      >>> util
-      <plone.transforms.binary.pdf_html.PDFCommandTransform object at ...>
-
-    Set up some test data:
-
-      >>> filename = input_file_path('test_pdf_html_complex.pdf')
-      >>> data = file(filename, 'rb')
-
-    Now transform the data:
-
-      >>> result = util.transform(data)
-      >>> data.close()
-
-    And check the result:
-
-      >>> result
-      <plone.transforms.transform.TransformResult object at ...>
-
-      >>> 'Plone is awesome' in u''.join(result.data)
-      True
-
-    We got two subobjects:
-
-      >>> len(result.subobjects)
-      2
-
-    Two of them are images:
-
-      >>> images = [f for f in result.subobjects.keys() if f.endswith('png')]
-      >>> len(images)
-      2
-
-      >>> image1 = result.subobjects[images[0]]
-      >>> ''.join(image1).startswith('\x89PNG')
-      True
-    """
+from plone.transforms.interfaces import ITransform
 
 
-def testPDFPipeTransform():
-    """
-    First we get the transform utility.
+TRANSFORMS = [
+    dict(name='plone.transforms.binary.pdf_html.PDFCommandTransform',
+         class_=PDFCommandTransform,
+         inputfile='test_pdf_html_complex.pdf',
+         output=u"""
+<!-- Page 1 -->\n<a name="1"></a>
+<DIV style="position:relative;width:1200;height:900;">
+<STYLE type="text/css">\n<!--\n-->\n</STYLE>
+"""
+        ),
+    dict(name='plone.transforms.binary.pdf_html.PDFPipeTransform',
+         class_=PDFPipeTransform,
+         inputfile='test_pdf_html.pdf',
+         output=u"""\n<A name=1></a>test_pdf_html.py<br>\n2007-08-03<br>
+# -*- coding: UTF-8 -*-<br>&quot;&quot;&quot;<br>    Tests for the pdf to html transform.<br>&quot;&quot;&quot;<br>
+"""
+        ),
+]
 
-      >>> from zope.component import queryUtility
-      >>> from plone.transforms.interfaces import ITransform
+tests = []
+for transform in TRANSFORMS:
 
-      >>> util = queryUtility(ITransform,
-      ...            name='plone.transforms.binary.pdf_html.PDFPipeTransform')
-      >>> util
-      <plone.transforms.binary.pdf_html.PDFPipeTransform object at ...>
+    class BinaryTransformTest(BinaryTransformTestCase):
 
-    Set up some test data:
+        name = transform['name']
+        class_ = transform['class_']
+        interface = ITransform
+        inputfile = input_file_path(transform['inputfile'])
+        output = transform['output']
 
-      >>> filename = input_file_path('test_pdf_html.pdf')
-      >>> data = file(filename, 'rb')
-
-    Now transform the data:
-
-      >>> result = util.transform(data)
-      >>> data.close()
-
-    And check the result:
-
-      >>> result
-      <plone.transforms.transform.TransformResult object at ...>
-
-      >>> beginning = "<A name=1></a>test_pdf_html.py<br>\\n2007-08-03<br>\\n# -*- coding: UTF-8"
-      >>> beginning in ''.join(result.data)
-      True
-    """
+    tests.append(BinaryTransformTest)
 
 
 def test_suite():
-    suite = unittest.TestSuite((
-        DocTestSuite('plone.transforms.binary.pdf_html'),
-        ))
-    suite.addTest(
-        DocTestSuite(setUp=configurationSetUp,
-                     tearDown=tearDown,
-                     optionflags=doctest.ELLIPSIS | 
-                        doctest.NORMALIZE_WHITESPACE))
+    suite = unittest.TestSuite()
+    for test in tests:
+        suite.addTest(unittest.makeSuite(test))
     return suite
-
-if __name__ == '__main__':
-    unittest.main(defaultTest="test_suite")

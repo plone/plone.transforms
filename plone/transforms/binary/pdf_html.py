@@ -30,7 +30,7 @@ class PDFCommandTransform(CommandTransform):
 
     implements(ICommandTransform)
 
-    name = u'plone.transforms.binary.pdf_html.PDFPipeTransform'
+    name = u'plone.transforms.binary.pdf_html.PDFCommandTransform'
 
     title = _(u'title_pdf_html_transform',
         default=u'PDF to HTML transform including images.')
