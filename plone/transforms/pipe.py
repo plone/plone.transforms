@@ -50,7 +50,7 @@ class PipeTransform(CommandTransform):
         The transform method takes some data in one of the input formats and
         returns it in the output format.
         """
-        if not self.available:
+        if self._validate(data) is None:
             return None
 
         if not self.use_stdin:

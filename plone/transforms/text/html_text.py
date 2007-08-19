@@ -1,14 +1,12 @@
 """
 HTML to text transform
 """
-from logging import DEBUG
 import re
 
 from zope.interface import implements
 
 from plone.transforms.interfaces import ITransform
 from plone.transforms.message import PloneMessageFactory as _
-from plone.transforms.log import log
 from plone.transforms.stringiter import StringIter
 from plone.transforms.transform import Transform
 from plone.transforms.transform import TransformResult
@@ -41,12 +39,7 @@ class HtmlToTextTransform(Transform):
     available = True
 
     def transform(self, data):
-        if not self.available:
-            return None
-        # Invalid input
-        if data is None or isinstance(data, basestring):
-            log(DEBUG, "Invalid input while transforming an Image in %s." %
-                        self.name)
+        if self._validate(data) is None:
             return None
 
         # TODO convert entites with htmlentitydefs.name2codepoint ?

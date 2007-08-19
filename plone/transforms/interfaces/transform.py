@@ -6,7 +6,7 @@ class ITransformResult(Interface):
     
     The data argument takes an object providing Python's iterator protocol.
     In case of textual data, the data has to be Unicode. The same applies
-    to the data return value and the values in the subobjects
+    to the data return value and the values in the subobjects.
     """
 
     data = Attribute("The default return data from the transform.")

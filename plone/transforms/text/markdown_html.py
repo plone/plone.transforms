@@ -4,12 +4,9 @@ handy work
 
 Based on work from: Tom Lazar <tom@tomster.org> at the archipelago sprint 2006.
 """
-from logging import DEBUG
-
 from zope.interface import implements
 
 from plone.transforms.interfaces import ITransform
-from plone.transforms.log import log
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.stringiter import StringIter
 from plone.transforms.transform import Transform
@@ -46,12 +43,7 @@ class MarkdownTransform(Transform):
             self.available = True
 
     def transform(self, data):
-        if not self.available:
-            return None
-        # Invalid input
-        if data is None or isinstance(data, basestring):
-            log(DEBUG, "Invalid input while transforming an Image in %s." %
-                        self.name)
+        if self._validate(data) is None:
             return None
 
         html = markdown(u''.join(data).encode('utf-8'))

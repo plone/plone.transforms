@@ -91,9 +91,6 @@ class CommandTransform(PersistentTransform):
         The method takes some data in one of the input formats and returns
         a TransformResult with data in the output format.
         """
-        if not self.available:
-            return None
-
         try:
             tmpdirpath = tempfile.mkdtemp()
             tmpfilepath = self.initialize_tmpfile(data, dir=tmpdirpath)
@@ -144,5 +141,8 @@ class CommandTransform(PersistentTransform):
         You can then pick the default content from the result object and put
         it into the default data.
         """
+        if self._validate(data) is None:
+            return None
+
         result = self.prepare_transform(data)
         return result

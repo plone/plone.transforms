@@ -1,8 +1,10 @@
+from logging import DEBUG
 from persistent import Persistent
 from zope.interface import implements
 
 from plone.transforms.interfaces import ITransform
 from plone.transforms.interfaces import ITransformResult
+from plone.transforms.log import log
 
 from plone.transforms.message import PloneMessageFactory as _
 
@@ -62,19 +64,37 @@ class Transform(object):
     def __init__(self):
         super(Transform, self).__init__()
 
-    def transform(self, data):
+    def _validate(self, data):
+        """Checks if the transform itself is available and the passed in data
+        is of the right type.
         """
-        The transform method takes some data in one of the input formats and
+        if not self.available:
+            return None
+        # Invalid input
+        if data is None:
+            log(DEBUG, "No input while transforming data in %s." % self.name)
+            return None
+        elif isinstance(data, basestring):
+            log(DEBUG, "Invalid input while transforming data in %s." %
+                        self.name)
+            return None
+        return True
+
+    def transform(self, data):
+        """The transform method takes some data in one of the input formats and
         returns it in the output format.
-        
+
         The data argument takes an object providing Python's iterator protocol.
         In case of textual data, the data has to be Unicode. The same applies
         to the return value.
         """
+        if self._validate(data) is None:
+            return None
+
         return TransformResult(data)
 
 
-class PersistentTransform(Persistent):
+class PersistentTransform(Transform, Persistent):
     """A persistent transform is an utility with optional configuration
     information.
 
@@ -96,17 +116,3 @@ class PersistentTransform(Persistent):
     description = None
 
     available = True
-
-    def __init__(self):
-        super(PersistentTransform, self).__init__()
-
-    def transform(self, data):
-        """
-        The transform method takes some data in one of the input formats and
-        returns it in the output format.
-
-        The data argument takes an object providing Python's iterator protocol.
-        In case of textual data, the data has to be Unicode. The same applies
-        to the return value.
-        """
-        return TransformResult(data)

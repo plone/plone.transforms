@@ -50,17 +50,13 @@ class PILTransform(PersistentTransform):
             self.available = True
 
     def transform(self, data):
-        if not self.available or not self.format:
+        if self._validate(data) is None:
             return None
 
-        # Invalid input
-        if data is None or isinstance(data, basestring):
-            log(DEBUG, "Invalid input while transforming an Image in %s." %
-                        self.name)
+        if self.format is None:
             return None
 
         result = TransformResult(None)
-
         try:
             # If we already got a file-like iterator use it
             if isinstance(data, file):
@@ -93,5 +89,4 @@ class PILTransform(PersistentTransform):
             orig.close()
 
         result.data = transformed
-
         return result

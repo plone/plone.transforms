@@ -37,6 +37,9 @@ class DocTxtWvCommandTransform(CommandTransform):
         You can then pick the default content from the result object and put
         it into the default data.
         """
+        if self._validate(data) is None:
+            return None
+
         result = self.prepare_transform(data, infile_data_suffix='.text')
         text = u''.join(result.data).decode('utf-8', 'ignore')
         result.data = StringIter(text)
