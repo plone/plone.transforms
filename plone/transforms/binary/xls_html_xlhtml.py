@@ -7,14 +7,7 @@ from plone.transforms.stringiter import StringIter
 
 
 class XlsHtmlXlhtmlCommandTransform(PipeTransform):
-    """A transform which transforms xls into HTML.
-
-    Let's make sure that this implementation actually fulfills the API.
-
-      >>> from zope.interface.verify import verifyClass
-      >>> verifyClass(IPipeTransform, XlsHtmlXlhtmlCommandTransform)
-      True
-    """
+    """A transform which transforms xls into HTML."""
 
     implements(IPipeTransform)
 

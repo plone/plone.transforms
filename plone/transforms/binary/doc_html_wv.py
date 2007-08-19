@@ -10,12 +10,6 @@ from plone.transforms.utils import html_bodyfinder
 class DocHtmlWvCommandTransform(CommandTransform):
     """A transform which transforms doc into HTML including the images
     as subobjects.
-
-    Let's make sure that this implementation actually fulfills the API.
-
-      >>> from zope.interface.verify import verifyClass
-      >>> verifyClass(ICommandTransform, DocHtmlWvCommandTransform)
-      True
     """
 
     implements(ICommandTransform)

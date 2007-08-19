@@ -8,12 +8,6 @@ from plone.transforms.stringiter import StringIter
 
 class DocTxtWvCommandTransform(CommandTransform):
     """A transform which transforms doc into Text.
-
-    Let's make sure that this implementation actually fulfills the API.
-
-      >>> from zope.interface.verify import verifyClass
-      >>> verifyClass(ICommandTransform, DocTxtWvCommandTransform)
-      True
     """
 
     implements(ICommandTransform)
