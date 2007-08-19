@@ -24,6 +24,9 @@ class BinaryTransformTestCase(TransformTestCase):
         util = queryUtility(ITransform, name=self.name)
         result = None
 
+        if not util.available:
+            return
+
         try:
             data = file(self.inputfile, 'rb')
             result = util.transform(data)
