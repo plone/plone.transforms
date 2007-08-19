@@ -31,6 +31,9 @@ class TransformChain(list):
 
     available = True
 
+    def __repr__(self):
+        return '<%s object at %s>' % (str(self.name), id(self))
+
     @property
     def inputs(self):
         """
@@ -116,6 +119,9 @@ class PersistentTransformChain(PersistentList):
     description = None
 
     available = True
+
+    def __repr__(self):
+        return '<%s object at %s>' % (str(self.name), id(self))
 
     @property
     def inputs(self):
