@@ -18,12 +18,17 @@ TRANSFORMS = [
     dict(name='plone.transforms.binary.doc_html_wv.DocHtmlWvCommandTransform',
          class_=DocHtmlWvCommandTransform,
          inputfile='test.doc',
-         output=u""""""
+         output=u"""
+\n<!--Section Begins--><br>\n\n\n
+<p><div name="Default" align="left" style="  padding: 0.00mm 0.00mm 0.00mm 0.00mm; "> 
+\n<p style="text-indent: 0.00mm; text-align: left; line-height: 4.166667mm; color: Black; background-color: White; ">
+how odd: blank named file in directory
+"""
         ),
     dict(name='plone.transforms.binary.doc_txt_wv.DocTxtWvCommandTransform',
          class_=DocTxtWvCommandTransform,
          inputfile='test.doc',
-         output=u""""""
+         output=u"   how odd: blank named file in directory"
         ),
 ]
 
