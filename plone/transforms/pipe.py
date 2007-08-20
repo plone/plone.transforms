@@ -46,10 +46,7 @@ class PipeTransform(CommandTransform):
         return out
 
     def transform(self, data):
-        """
-        The transform method takes some data in one of the input formats and
-        returns it in the output format.
-        """
+        """Returns the transform result."""
         if self._validate(data) is None:
             return None
 

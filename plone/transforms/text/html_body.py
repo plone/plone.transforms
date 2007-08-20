@@ -28,6 +28,7 @@ class HtmlBodyTransform(Transform):
     output = "text/html"
 
     def transform(self, data):
+        """Returns the transform result."""
         if self._validate(data) is None:
             return None
 

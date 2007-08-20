@@ -115,11 +115,7 @@ class TransformEngine(object):
         return None
 
     def transform(self, data, input_mimetype, output_mimetype):
-        """
-        The transform method takes some data in one of the input formats.
-        It returns either an ITransformResult in the output format or None
-        if an error occurred.
-        """
+        """Returns the transform result."""
         transform = self.find_transform(input_mimetype, output_mimetype)
         if transform is None:
             return None
@@ -139,7 +135,7 @@ class ConfigurableTransformEngine(PersistentList, TransformEngine):
     Let's make sure that this implementation actually fulfills the API.
 
       >>> from zope.interface.verify import verifyClass
-      >>> verifyClass(IConfigurableTransformEngine, PersistentTransformEngine)
+      >>> verifyClass(IConfigurableTransformEngine, ConfigurableTransformEngine)
       True
     """
 

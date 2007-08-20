@@ -43,6 +43,7 @@ class MarkdownTransform(Transform):
             self.available = True
 
     def transform(self, data):
+        """Returns the transform result."""
         if self._validate(data) is None:
             return None
 

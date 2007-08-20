@@ -54,14 +54,7 @@ class AbstractTransformChain:
         return last.output
 
     def transform(self, data):
-        """
-        The transform method takes some data in one of the input formats and
-        returns it in the output format.
-        
-        The data argument takes an object providing Python's iterator protocol.
-        In case of textual data, the data has to be Unicode. The same applies
-        to the return value.
-        """
+        """Returns the transform result."""
         old_transform = None
         for transform_spec in self:
             interface_name, name = transform_spec

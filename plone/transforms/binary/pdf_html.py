@@ -49,10 +49,7 @@ class PDFCommandTransform(CommandTransform):
         return html
 
     def transform(self, data):
-        """Prepare the transform result and hand back everything as subobjects.
-        You can then pick the default content from the result object and put
-        it into the default data.
-        """
+        """Returns the transform result."""
         if self._validate(data) is None:
             return None
 
