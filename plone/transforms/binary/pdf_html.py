@@ -6,6 +6,7 @@ from plone.transforms.chain import PersistentTransformChain
 from plone.transforms.command import CommandTransform
 from plone.transforms.interfaces import ICommandTransform
 from plone.transforms.interfaces import IPipeTransform
+from plone.transforms.interfaces import IRankedTransform
 from plone.transforms.interfaces import ITransformChain
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.pipe import PipeTransform
@@ -23,7 +24,7 @@ class PDFCommandTransform(CommandTransform):
     """A transform which transforms pdf into HTML including the images
     as subobjects."""
 
-    implements(ICommandTransform)
+    implements(ICommandTransform, IRankedTransform)
 
     name = u'plone.transforms.binary.pdf_html.PDFCommandTransform'
 
@@ -39,6 +40,8 @@ class PDFCommandTransform(CommandTransform):
 
     command = 'pdftohtml'
     args = "%(infile)s -q -c -noframes -enc UTF-8"
+
+    rank = 50
 
     def fixBrokenStyles(self, html):
         for rex, subtxt in REGEXES:
@@ -64,7 +67,7 @@ class PDFCommandTransform(CommandTransform):
 class PDFPipeTransform(PipeTransform):
     """A transform which transforms pdf into HTML."""
 
-    implements(IPipeTransform)
+    implements(IPipeTransform, IRankedTransform)
 
     name = u'plone.transforms.binary.pdf_html.PDFPipeTransform'
 
@@ -80,6 +83,8 @@ class PDFPipeTransform(PipeTransform):
     command = 'pdftohtml'
     args = "%(infile)s -q -noframes -stdout -enc UTF-8"
     use_stdin = False
+
+    rank = 100
 
     def extractOutput(self, stdout):
         return StringIter(html_bodyfinder(stdout.read()).decode('utf-8', 'ignore'))

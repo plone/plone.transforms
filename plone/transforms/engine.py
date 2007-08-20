@@ -4,6 +4,7 @@ from persistent import Persistent
 from zope.component import getSiteManager
 from zope.interface import implements
 
+from plone.transforms.interfaces import IRankedTransform
 from plone.transforms.interfaces import ITransform
 from plone.transforms.interfaces import ITransformEngine
 from plone.transforms.log import log
@@ -93,9 +94,16 @@ class TransformEngine(object):
                 if spec[1] == output_mimetype:
                     paths.append(spec[2])
 
-        # Sort by path length
+        # Sort by some criteria
         if len(paths) > 0:
-            paths.sort()
+            def _criteria(value):
+                ranked = IRankedTransform.providedBy(value)
+                rank = 100
+                if ranked:
+                    rank = value.rank
+                return rank
+
+            paths.sort(key=_criteria)
             return paths[0]
 
         log(DEBUG, "No transforms could be found to transform the '%s' "

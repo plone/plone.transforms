@@ -44,3 +44,12 @@ class ITransform(Interface):
         It returns either an ITransformResult in the output format or None
         if an error occurred.
         """
+
+class IRankedTransform(Interface):
+    """A transformation utility with a score value determining its
+    rank when compared to another transform.
+    
+    Lower rank number means higher priority.
+    """
+
+    rank = Attribute("An integer value.")
