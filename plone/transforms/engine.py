@@ -88,7 +88,7 @@ class TransformEngine(object):
         matches = [spec for spec in available if spec[0] == input_mimetype]
         paths = []
         if len(matches) > 0:
-            # XXX Add recursive algorithms, so non-direct matches are found as well
+            # TODO Add recursive algorithms, so non-direct matches are found as well
             for spec in matches:
                 if spec[1] == output_mimetype:
                     paths.append(spec[2])
