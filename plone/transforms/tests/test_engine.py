@@ -126,6 +126,23 @@ def testConfigurableTransformEngine():
       >>> engine
       <ConfigurableTransformEngine object at ...>
 
+      >>> engine.available_transforms()
+      []
+
+      >>> engine.append(('plone.transforms.interfaces.ITransform',
+      ...                'plone.transforms.identity.IdentityTransform'))
+
+      >>> engine.available_transforms()
+      [(None, None, <plone.transforms.identity.IdentityTransform object at ...>)]
+
+      >>> engine.find_transform(None, None)
+      <plone.transforms.identity.IdentityTransform object at ...>
+
+      >>> engine.pop()
+      ('...ITransform', 'plone.transforms.identity.IdentityTransform')
+
+      >>> engine.available_transforms()
+      []
     """
 
 
