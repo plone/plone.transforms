@@ -12,13 +12,10 @@ TODO
     - benchmark the collections.deque for StringIter. In case this works, it's
       also nice for html_bodyfinder as it allows both leftpop and rightpop.
 
-    - Make the configuration screen for the engine and enhance the transform
-      finding algorithm.
+    - Make the configuration screen for the engine.
 
     - Add an example of a TTW configurable transform and provide a base helper
       class for those (probably schema and formlib-based).
-
-    - Add but comment out the (optional) dependencies in the setup.py.
 
     - Figure out a way to use a NamedTemporayFile or 'NamedTemporayDirectory'
       for returning subobjects, so these don't need to be loaded into memory.
