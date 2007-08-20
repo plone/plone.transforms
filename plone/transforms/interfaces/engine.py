@@ -1,3 +1,4 @@
+from zope.interface import Attribute
 from zope.interface import Interface
 
 
@@ -34,3 +35,12 @@ class ITransformEngine(Interface):
         It returns either an ITransformResult in the output format or None
         if an error occurred.
         """
+
+
+class IConfigurableTransformEngine(ITransformEngine):
+    """
+    A transformation engine, which provides helper methods to transform data.
+    
+    It bases its transform finding algorithm on the explicitely set
+    configuration information stored in itself.
+    """

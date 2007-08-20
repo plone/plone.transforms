@@ -10,6 +10,7 @@ from zope.component.testing import tearDown
 from zope.testing import doctest
 from zope.testing.doctestunit import DocTestSuite
 
+from plone.transforms.engine import PersistentTransformEngine
 from plone.transforms.interfaces import ITransformEngine
 
 from plone.transforms.tests.utils import configurationSetUp
@@ -35,6 +36,18 @@ def testTransformEngineInstallation():
 
       >>> u''.join(result.data)
       u'Some simple test text.'
+
+    Now try with a configurable engine:
+
+      >>> engine = PersistentTransformEngine()
+      >>> engine
+      <PersistentTransformEngine object at ...>
+
+    Try to transform the data:
+
+      >>> result = engine.transform(data, None, None)
+      >>> result is None
+      True
     """
 
 
@@ -51,6 +64,18 @@ def testAvailableTransforms():
 
       >>> len(avail) + len(unavail) >= 60
       True
+
+    Now try with a configurable engine:
+
+      >>> engine = PersistentTransformEngine()
+      >>> engine
+      <PersistentTransformEngine object at ...>
+
+      >>> avail = engine.available_transforms()
+      >>> unavail = engine.unavailable_transforms()
+
+      >>> len(avail) + len(unavail)
+      0
   """
 
 
@@ -79,6 +104,18 @@ def testTransformPaths():
 
       >>> engine.find_transform('image/x-ms-bmp', 'image/gif')
       <plone.transforms.image.gif.GifTransform object at ...>
+
+    Now try with a configurable engine:
+
+      >>> engine = PersistentTransformEngine()
+      >>> engine
+      <PersistentTransformEngine object at ...>
+
+      >>> engine.find_transform(None, None) is None
+      True
+
+      >>> engine.find_transform('application/pdf', 'text/html') is None
+      True
   """
 
 

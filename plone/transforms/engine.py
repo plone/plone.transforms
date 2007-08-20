@@ -1,9 +1,12 @@
 from logging import DEBUG
-from persistent import Persistent
+from persistent.list import PersistentList
 
+from zope.component import queryUtility
 from zope.component import getSiteManager
+from zope.dottedname.resolve import resolve
 from zope.interface import implements
 
+from plone.transforms.interfaces import IConfigurableTransformEngine
 from plone.transforms.interfaces import IRankedTransform
 from plone.transforms.interfaces import ITransform
 from plone.transforms.interfaces import ITransformEngine
@@ -124,7 +127,55 @@ class TransformEngine(object):
         return transform.transform(data)
 
 
-class PersistentTransformEngine(Persistent, TransformEngine):
+class PersistentTransformEngine(PersistentList, TransformEngine):
+    """
+    A transformation engine, which provides helper methods to transform data.
+    
+    It bases its transform finding algorithm on the explicitely set
+    configuration information stored in itself.
+
+    It stores a list of (interface, name) tuples.
+
+    Let's make sure that this implementation actually fulfills the API.
+
+      >>> from zope.interface.verify import verifyClass
+      >>> verifyClass(IConfigurableTransformEngine, PersistentTransformEngine)
+      True
+    """
+
+    implements(IConfigurableTransformEngine)
 
     def __init__(self):
-      self.selected_transforms = {}
+        super(PersistentTransformEngine, self).__init__()
+
+    def __repr__(self):
+        return '<PersistentTransformEngine object at %s>' % id(self)
+
+    def unavailable_transforms(self):
+        """
+        Returns a list of all currently registered but unavailable transforms.
+        The list entries are triples of
+        (input mimetype, output mimetype, transform).
+        """
+        unavailable = []
+        for interface_name, name in self:
+            interface = resolve(interface_name)
+            transform = queryUtility(interface, name=name)
+            if transform is not None and not transform.available:
+                for input_ in transform.inputs:
+                    unavailable.append((input_, transform.output, transform))
+        return unavailable
+
+    def available_transforms(self):
+        """
+        Returns a list of all available transforms. The list entries are
+        triples of (input mimetype, output mimetype, transform).
+        """
+        available = []
+        for interface_name, name in self:
+            interface = resolve(interface_name)
+            transform = queryUtility(interface, name=name)
+            if transform is not None and transform.available:
+                for input_ in transform.inputs:
+                    available.append((input_, transform.output, transform))
+        return available
