@@ -127,7 +127,7 @@ class TransformEngine(object):
         return transform.transform(data)
 
 
-class PersistentTransformEngine(PersistentList, TransformEngine):
+class ConfigurableTransformEngine(PersistentList, TransformEngine):
     """
     A transformation engine, which provides helper methods to transform data.
     
@@ -146,10 +146,10 @@ class PersistentTransformEngine(PersistentList, TransformEngine):
     implements(IConfigurableTransformEngine)
 
     def __init__(self):
-        super(PersistentTransformEngine, self).__init__()
+        super(ConfigurableTransformEngine, self).__init__()
 
     def __repr__(self):
-        return '<PersistentTransformEngine object at %s>' % id(self)
+        return '<ConfigurableTransformEngine object at %s>' % id(self)
 
     def unavailable_transforms(self):
         """

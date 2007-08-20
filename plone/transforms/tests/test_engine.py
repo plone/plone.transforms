@@ -10,7 +10,7 @@ from zope.component.testing import tearDown
 from zope.testing import doctest
 from zope.testing.doctestunit import DocTestSuite
 
-from plone.transforms.engine import PersistentTransformEngine
+from plone.transforms.engine import ConfigurableTransformEngine
 from plone.transforms.interfaces import ITransformEngine
 
 from plone.transforms.tests.utils import configurationSetUp
@@ -39,9 +39,9 @@ def testTransformEngineInstallation():
 
     Now try with a configurable engine:
 
-      >>> engine = PersistentTransformEngine()
+      >>> engine = ConfigurableTransformEngine()
       >>> engine
-      <PersistentTransformEngine object at ...>
+      <ConfigurableTransformEngine object at ...>
 
     Try to transform the data:
 
@@ -67,16 +67,16 @@ def testAvailableTransforms():
 
     Now try with a configurable engine:
 
-      >>> engine = PersistentTransformEngine()
+      >>> engine = ConfigurableTransformEngine()
       >>> engine
-      <PersistentTransformEngine object at ...>
+      <ConfigurableTransformEngine object at ...>
 
       >>> avail = engine.available_transforms()
       >>> unavail = engine.unavailable_transforms()
 
       >>> len(avail) + len(unavail)
       0
-  """
+    """
 
 
 def testTransformPaths():
@@ -107,16 +107,26 @@ def testTransformPaths():
 
     Now try with a configurable engine:
 
-      >>> engine = PersistentTransformEngine()
+      >>> engine = ConfigurableTransformEngine()
       >>> engine
-      <PersistentTransformEngine object at ...>
+      <ConfigurableTransformEngine object at ...>
 
       >>> engine.find_transform(None, None) is None
       True
 
       >>> engine.find_transform('application/pdf', 'text/html') is None
       True
-  """
+    """
+
+def testConfigurableTransformEngine():
+    """
+    Create a configurable engine:
+
+      >>> engine = ConfigurableTransformEngine()
+      >>> engine
+      <ConfigurableTransformEngine object at ...>
+
+    """
 
 
 def test_suite():
