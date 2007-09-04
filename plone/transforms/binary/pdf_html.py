@@ -83,7 +83,7 @@ class PDFPipeTransform(PipeTransform):
 
     rank = 100
 
-    def extractOutput(self, stdout):
+    def extract_output(self, stdout):
         return StringIter(html_bodyfinder(stdout.read()).decode('utf-8', 'ignore'))
 
 

@@ -11,7 +11,10 @@ class ICommandTransform(ITransform):
 
     args = Attribute("The arguments for the command line tool.")
 
-    def initialize_tmpfile(data):
+    def initialize_tmpfile(data, directory=None):
         """Create a temporary file and copy input into it.
         Returns the path of the tmp file.
+
+        The temporary directory in which the file is being created can
+        optionally be specified via the directory argument.
         """

@@ -58,28 +58,31 @@ class CommandTransform(PersistentTransform):
         # write data to tmp using a file descriptor
         firstchunk = data.next()
         if isinstance(firstchunk, unicode):
-            self.writeText(fd, firstchunk, data)
+            self.write_text(fd, firstchunk, data)
         else:
-            self.writeBinary(fd, firstchunk, data)
+            self.write_binary(fd, firstchunk, data)
 
-    def writeBinary(self, fd, firstchunk, data):
+    def write_binary(self, fd, firstchunk, data):
         os.write(fd, firstchunk)
         for chunk in data:
             os.write(fd, chunk)
 
-    def writeText(self, fd, firstchunk, data):
+    def write_text(self, fd, firstchunk, data):
         os.write(fd, firstchunk.encode('utf-8'))
         for chunk in data:
             os.write(fd, chunk.encode('utf-8')) 
 
-    def initialize_tmpfile(self, data, dir=None):
+    def initialize_tmpfile(self, data, directory=None):
         """Create a temporary file and copy input into it.
         Returns the path of the tmp file.
+
+        The temporary directory in which the file is being created can
+        optionally be specified via the directory argument.
         """
-        if dir is None:
+        if directory is None:
             fd, tmpfilepath = tempfile.mkstemp(text=False)
         else:
-            fd, tmpfilepath = tempfile.mkstemp(text=False, dir=dir)
+            fd, tmpfilepath = tempfile.mkstemp(text=False, dir=directory)
         # write data to tmp using a file descriptor
         self.write(fd, data)
         # close it so the other process can read it
@@ -94,7 +97,7 @@ class CommandTransform(PersistentTransform):
         """
         try:
             tmpdirpath = tempfile.mkdtemp()
-            tmpfilepath = self.initialize_tmpfile(data, dir=tmpdirpath)
+            tmpfilepath = self.initialize_tmpfile(data, directory=tmpdirpath)
             if infile_data_suffix:
                 primaryname = os.path.basename(tmpfilepath) + infile_data_suffix
 

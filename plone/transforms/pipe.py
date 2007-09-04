@@ -39,7 +39,7 @@ class PipeTransform(CommandTransform):
     def __init__(self):
         super(PipeTransform, self).__init__()
 
-    def extractOutput(self, stdout):
+    def extract_output(self, stdout):
         out = StringIO()
         out.writelines(stdout)
         out.seek(0)
@@ -61,7 +61,7 @@ class PipeTransform(CommandTransform):
             self.write(child_stdin, data)
 
         status = child_stdin.close()
-        out = self.extractOutput(child_stdout)
+        out = self.extract_output(child_stdout)
         child_stdout.close()
 
         if not self.use_stdin:

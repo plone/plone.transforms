@@ -3,13 +3,14 @@ from zope.interface import Attribute, Interface
 
 class ITransformResult(Interface):
     """Data stream, is the result of a transform.
-    
+
     The data argument takes an object providing Python's iterator protocol.
     In case of textual data, the data has to be Unicode. The same applies
     to the data return value and the values in the subobjects.
     """
 
-    data = Attribute("The default return data from the transform.")
+    data = Attribute("The default return data from the transform. Needs to "
+                     "comply to Python's iterator protocol.")
 
     metadata = Attribute("The metadata for the result as a dictonary.")
 
@@ -36,7 +37,9 @@ class ITransform(Interface):
 
     description = Attribute("A description of the transform.")
 
-    available = Attribute("A boolean indicating if the transform is available.")
+    available = Attribute("A boolean indicating if the transform is available."
+                          "This is often set to false at runtime, when an "
+                          "external dependency is not available.")
 
     def transform(data):
         """
