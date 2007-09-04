@@ -18,9 +18,6 @@ class AbstractTransformChain:
 
     available = True
 
-    def __repr__(self):
-        return '<%s object at %s>' % (str(self.name), id(self))
-
     @property
     def inputs(self):
         """
@@ -55,6 +52,9 @@ class AbstractTransformChain:
 
     def transform(self, data):
         """Returns the transform result."""
+        metadata = None
+        subobjects = None
+        errors = None
         old_transform = None
         for transform_spec in self:
             interface_name, name = transform_spec
@@ -75,13 +75,16 @@ class AbstractTransformChain:
             result = transform.transform(data)
             if result is None:
                 return None
-            # Get the main data from the result
+            # Get the data from the result
             data = result.data
+            metadata = result.metadata
+            subobjects = result.subobjects
+            errors = result.errors
             old_transform = transform
-        return TransformResult(data)
+        return TransformResult(data, metadata, subobjects, errors)
 
 
-class TransformChain(AbstractTransformChain, list):
+class TransformChain(list, AbstractTransformChain):
     """A transform chain is an utility with optional configuration information.
     
     It stores a list of (interface_name, name) tuples which identify transforms.
@@ -103,8 +106,11 @@ class TransformChain(AbstractTransformChain, list):
 
     available = True
 
+    def __repr__(self):
+        return '<%s object at %s>' % (str(self.name), id(self))
 
-class PersistentTransformChain(AbstractTransformChain, PersistentList):
+
+class PersistentTransformChain(PersistentList, AbstractTransformChain):
     """A persistent transform chain
 
     Let's make sure that this implementation actually fulfills the API.
@@ -122,3 +128,6 @@ class PersistentTransformChain(AbstractTransformChain, PersistentList):
     description = None
 
     available = True
+
+    def __repr__(self):
+        return '<%s object at %s>' % (str(self.name), id(self))

@@ -19,6 +19,7 @@ class BinaryTransformTestCase(TransformTestCase):
     interface = None
     inputfile = None
     output = None
+    subobjects = None
 
     def test_transform(self):
         util = queryUtility(ITransform, name=self.name)
@@ -43,3 +44,7 @@ class BinaryTransformTestCase(TransformTestCase):
         # Check the beginning of the file only
         result_string = ''.join(result.data)
         self.failUnless(result_string.startswith(self.output))
+
+        # Check the subobjects
+        if self.subobjects is not None:
+            self.failUnless(self.subobjects==len(result.subobjects))

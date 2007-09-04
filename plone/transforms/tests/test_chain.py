@@ -32,6 +32,8 @@ class ReverseTransform(Transform):
     title = u"Reversing transform."
 
     def transform(self, data):
+        if data is None:
+            return None
         temp = [d for d in data]
         temp.reverse()
         return TransformResult((c for c in temp))
@@ -268,7 +270,7 @@ def testReversingSplitChain():
       >>> chain.name = u'ReverseSplitChain'
       >>> chain.title = u'Reversing and splitting chain'
 
-    Put in one transforms:
+    Put in two transforms:
 
       >>> reverse = ('plone.transforms.interfaces.ITransform', 
       ...            'plone.transforms.test_chain.ReverseTransform')

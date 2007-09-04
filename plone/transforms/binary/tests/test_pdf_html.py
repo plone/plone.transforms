@@ -23,21 +23,24 @@ TRANSFORMS = [
 <!-- Page 1 -->\n<a name="1"></a>
 <DIV style="position:relative;width:1200;height:900;">
 <STYLE type="text/css">\n<!--\n-->\n</STYLE>
-"""
+""",
+         subobjects=2
         ),
     dict(name='plone.transforms.binary.pdf_html.PDFPipeTransform',
          class_=PDFPipeTransform,
          inputfile='test_pdf_html.pdf',
          output=u"""\n<A name=1></a>test_pdf_html.py<br>\n2007-08-03<br>
 # -*- coding: UTF-8 -*-<br>&quot;&quot;&quot;<br>    Tests for the pdf to html transform.<br>&quot;&quot;&quot;<br>
-"""
+""",
+         subobjects=0
         ),
     dict(name='plone.transforms.binary.pdf_html.PDFTextTransform',
          class_=PDFTextTransform,
          inputfile='test_pdf_html.pdf',
          output=u"""
   test_pdf_html.py \n2007-08-03 
-# -*- coding: UTF-8 -*- &quot;&quot;&quot;     Tests for the pdf to html transform. &quot;&quot;&quot;"""
+# -*- coding: UTF-8 -*- &quot;&quot;&quot;     Tests for the pdf to html transform. &quot;&quot;&quot;""",
+         subobjects=0
         ),
 ]
 
@@ -51,6 +54,7 @@ for transform in TRANSFORMS:
         interface = ITransform
         inputfile = input_file_path(transform['inputfile'])
         output = transform['output']
+        subobjects = transform['subobjects']
 
     tests.append(BinaryTransformTest)
 

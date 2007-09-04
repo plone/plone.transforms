@@ -45,9 +45,8 @@ class SplitTransform(Transform):
                 second.append(data.next())
             except StopIteration:
                 break
-        result = TransformResult(iter(first))
-        result.subobjects['second'] = iter(second)
-        return result
+        return TransformResult(iter(first),
+                               subobjects=dict(second=iter(second)))
 
 
 def testEmptyTransform():

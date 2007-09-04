@@ -26,8 +26,8 @@ class TransformResult(object):
     implements(ITransformResult)
 
     data = None
-    metadata = {}
-    subobjects = {}
+    metadata = None
+    subobjects = None
     errors = None
 
     def __init__(self, data, metadata=None, subobjects=None, errors=None):
@@ -35,8 +35,12 @@ class TransformResult(object):
         self.errors = errors
         if subobjects is not None:
             self.subobjects = subobjects
+        else:
+            self.subobjects = {}
         if metadata is not None:
             self.metadata = metadata
+        else:
+            self.metadata = {}
 
 
 class Transform(object):
