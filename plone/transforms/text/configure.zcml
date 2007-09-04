@@ -19,4 +19,10 @@
       name="plone.transforms.text.markdown_html.MarkdownTransform"
       permission="zope.Public" />
 
+  <utility
+      provides="..interfaces.ITransform"
+      factory=".textile_html.TextileTransform"
+      name="plone.transforms.text.textile_html.TextileTransform"
+      permission="zope.Public" />
+
 </configure>

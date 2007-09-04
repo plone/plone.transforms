@@ -1,5 +1,5 @@
 """
-Uses the http://www.freewisdom.org/projects/python-markdown/ module to do its
+Uses Roberto A. F. De Almeida's http://dealmeida.net/ module to do its
 handy work
 
 Based on work from: Tom Lazar <tom@tomster.org> at the archipelago sprint 2006.
@@ -12,31 +12,31 @@ from plone.transforms.stringiter import StringIter
 from plone.transforms.transform import Transform
 from plone.transforms.transform import TransformResult
 
-HAS_MARKDOWN = True
+HAS_TEXTILE = True
 try:
-    from markdown import markdown
+    from textile import textile
 except ImportError:
-    HAS_MARKDOWN = False
+    HAS_TEXTILE = False
 
 
-class MarkdownTransform(Transform):
-    """A transform which transforms markdown text into HTML."""
+class TextileTransform(Transform):
+    """A transform which transforms textile text into HTML."""
 
     implements(ITransform)
 
-    name = u'plone.transforms.text.markdown_html.MarkdownTransform'
+    name = u'plone.transforms.text.textile_html.TextileTransform'
 
-    title = _(u'title_markdown_transform',
-        default=u'Markdown to HTML transform')
+    title = _(u'title_textile_transform',
+        default=u'Textile to HTML transform')
 
-    inputs  = ("text/x-web-markdown",)
+    inputs  = ("text/x-web-textile",)
     output = "text/html"
 
     available = False
 
     def __init__(self):
-        super(MarkdownTransform, self).__init__()
-        if HAS_MARKDOWN:
+        super(TextileTransform, self).__init__()
+        if HAS_TEXTILE:
             self.available = True
 
     def transform(self, data):
@@ -44,5 +44,5 @@ class MarkdownTransform(Transform):
         if self._validate(data) is None:
             return None
 
-        html = markdown(u''.join(data).encode('utf-8'))
-        return TransformResult(StringIter(html))
+        html = textile(u''.join(data).encode('utf-8'), encoding='utf-8', output='utf-8')
+        return TransformResult(StringIter(unicode(html, 'utf-8')))

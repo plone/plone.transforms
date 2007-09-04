@@ -48,7 +48,6 @@ TODO
         st
         text_pre_to_html
         text_to_html
-        textile_to_html
         web_intelligent_plain_text_to_html
         build_transforms
         xml
