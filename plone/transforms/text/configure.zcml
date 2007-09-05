@@ -25,4 +25,16 @@
       name="plone.transforms.text.textile_html.TextileTransform"
       permission="zope.Public" />
 
+  <utility
+      provides="..interfaces.ITransform"
+      factory=".web_intelligent.HtmlWebIntelligentTransform"
+      name="plone.transforms.text.web_intelligent.HtmlWebIntelligentTransform"
+      permission="zope.Public" />
+
+  <utility
+      provides="..interfaces.ITransform"
+      factory=".web_intelligent.WebIntelligentHtmlTransform"
+      name="plone.transforms.text.web_intelligent.WebIntelligentHtmlTransform"
+      permission="zope.Public" />
+
 </configure>

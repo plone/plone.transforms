@@ -35,7 +35,6 @@ TODO
       Here's the current list of transforms only available in PortalTransforms
       right now:
 
-        html_to_web_intelligent_plain_text
         lynx_dump
         office_com
         office_uno
@@ -48,7 +47,6 @@ TODO
         st
         text_pre_to_html
         text_to_html
-        web_intelligent_plain_text_to_html
         build_transforms
         xml
 
