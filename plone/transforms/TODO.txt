@@ -1,16 +1,18 @@
 TODO
 ====
 
+    - Write more tests for the engine. Check the use_ranked vs. not use_ranked
+      behavior.
+
+    - Write tests for web.intelligenttext!
+
     - Port the xslt base transform class.
 
     - Write an iterator based version of the html_bodyfinder, so the pdf to
       html transforms don't need to load the whole file into memory.
 
     - Use reversed(iter) (needs __len__ and __getitem__) for the html
-      bodyfinder?
-
-    - benchmark the collections.deque for StringIter. In case this works, it's
-      also nice for html_bodyfinder as it allows both leftpop and rightpop.
+      bodyfinder? Or collections.deque which has both leftpop and rightpop.
 
     - Make the configuration screen for the engine.
 
@@ -44,7 +46,7 @@ TODO
         rtf_to_html
         rtf_to_xml
         safe_html
-        st
+        st (aka structuredtext)
         text_pre_to_html
         text_to_html
         build_transforms
@@ -55,6 +57,3 @@ Not directly package related tasks
 
     - Make PortalTransforms into a wrapper around plone.transforms and use it
       directly from Archetypes.
-
-    - Look into MimetypesRegistry and consider rewriting it as a Zope3
-      component as well.

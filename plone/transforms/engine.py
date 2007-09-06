@@ -60,7 +60,7 @@ class TransformEngine(object):
                     available.append((input_, transform.output, transform))
         return available
 
-    def find_transform(self, input_mimetype, output_mimetype):
+    def find_transform(self, input_mimetype, output_mimetype, use_ranked=True):
         """
         The find_transform method returns the transform which is going to
         be used for a particular input / output mimetype combination.
@@ -106,7 +106,8 @@ class TransformEngine(object):
                     rank = value.rank
                 return rank
 
-            paths.sort(key=_criteria)
+            if use_ranked:
+                paths.sort(key=_criteria)
             return paths[0]
 
         log(DEBUG, "No transforms could be found to transform the '%s' "
@@ -175,3 +176,15 @@ class ConfigurableTransformEngine(PersistentList, TransformEngine):
                 for input_ in transform.inputs:
                     available.append((input_, transform.output, transform))
         return available
+
+    def find_transform(self, input_mimetype, output_mimetype):
+        """
+        The find_transform method returns the transform which is going to
+        be used for a particular input / output mimetype combination.
+        
+        The configurable transform engine does only take the order in its own
+        registry list into account and ignores the ones specifed via
+        IRankedTransform.
+        """
+        return super(ConfigurableTransformEngine, self).find_transform(
+            input_mimetype, output_mimetype, use_ranked=False)
