@@ -93,12 +93,6 @@ def testTransformPaths():
       >>> engine.find_transform('text/html', 'text/plain')
       <plone.transforms.text.html_text.HtmlToTextTransform object at ...>
 
-      >>> engine.find_transform('image/jpeg', 'image/png')
-      <plone.transforms.image.png.PngTransform object at ...>
-
-      >>> engine.find_transform('image/x-ms-bmp', 'image/gif')
-      <plone.transforms.image.gif.GifTransform object at ...>
-
     Now try with a configurable engine:
 
       >>> engine = ConfigurableTransformEngine()

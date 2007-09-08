@@ -9,6 +9,7 @@ from zope.component.testing import tearDown
 from zope.testing import doctest
 from zope.testing.doctestunit import DocTestSuite
 
+from plone.transforms.image.pil import HAS_PIL
 from plone.transforms.tests.utils import configurationSetUp
 
 
@@ -49,10 +50,13 @@ def testEmptyPILTransform():
 
 
 def test_suite():
-    return unittest.TestSuite((
-        DocTestSuite('plone.transforms.image.pil'),
-        DocTestSuite(setUp=configurationSetUp,
-                     tearDown=tearDown,
-                     optionflags=doctest.ELLIPSIS | 
-                                 doctest.NORMALIZE_WHITESPACE),
-        ))
+    if HAS_PIL:
+        return unittest.TestSuite((
+            DocTestSuite('plone.transforms.image.pil'),
+            DocTestSuite(setUp=configurationSetUp,
+                         tearDown=tearDown,
+                         optionflags=doctest.ELLIPSIS | 
+                                     doctest.NORMALIZE_WHITESPACE),
+            ))
+    else:
+        return unittest.TestSuite()

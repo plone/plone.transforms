@@ -5,6 +5,8 @@
 
 import unittest
 
+from plone.transforms.image.pil import HAS_PIL
+
 from plone.transforms.image.bmp import BmpTransform
 from plone.transforms.image.gif import GifTransform
 from plone.transforms.image.jpeg import JpegTransform
@@ -50,6 +52,9 @@ TRANSFORMS = [
         ),
 ]
 
+if not HAS_PIL:
+    TRANSFORMS = []
+
 tests = []
 for transform in TRANSFORMS:
 
@@ -79,6 +84,7 @@ for transform in TRANSFORMS:
 
 def test_suite():
     suite = unittest.TestSuite()
-    for test in tests:
-        suite.addTest(unittest.makeSuite(test))
+    if HAS_PIL:
+        for test in tests:
+            suite.addTest(unittest.makeSuite(test))
     return suite
