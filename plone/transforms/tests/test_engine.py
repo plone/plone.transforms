@@ -90,12 +90,6 @@ def testTransformPaths():
       >>> engine.find_transform(None, None)
       <plone.transforms.identity.IdentityTransform object at ...>
 
-      >>> engine.find_transform('application/pdf', 'text/html')
-      <plone.transforms.binary.pdf_html.PDFCommandTransform object at ...>
-
-      >>> engine.find_transform('application/pdf', 'text/plain')
-      <plone.transforms.binary.pdf_html.PDFTextTransform object at ...>
-
       >>> engine.find_transform('text/html', 'text/plain')
       <plone.transforms.text.html_text.HtmlToTextTransform object at ...>
 

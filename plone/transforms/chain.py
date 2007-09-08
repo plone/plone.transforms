@@ -72,6 +72,12 @@ class AbstractTransformChain:
                                  "transform for the interface '%s' with the "
                                  "name '%s'. The transform could not be found."
                                  % (self.name, interface_name, name))
+            if not transform.available:
+                self.available = False
+                raise ValueError("The transform chain '%s' includes a "
+                                 "transform for the interface '%s' with the "
+                                 "name '%s'. The transform is unavailable."
+                                 % (self.name, interface_name, name))
             result = transform.transform(data, options=options)
             if result is None:
                 return None
