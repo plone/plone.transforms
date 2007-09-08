@@ -25,7 +25,9 @@ TODO
       would be nice.
 
     - Reconsider passing a desired filename argument to the command transforms,
-      make the infile_data_suffix argument more clever or powerful.
+      make the infile_data_suffix argument more clever or powerful. Stuff more
+      things into the new options argument, pass these down to the helper
+      functions.
 
     - Make a new plone.app.transforms package which has GenericSetup export/
       import handlers for the engine configuration.
@@ -51,6 +53,9 @@ TODO
         text_to_html
         build_transforms
         xml
+
+    - Look into textindexng, smartprintng, AROfficeTransforms, AttachmentField
+      for more or more clever transforms.
 
 Not directly package related tasks
 ----------------------------------
