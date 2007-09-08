@@ -140,7 +140,7 @@ class CommandTransform(PersistentTransform):
 
         return result
 
-    def transform(self, data):
+    def transform(self, data, options=None):
         """Returns the transform result."""
         if self._validate(data) is None:
             return None

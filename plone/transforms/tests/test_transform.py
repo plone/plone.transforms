@@ -36,7 +36,7 @@ class SplitTransform(Transform):
     name = u"plone.transforms.test_transform.SplitTransform"
     title = u"Splitting transform."
 
-    def transform(self, data):
+    def transform(self, data, options=None):
         first = []
         second = []
         while data:

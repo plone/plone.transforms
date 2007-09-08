@@ -50,7 +50,7 @@ class AbstractTransformChain:
             return None
         return last.output
 
-    def transform(self, data):
+    def transform(self, data, options=None):
         """Returns the transform result."""
         metadata = None
         subobjects = None
@@ -72,7 +72,7 @@ class AbstractTransformChain:
                                  "transform for the interface '%s' with the "
                                  "name '%s'. The transform could not be found."
                                  % (self.name, interface_name, name))
-            result = transform.transform(data)
+            result = transform.transform(data, options=options)
             if result is None:
                 return None
             # Get the data from the result

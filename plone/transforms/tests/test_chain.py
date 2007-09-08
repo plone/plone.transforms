@@ -31,7 +31,7 @@ class ReverseTransform(Transform):
     name = u"plone.transforms.test_chain.ReverseTransform"
     title = u"Reversing transform."
 
-    def transform(self, data):
+    def transform(self, data, options=None):
         if data is None:
             return None
         temp = [d for d in data]

@@ -41,12 +41,17 @@ class ITransform(Interface):
                           "This is often set to false at runtime, when an "
                           "external dependency is not available.")
 
-    def transform(data):
+    def transform(data, options=None):
         """
         The transform method takes some data in one of the input formats.
         It returns either an ITransformResult in the output format or None
         if an error occurred.
+
+        The optional options dictonary can be used to provide additional
+        arguments to influence the result of the transform, like image sizes
+        or quality settings.
         """
+
 
 class IRankedTransform(Interface):
     """A transformation utility with a score value determining its

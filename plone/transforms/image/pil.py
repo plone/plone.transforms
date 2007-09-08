@@ -49,7 +49,7 @@ class PILTransform(PersistentTransform):
         if HAS_PIL:
             self.available = True
 
-    def transform(self, data):
+    def transform(self, data, options=None):
         if self._validate(data) is None:
             return None
 

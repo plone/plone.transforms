@@ -115,13 +115,13 @@ class TransformEngine(object):
                    (input_mimetype, output_mimetype))
         return None
 
-    def transform(self, data, input_mimetype, output_mimetype):
+    def transform(self, data, input_mimetype, output_mimetype, options=None):
         """Returns the transform result."""
         transform = self.find_transform(input_mimetype, output_mimetype)
         if transform is None:
             return None
 
-        return transform.transform(data)
+        return transform.transform(data, options=options)
 
 
 class ConfigurableTransformEngine(PersistentList, TransformEngine):

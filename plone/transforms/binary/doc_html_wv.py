@@ -29,7 +29,7 @@ class DocHtmlWvCommandTransform(CommandTransform):
     command = 'wvHtml'
     args = "%(infile)s %(infile)s.html --charset=utf-8"
 
-    def transform(self, data):
+    def transform(self, data, options=None):
         """Returns the transform result."""
         if self._validate(data) is None:
             return None

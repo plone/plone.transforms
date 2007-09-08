@@ -84,7 +84,7 @@ class Transform(object):
             return None
         return True
 
-    def transform(self, data):
+    def transform(self, data, options=None):
         """The transform method takes some data in one of the input formats and
         returns it in the output format.
 
