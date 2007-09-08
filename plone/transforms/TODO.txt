@@ -1,8 +1,6 @@
 TODO
 ====
 
-    - Write tests for web.intelligenttext!
-
     - Port the xslt base transform class.
 
     - Write an iterator based version of the html_bodyfinder, so the pdf to

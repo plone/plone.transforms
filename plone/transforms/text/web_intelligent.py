@@ -72,5 +72,6 @@ class HtmlWebIntelligentTransform(Transform):
         if self._validate(data) is None:
             return None
 
-        html = convertHtmlToWebIntelligentPlainText(u''.join(data))
-        return TransformResult(StringIter(html))
+        html = u''.join(data).encode('utf-8')
+        html = convertHtmlToWebIntelligentPlainText(html)
+        return TransformResult(StringIter(unicode(html, 'utf-8')))
