@@ -95,6 +95,7 @@ class CommandTransform(PersistentTransform):
         The method takes some data in one of the input formats and returns
         a TransformResult with data in the output format.
         """
+        result = TransformResult(None)
         try:
             tmpdirpath = tempfile.mkdtemp()
             tmpfilepath = self.initialize_tmpfile(data, directory=tmpdirpath)
@@ -112,7 +113,6 @@ class CommandTransform(PersistentTransform):
                 commandline = commandline + ' 2>error_log 1>/dev/null'
 
             os.system(commandline)
-            result = TransformResult(None)
 
             for tmpfile in os.listdir(tmpdirpath):
                 tmp = os.path.join(tmpdirpath, tmpfile)
