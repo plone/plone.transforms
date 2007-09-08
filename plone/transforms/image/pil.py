@@ -56,6 +56,14 @@ class PILTransform(PersistentTransform):
         if self.format is None:
             return None
 
+        width = self.width
+        height = self.height
+
+        # Allow to override the size settings via the options dict
+        if options is not None:
+            width = options.get('width', width)
+            height = options.get('height', height)
+
         result = TransformResult(None)
         try:
             # If we already got a file-like iterator use it
@@ -78,8 +86,8 @@ class PILTransform(PersistentTransform):
                 pil_image.draft("RGB", pil_image.size)
                 pil_image = pil_image.convert("RGB")
 
-            if self.width and self.height:
-                pil_image.thumbnail((self.width,self.height), Image.ANTIALIAS)
+            if width and height:
+                pil_image.thumbnail((width, height), Image.ANTIALIAS)
 
             transformed = StringIO()
             pil_image.save(transformed, self.format)
