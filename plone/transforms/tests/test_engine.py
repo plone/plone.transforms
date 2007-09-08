@@ -5,15 +5,42 @@
 
 import unittest
 
+from zope.component import getGlobalSiteManager
 from zope.component import queryUtility
 from zope.component.testing import tearDown
+from zope.interface import implements
 from zope.testing import doctest
 from zope.testing.doctestunit import DocTestSuite
 
 from plone.transforms.engine import ConfigurableTransformEngine
+from plone.transforms.interfaces import IRankedTransform
+from plone.transforms.interfaces import ITransform
 from plone.transforms.interfaces import ITransformEngine
+from plone.transforms.transform import Transform
 
 from plone.transforms.tests.utils import configurationSetUp
+
+
+class IAmFirstTransform(Transform):
+
+    implements(IRankedTransform)
+
+    name = u'IAmFirstTransform'
+    rank = -10
+
+    inputs = ('foo', )
+    output = 'bar'
+
+
+class IAmSecondTransform(Transform):
+
+    implements(IRankedTransform)
+
+    name = u'IAmSecondTransform'
+    rank = 10
+
+    inputs = ('foo', )
+    output = 'bar'
 
 
 def testTransformEngineInstallation():
@@ -133,6 +160,97 @@ def testConfigurableTransformEngine():
       []
     """
 
+def testTransformOrder():
+    """
+    Get the global transform engine:
+
+      >>> engine = queryUtility(ITransformEngine)
+      >>> engine
+      <plone.transforms.engine.TransformEngine object at ...>
+
+    Register our two new test transforms:
+
+      >>> gsm = getGlobalSiteManager()
+      >>> gsm.registerUtility(IAmFirstTransform(),
+      ...     ITransform,
+      ...     name='IAmFirstTransform')
+
+      >>> gsm.registerUtility(IAmSecondTransform(),
+      ...     ITransform,
+      ...     name='IAmSecondTransform')
+
+    Check the rank of the two transforms:
+
+      >>> first = queryUtility(ITransform,
+      ...                      name='IAmFirstTransform')
+      >>> first.rank
+      -10
+
+      >>> second = queryUtility(ITransform,
+      ...                       name='IAmSecondTransform')
+      >>> second.rank
+      10
+
+    Check that the first transform is found first:
+
+      >>> engine.find_transform('foo', 'bar')
+      <plone.transforms.tests.test_engine.IAmFirstTransform object at ...>
+
+    Change the first transforms rank and see if the second is found now:
+
+      >>> first.rank = 20
+
+      >>> engine.find_transform('foo', 'bar')
+      <plone.transforms.tests.test_engine.IAmSecondTransform object at ...>
+
+    Restore the rank:
+
+      >>> first.rank = -10
+
+    Create a configurable engine:
+
+      >>> engine = ConfigurableTransformEngine()
+      >>> engine
+      <ConfigurableTransformEngine object at ...>
+
+    Check that we don't find any transform at first:
+
+      >>> engine.find_transform('foo', 'bar') is None
+      True
+
+    Put in the two test transforms:
+
+      >>> engine.append(('plone.transforms.interfaces.ITransform',
+      ...                'IAmFirstTransform'))
+      >>> engine.append(('plone.transforms.interfaces.ITransform',
+      ...                'IAmSecondTransform'))
+
+    Check that we get the first transform:
+
+      >>> engine.find_transform('foo', 'bar')
+      <plone.transforms.tests.test_engine.IAmFirstTransform object at ...>
+
+    Change the first transform's rank and make sure that this doesn't change
+    anything:
+
+      >>> first.rank = 20
+
+      >>> engine.find_transform('foo', 'bar')
+      <plone.transforms.tests.test_engine.IAmFirstTransform object at ...>
+
+    Restore the first rank and reverse the transforms in the engine:
+
+      >>> first.rank = -10
+      >>> engine.reverse()
+
+    Now the second transform should be found:
+
+      >>> engine[0]
+      ('plone.transforms.interfaces.ITransform', 'IAmSecondTransform')
+
+      >>> engine.find_transform('foo', 'bar')
+      <plone.transforms.tests.test_engine.IAmSecondTransform object at ...>
+    """
 
 def test_suite():
     return unittest.TestSuite((

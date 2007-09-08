@@ -1,9 +1,6 @@
 TODO
 ====
 
-    - Write more tests for the engine. Check the use_ranked vs. not use_ranked
-      behavior.
-
     - Write tests for web.intelligenttext!
 
     - Port the xslt base transform class.
