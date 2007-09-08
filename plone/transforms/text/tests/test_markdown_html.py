@@ -7,7 +7,7 @@ from unittest import TestSuite, makeSuite
 
 from plone.transforms.interfaces import ITransform
 from plone.transforms.tests.base import TransformTestCase
-from plone.transforms.text.markdown_html import MarkdownTransform
+from plone.transforms.text.markdown_html import MarkdownTransform, HAS_MARKDOWN
 
 
 class MarkdownTransformTest(TransformTestCase):
@@ -21,5 +21,6 @@ class MarkdownTransformTest(TransformTestCase):
 
 def test_suite():
     suite = TestSuite()
-    suite.addTest(makeSuite(MarkdownTransformTest))
+    if HAS_MARKDOWN:
+        suite.addTest(makeSuite(MarkdownTransformTest))
     return suite
