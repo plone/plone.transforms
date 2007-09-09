@@ -23,8 +23,6 @@ class PDFCommandTransform(CommandTransform):
 
     implements(IRankedTransform)
 
-    name = u'plone.transforms.binary.pdf_html.PDFCommandTransform'
-
     title = _(u'title_pdf_html_transform',
         default=u'PDF to HTML transform including images.')
 
@@ -58,8 +56,6 @@ class PDFPipeTransform(PipeTransform):
     """A transform which transforms pdf into HTML."""
 
     implements(IRankedTransform)
-
-    name = u'plone.transforms.binary.pdf_html.PDFPipeTransform'
 
     title = _(u'title_pdf_html_transform',
         default=u'PDF to HTML only transform')

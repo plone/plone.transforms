@@ -8,8 +8,6 @@ class PythonHtmlTransform(PipeTransform):
     highlighting.
     """
 
-    name = u'plone.transforms.text.python_html.PythonHtmlTransform'
-
     title = _(u'title_python_html_transform',
         default=u'Python to HTML transform')
 

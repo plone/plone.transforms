@@ -7,8 +7,6 @@ class DocTxtWvCommandTransform(CommandTransform):
     """A transform which transforms doc into Text.
     """
 
-    name = u'plone.transforms.binary.doc_txt_wv.DocTxtWvCommandTransform'
-
     title = _(u'title_doc_txt_wv_transform',
         default=u'DOC to Text transform.')
 

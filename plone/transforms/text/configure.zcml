@@ -1,46 +1,12 @@
 <configure xmlns="http://namespaces.zope.org/zope"
-  xmlns:zcml="http://namespaces.zope.org/zcml">
+           xmlns:plone="http://namespaces.plone.org/plone">
 
-  <utility
-      provides="..interfaces.ITransform"
-      factory=".html_body.HtmlBodyTransform"
-      name="plone.transforms.text.html_body.HtmlBodyTransform"
-      permission="zope.Public" />
-
-  <utility
-      provides="..interfaces.ITransform"
-      factory=".html_text.HtmlToTextTransform"
-      name="plone.transforms.text.html_text.HtmlToTextTransform"
-      permission="zope.Public" />
-
-  <utility
-      provides="..interfaces.ITransform"
-      factory=".markdown_html.MarkdownTransform"
-      name="plone.transforms.text.markdown_html.MarkdownTransform"
-      permission="zope.Public" />
-
-  <utility
-      provides="..interfaces.ITransform"
-      factory=".python_html.PythonHtmlTransform"
-      name="plone.transforms.text.python_html.PythonHtmlTransform"
-      permission="zope.Public" />
-
-  <utility
-      provides="..interfaces.ITransform"
-      factory=".textile_html.TextileTransform"
-      name="plone.transforms.text.textile_html.TextileTransform"
-      permission="zope.Public" />
-
-  <utility
-      provides="..interfaces.ITransform"
-      factory=".web_intelligent.HtmlWebIntelligentTransform"
-      name="plone.transforms.text.web_intelligent.HtmlWebIntelligentTransform"
-      permission="zope.Public" />
-
-  <utility
-      provides="..interfaces.ITransform"
-      factory=".web_intelligent.WebIntelligentHtmlTransform"
-      name="plone.transforms.text.web_intelligent.WebIntelligentHtmlTransform"
-      permission="zope.Public" />
+  <plone:transform factory=".html_body.HtmlBodyTransform" />
+  <plone:transform factory=".html_text.HtmlToTextTransform" />
+  <plone:transform factory=".markdown_html.MarkdownTransform" />
+  <plone:transform factory=".python_html.PythonHtmlTransform" />
+  <plone:transform factory=".textile_html.TextileTransform" />
+  <plone:transform factory=".web_intelligent.HtmlWebIntelligentTransform" />
+  <plone:transform factory=".web_intelligent.WebIntelligentHtmlTransform" />
 
 </configure>

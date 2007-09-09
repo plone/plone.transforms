@@ -1,15 +1,7 @@
-<configure xmlns="http://namespaces.zope.org/zope">
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:plone="http://namespaces.plone.org/plone">
 
-  <utility
-      provides="..interfaces.ITransform"
-      factory=".test_chain.ReverseTransform"
-      name="plone.transforms.test_chain.ReverseTransform"
-      permission="zope.Public" />
-
-  <utility
-      provides="..interfaces.ITransform"
-      factory=".test_transform.SplitTransform"
-      name="plone.transforms.test_transform.SplitTransform"
-      permission="zope.Public" />
+  <plone:transform factory=".test_chain.ReverseTransform" />
+  <plone:transform factory=".test_transform.SplitTransform" />
 
 </configure>

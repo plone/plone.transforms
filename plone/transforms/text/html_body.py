@@ -11,8 +11,6 @@ from plone.transforms.utils import html_bodyfinder
 class HtmlBodyTransform(Transform):
     """A transform which extracts the body of a HTML text."""
 
-    name = u'plone.transforms.text.html_body.HtmlBodyTransform'
-
     title = _(u'title_html_body_transform',
         default=u'HTML body extractor')
 

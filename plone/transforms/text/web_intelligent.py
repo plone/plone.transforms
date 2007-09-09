@@ -1,6 +1,3 @@
-"""
-
-"""
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.stringiter import StringIter
 from plone.transforms.transform import Transform
@@ -17,8 +14,6 @@ except ImportError:
 
 class WebIntelligentHtmlTransform(Transform):
     """A transform which transforms web intelligent text into HTML."""
-
-    name = u'plone.transforms.text.web_intelligent.WebIntelligentHtmlTransform'
 
     title = _(u'title_web_intelligent_html_transform',
         default=u'Web Intelligent Text to HTML transform')
@@ -44,8 +39,6 @@ class WebIntelligentHtmlTransform(Transform):
 
 class HtmlWebIntelligentTransform(Transform):
     """A transform which transforms HTML into web intelligent text."""
-
-    name = u'plone.transforms.text.web_intelligent.HtmlWebIntelligentTransform'
 
     title = _(u'title_html_web_intelligent_transform',
         default=u'HTML to Web Intelligent Text transform')

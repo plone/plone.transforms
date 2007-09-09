@@ -28,7 +28,6 @@ class TestChain(TransformChain):
 
 class ReverseTransform(Transform):
 
-    name = u"plone.transforms.test_chain.ReverseTransform"
     title = u"Reversing transform."
 
     def transform(self, data, options=None):
@@ -209,7 +208,7 @@ def testReversingChain():
     Put in one transforms:
 
       >>> reverse = ('plone.transforms.interfaces.ITransform', 
-      ...            'plone.transforms.test_chain.ReverseTransform')
+      ...            'plone.transforms.tests.test_chain.ReverseTransform')
 
       >>> chain.append(reverse)
 
@@ -273,10 +272,10 @@ def testReversingSplitChain():
     Put in two transforms:
 
       >>> reverse = ('plone.transforms.interfaces.ITransform', 
-      ...            'plone.transforms.test_chain.ReverseTransform')
+      ...            'plone.transforms.tests.test_chain.ReverseTransform')
 
       >>> split = ('plone.transforms.interfaces.ITransform',
-      ...          'plone.transforms.test_transform.SplitTransform')
+      ...          'plone.transforms.tests.test_transform.SplitTransform')
 
       >>> chain.append(reverse)
       >>> chain.append(split)

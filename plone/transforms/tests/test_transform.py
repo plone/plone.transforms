@@ -33,7 +33,6 @@ class TestPersistentTransform(PersistentTransform):
 
 class SplitTransform(Transform):
 
-    name = u"plone.transforms.test_transform.SplitTransform"
     title = u"Splitting transform."
 
     def transform(self, data, options=None):
@@ -152,7 +151,7 @@ def testSplitTransform():
       >>> XMLConfig('configure.zcml', plone.transforms.tests)()
 
       >>> util = queryUtility(ITransform,
-      ...            name='plone.transforms.test_transform.SplitTransform')
+      ...            name='plone.transforms.tests.test_transform.SplitTransform')
       >>> util
       <plone.transforms.tests.test_transform.SplitTransform object at ...>
 

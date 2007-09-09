@@ -1,40 +1,18 @@
 <configure xmlns="http://namespaces.zope.org/zope"
-  xmlns:zcml="http://namespaces.zope.org/zcml">
+           xmlns:plone="http://namespaces.plone.org/plone">
 
-  <utility
-      provides="..interfaces.ICommandTransform"
-      factory=".doc_html_wv.DocHtmlWvCommandTransform"
-      name="plone.transforms.binary.doc_html_wv.DocHtmlWvCommandTransform"
-      permission="zope.Public" />
+  <plone:transform factory=".doc_html_wv.DocHtmlWvCommandTransform" />
+  <plone:transform factory=".doc_txt_wv.DocTxtWvCommandTransform" />
+  <plone:transform factory=".pdf_html.PDFCommandTransform" />
+  <plone:transform factory=".pdf_html.PDFPipeTransform" />
 
-  <utility
-      provides="..interfaces.ICommandTransform"
-      factory=".doc_txt_wv.DocTxtWvCommandTransform"
-      name="plone.transforms.binary.doc_txt_wv.DocTxtWvCommandTransform"
-      permission="zope.Public" />
-
-  <utility
-      provides="..interfaces.ICommandTransform"
-      factory=".pdf_html.PDFCommandTransform"
-      name="plone.transforms.binary.pdf_html.PDFCommandTransform"
-      permission="zope.Public" />
-
-  <utility
-      provides="..interfaces.IPipeTransform"
-      factory=".pdf_html.PDFPipeTransform"
-      name="plone.transforms.binary.pdf_html.PDFPipeTransform"
-      permission="zope.Public" />
-
+  <!-- <plone:transform factory=".pdf_html.PDFTextTransform" /> -->
   <utility
       provides="..interfaces.ITransformChain"
       factory=".pdf_html.PDFTextTransform"
       name="plone.transforms.binary.pdf_html.PDFTextTransform"
       permission="zope.Public" />
 
-  <utility
-      provides="..interfaces.ICommandTransform"
-      factory=".xls_html_xlhtml.XlsHtmlXlhtmlCommandTransform"
-      name="plone.transforms.binary.xls_html_xlhtml.XlsHtmlXlhtmlCommandTransform"
-      permission="zope.Public" />
+  <plone:transform factory=".xls_html_xlhtml.XlsHtmlXlhtmlCommandTransform" />
 
 </configure>

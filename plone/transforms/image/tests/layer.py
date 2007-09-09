@@ -13,6 +13,7 @@ class PILLayer:
     def setUp(cls):
         setUp()
         XMLConfig('meta.zcml', zope.component)()
+        XMLConfig('meta.zcml', plone.transforms)()
         XMLConfig('configure.zcml', plone.transforms.image)()
 
     @classmethod

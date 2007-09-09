@@ -5,7 +5,6 @@ from plone.transforms.image.pil import PILTransform
 class BmpTransform(PILTransform):
     """A transform which converts images to bmp files."""
 
-    name = u'plone.transforms.image.bmp.BmpTransform'
     title = _(u'title_pil_bmp_transform',
               default=u'A PIL transform which converts to BMP.')
 

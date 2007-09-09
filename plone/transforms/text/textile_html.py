@@ -19,8 +19,6 @@ except ImportError:
 class TextileTransform(Transform):
     """A transform which transforms textile text into HTML."""
 
-    name = u'plone.transforms.text.textile_html.TextileTransform'
-
     title = _(u'title_textile_transform',
         default=u'Textile to HTML transform')
 

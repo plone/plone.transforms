@@ -9,8 +9,6 @@ class DocHtmlWvCommandTransform(CommandTransform):
     as subobjects.
     """
 
-    name = u'plone.transforms.binary.doc_html_wv.DocHtmlWvCommandTransform'
-
     title = _(u'title_doc_html_wv_transform',
         default=u'DOC to HTML transform including images.')
 

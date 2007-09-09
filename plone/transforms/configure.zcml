@@ -1,18 +1,12 @@
-<configure xmlns="http://namespaces.zope.org/zope">
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:plone="http://namespaces.plone.org/plone">
 
   <include package=".binary" />
-
   <include package=".browser" />
-
   <include package=".image" />
-
   <include package=".text" />
 
-  <utility
-      provides=".interfaces.ITransform"
-      factory=".identity.IdentityTransform"
-      name="plone.transforms.identity.IdentityTransform"
-      permission="zope.Public" />
+  <plone:transform factory=".identity.IdentityTransform" />
 
   <utility
       provides=".interfaces.ITransformEngine"

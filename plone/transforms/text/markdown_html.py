@@ -19,8 +19,6 @@ except ImportError:
 class MarkdownTransform(Transform):
     """A transform which transforms markdown text into HTML."""
 
-    name = u'plone.transforms.text.markdown_html.MarkdownTransform'
-
     title = _(u'title_markdown_transform',
         default=u'Markdown to HTML transform')
 

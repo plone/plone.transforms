@@ -11,4 +11,5 @@ def configurationSetUp(arg=None):
     setUp()
     XMLConfig('meta.zcml', zope.component)()
     XMLConfig('meta.zcml', zope.app.publisher.browser)()
+    XMLConfig('meta.zcml', plone.transforms)()
     XMLConfig('configure.zcml', plone.transforms)()

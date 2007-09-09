@@ -6,8 +6,6 @@ from plone.transforms.stringiter import StringIter
 class XlsHtmlXlhtmlCommandTransform(PipeTransform):
     """A transform which transforms xls into HTML."""
 
-    name = u'plone.transforms.binary.xls_html_xlhtml.XlsHtmlXlhtmlCommandTransform'
-
     title = _(u'title_xls_html_xlhtml_transform',
         default=u'Xls to HTML transform.')
 
