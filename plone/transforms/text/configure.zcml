@@ -6,6 +6,7 @@
   <plone:transform factory=".markdown_html.MarkdownTransform" />
   <plone:transform factory=".python_html.PythonHtmlTransform" />
   <plone:transform factory=".rest_html.RestHtmlTransform" />
+  <plone:transform factory=".st_html.StructuredTextHtmlTransform" />
   <plone:transform factory=".textile_html.TextileTransform" />
   <plone:transform factory=".web_intelligent.HtmlWebIntelligentTransform" />
   <plone:transform factory=".web_intelligent.WebIntelligentHtmlTransform" />

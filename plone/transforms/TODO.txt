@@ -38,7 +38,6 @@ TODO
         rtf_to_html
         rtf_to_xml
         safe_html
-        st (aka structuredtext)
         text_pre_to_html
         text_to_html
         build_transforms
