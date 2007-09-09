@@ -16,6 +16,15 @@ from plone.transforms.transform import TransformResult
 from plone.transforms.utils import bin_search
 
 
+# Helper method which can write both directly to a file object an to an integer
+# representing an open file.
+def _write(fd, text, fdint=False):
+    if fdint:
+        os.write(fd, text)
+    else:
+        fd.write(text)
+
+
 class CommandTransform(PersistentTransform):
     """A persistent transform which runs a transform based on a command line
     tool.
@@ -55,22 +64,26 @@ class CommandTransform(PersistentTransform):
                            "to use the %s transform." % (self.command, self.name))
 
     def write(self, fd, data):
+        if isinstance(fd, int):
+            fdint = True
+        else:
+            fdint = False
         # write data to tmp using a file descriptor
         firstchunk = data.next()
         if isinstance(firstchunk, unicode):
-            self.write_text(fd, firstchunk, data)
+            self.write_text(fd, firstchunk, data, fdint=fdint)
         else:
-            self.write_binary(fd, firstchunk, data)
+            self.write_binary(fd, firstchunk, data, fdint=fdint)
 
-    def write_binary(self, fd, firstchunk, data):
-        os.write(fd, firstchunk)
+    def write_binary(self, fd, firstchunk, data, fdint=False):
+        _write(fd, firstchunk, fdint=fdint)
         for chunk in data:
-            os.write(fd, chunk)
+            _write(fd, chunk, fdint=fdint)
 
-    def write_text(self, fd, firstchunk, data):
-        os.write(fd, firstchunk.encode('utf-8'))
+    def write_text(self, fd, firstchunk, data, fdint=False):
+        _write(fd, firstchunk.encode('utf-8'), fdint=fdint)
         for chunk in data:
-            os.write(fd, chunk.encode('utf-8')) 
+            _write(fd, chunk.encode('utf-8'), fdint=fdint)
 
     def initialize_tmpfile(self, data, directory=None):
         """Create a temporary file and copy input into it.

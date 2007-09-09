@@ -54,6 +54,8 @@ class PipeTransform(CommandTransform):
             tmpname = self.initialize_tmpfile(data)
             commandline = "%s %s" % (self.command, self.args)
             commandline = commandline % { 'infile' : tmpname }
+        else:
+            commandline = "%s %s" % (self.command, self.args)
 
         child_stdin, child_stdout, child_stderr = os.popen3(commandline, 'b')
 

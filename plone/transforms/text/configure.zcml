@@ -21,6 +21,12 @@
 
   <utility
       provides="..interfaces.ITransform"
+      factory=".python_html.PythonHtmlTransform"
+      name="plone.transforms.text.python_html.PythonHtmlTransform"
+      permission="zope.Public" />
+
+  <utility
+      provides="..interfaces.ITransform"
       factory=".textile_html.TextileTransform"
       name="plone.transforms.text.textile_html.TextileTransform"
       permission="zope.Public" />

@@ -50,7 +50,7 @@ class TransformTestCase(TestCase):
 
         # Make sure we got back a proper result
         self.failUnless(ITransformResult.providedBy(result))
-        self.failUnless(result.errors is None)
+        self.failUnless(not result.errors)
 
         # Did we get an iterator as the primary result data?
         self.failUnless(getattr(result.data, 'next', None) is not None)
