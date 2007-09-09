@@ -50,12 +50,10 @@ class PipeTransform(CommandTransform):
         if self._validate(data) is None:
             return None
 
+        commandline = "%s %s" % (self.command, self.args)
         if not self.use_stdin:
             tmpname = self.initialize_tmpfile(data)
-            commandline = "%s %s" % (self.command, self.args)
             commandline = commandline % { 'infile' : tmpname }
-        else:
-            commandline = "%s %s" % (self.command, self.args)
 
         child_stdin, child_stdout, child_stderr = os.popen3(commandline, 'b')
 
