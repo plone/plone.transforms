@@ -1,10 +1,9 @@
 from cStringIO import StringIO
-from logging import DEBUG
 
 from zope.interface import implements
 
 from plone.transforms.interfaces import IPILTransform
-from plone.transforms.log import log
+from plone.transforms.log import log_debug
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.transform import PersistentTransform
 from plone.transforms.transform import TransformResult
@@ -78,8 +77,8 @@ class PILTransform(PersistentTransform):
                 pil_image = Image.open(orig)
             except IOError, e:
                 result.errors = str(e)
-                log(DEBUG, "Error %s while transforming an Image in %s." %
-                            (str(e), self.name))
+                log_debug("Error %s while transforming an Image in %s." %
+                          (str(e), self.name))
                 return result
 
             if self.format in ['jpeg', 'ppm']:

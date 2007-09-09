@@ -1,10 +1,9 @@
-from logging import DEBUG
 from persistent import Persistent
 from zope.interface import implements
 
 from plone.transforms.interfaces import ITransform
 from plone.transforms.interfaces import ITransformResult
-from plone.transforms.log import log
+from plone.transforms.log import log_debug
 
 from plone.transforms.message import PloneMessageFactory as _
 
@@ -76,11 +75,11 @@ class Transform(object):
             return None
         # Invalid input
         if data is None:
-            log(DEBUG, "No input while transforming data in %s." % self.name)
+            log_debug("No input while transforming data in %s." % self.name)
             return None
         elif isinstance(data, basestring):
-            log(DEBUG, "Invalid input while transforming data in %s." %
-                        self.name)
+            log_debug("Invalid input while transforming data in %s." %
+                      self.name)
             return None
         return True
 

@@ -1,4 +1,3 @@
-from logging import DEBUG
 import os
 import shutil
 import tempfile
@@ -8,7 +7,7 @@ from StringIO import StringIO
 from zope.interface import implements
 
 from plone.transforms.interfaces import ICommandTransform
-from plone.transforms.log import log
+from plone.transforms.log import log_debug
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.transform import PersistentTransform
 from plone.transforms.transform import TransformResult
@@ -53,14 +52,14 @@ class CommandTransform(PersistentTransform):
     def __init__(self):
         super(CommandTransform, self).__init__()
         if self.command is None:
-            log(DEBUG, "There was no command given for the %s transform." %
-                        self.name)
+            log_debug("There was no command given for the %s transform." %
+                      self.name)
         else:
             if bin_search(self.command):
                 self.available = True
             else:
-                log(DEBUG, "The binary %s could not be found, while trying "
-                           "to use the %s transform." % (self.command, self.name))
+                log_debug("The binary %s could not be found, while trying to "
+                          "use the %s transform." % (self.command, self.name))
 
     def write(self, fd, data):
         if isinstance(fd, int):

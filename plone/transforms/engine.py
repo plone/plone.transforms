@@ -1,4 +1,3 @@
-from logging import DEBUG
 from persistent.list import PersistentList
 
 from zope.component import queryUtility
@@ -10,7 +9,7 @@ from plone.transforms.interfaces import IConfigurableTransformEngine
 from plone.transforms.interfaces import IRankedTransform
 from plone.transforms.interfaces import ITransform
 from plone.transforms.interfaces import ITransformEngine
-from plone.transforms.log import log
+from plone.transforms.log import log_debug
 
 
 class TransformEngine(object):
@@ -72,9 +71,9 @@ class TransformEngine(object):
         # Is the input and output format available?
         if (input_mimetype not in available_inputs or
             output_mimetype not in available_outputs):
-            log(DEBUG, "No transforms could be found to transform the "
-                       "'%s' format into the '%s' format." %
-                       (input_mimetype, output_mimetype))
+            log_debug("No transforms could be found to transform the "
+                      "'%s' format into the '%s' format." %
+                      (input_mimetype, output_mimetype))
             return None
 
         # Special behavior for filters, which have an identical input and
@@ -110,9 +109,9 @@ class TransformEngine(object):
                 paths.sort(key=_criteria)
             return paths[0]
 
-        log(DEBUG, "No transforms could be found to transform the '%s' "
-                   "format into the '%s' format." %
-                   (input_mimetype, output_mimetype))
+        log_debug("No transforms could be found to transform the '%s' "
+                  "format into the '%s' format." %
+                  (input_mimetype, output_mimetype))
         return None
 
     def transform(self, data, input_mimetype, output_mimetype, options=None):
