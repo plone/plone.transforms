@@ -36,7 +36,6 @@ class CommandTransform(PersistentTransform):
 
     implements(ICommandTransform)
 
-    name = u'plone.transforms.transform.CommandTransform'
     title = _(u'title_skeleton_command_transform',
               default=u'A skeleton command transform.')
     description = None

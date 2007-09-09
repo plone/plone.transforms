@@ -76,7 +76,6 @@ class PDFPipeTransform(PipeTransform):
 class PDFTextTransform(PersistentTransformChain):
     """A transform chain which transforms pdf into text."""
 
-    name = u'plone.transforms.binary.pdf_html.PDFTextTransform'
     title = _(u'title_pdf_text_transform',
         default=u'PDF to Text only transform')
 

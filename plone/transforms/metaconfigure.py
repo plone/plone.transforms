@@ -4,11 +4,17 @@ from zope.component.zcml import PublicPermission
 from zope.component.zcml import utility
 from zope.interface import providedBy
 
+from plone.transforms.interfaces import ICommandTransform
 from plone.transforms.interfaces import IRankedTransform
 from plone.transforms.interfaces import ITransform
 
 INVALID_INTERFACES = frozenset((IPersistent, IRankedTransform, ))
 
+KNOWN_BASE_NAMES = frozenset((
+    ('plone.transforms.transform'),
+    ('plone.transforms.chain'),
+    ('plone.transforms.image.pil'),
+    ))
 
 def transformDirective(_context, provides=None, component=None, factory=None,
                        permission=None, name=None):
@@ -19,13 +25,15 @@ def transformDirective(_context, provides=None, component=None, factory=None,
         component = factory()
         factory = None
 
-    if name is None or name.startswith('plone.transforms.transform'):
-        # If no name was specified or we are subclassing one of the
-        # base classes automatically generate the name based on the full
-        # dotted class name.
-        module = component.__module__
-        classname = component.__class__.__name__
-        name = component.name = module + '.' + classname
+    if name is None:
+        name = component.name
+        if [True for n in KNOWN_BASE_NAMES if name.startswith(n)]:
+            # If no name was specified or we are subclassing one of the
+            # base classes, automatically generate the name based on the full
+            # dotted class name.
+            module = component.__module__
+            classname = component.__class__.__name__
+            name = component.name = module + '.' + classname
 
     if permission is None:
         # Default to all public permission
@@ -38,7 +46,7 @@ def transformDirective(_context, provides=None, component=None, factory=None,
         else:
             # Try to be a bit smarter about the interface guessing.
             for iface in provides:
-                if (not ITransform.isOrExtends(iface) or
+                if (not iface.isOrExtends(ITransform) or
                     iface in INVALID_INTERFACES):
                     provides.remove(iface)
             # See if we still have more than one interface
@@ -51,7 +59,13 @@ def transformDirective(_context, provides=None, component=None, factory=None,
                 if len(provides) == 1:
                     provides = provides[0]
                 else:
-                    raise TypeError("Missing 'provides' attribute")
+                    # Look again for ICommandTransform and something else
+                    if ICommandTransform in provides:
+                        provides.remove(ICommandTransform)
+                    if len(provides) == 1:
+                        provides = provides[0]
+                    else:
+                        raise TypeError("Missing 'provides' attribute")
 
     utility(_context, provides=provides, component=component, factory=factory,
                     permission=permission, name=name)

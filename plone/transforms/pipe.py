@@ -25,7 +25,6 @@ class PipeTransform(CommandTransform):
     inputs = (None, )
     output = None
 
-    name = u'plone.transforms.transform.PipeTransform'
     title = _(u'title_skeleton_pipe_transform',
               default=u'A skeleton pipe transform.')
     description = None

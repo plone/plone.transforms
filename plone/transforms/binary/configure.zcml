@@ -5,14 +5,7 @@
   <plone:transform factory=".doc_txt_wv.DocTxtWvCommandTransform" />
   <plone:transform factory=".pdf_html.PDFCommandTransform" />
   <plone:transform factory=".pdf_html.PDFPipeTransform" />
-
-  <!-- <plone:transform factory=".pdf_html.PDFTextTransform" /> -->
-  <utility
-      provides="..interfaces.ITransformChain"
-      factory=".pdf_html.PDFTextTransform"
-      name="plone.transforms.binary.pdf_html.PDFTextTransform"
-      permission="zope.Public" />
-
+  <plone:transform factory=".pdf_html.PDFTextTransform" /> 
   <plone:transform factory=".xls_html_xlhtml.XlsHtmlXlhtmlCommandTransform" />
 
 </configure>
