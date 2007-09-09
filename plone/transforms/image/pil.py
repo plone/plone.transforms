@@ -18,12 +18,6 @@ except ImportError:
 class PILTransform(PersistentTransform):
     """A persistent transform which runs a transform based on the Python
     Imaging library.
-
-    Let's make sure that this implementation actually fulfills the API.
-
-      >>> from zope.interface.verify import verifyClass
-      >>> verifyClass(IPILTransform, PILTransform)
-      True
     """
 
     implements(IPILTransform)

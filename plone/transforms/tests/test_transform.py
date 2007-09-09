@@ -49,8 +49,26 @@ class SplitTransform(Transform):
                                subobjects=dict(second=iter(second)))
 
 
+def testTransformResult():
+    """
+    Let's make sure that this implementation actually fulfills the API.
+
+      >>> from plone.transforms.interfaces import ITransformResult
+
+      >>> from zope.interface.verify import verifyClass
+      >>> verifyClass(ITransformResult, TransformResult)
+      True
+    """
+
+
 def testEmptyTransform():
     """
+    Let's make sure that this implementation actually fulfills the API.
+
+      >>> from zope.interface.verify import verifyClass
+      >>> verifyClass(ITransform, Transform)
+      True
+
     First we create and register a new transform:
 
       >>> gsm = getGlobalSiteManager()
@@ -86,6 +104,12 @@ def testEmptyTransform():
 
 def testEmptyPersistentTransform():
     """
+    Let's make sure that this implementation actually fulfills the API.
+
+      >>> from zope.interface.verify import verifyClass
+      >>> verifyClass(ITransform, PersistentTransform)
+      True
+
     First we create and register a new transform:
 
       >>> gsm = getGlobalSiteManager()
@@ -156,7 +180,6 @@ def testSplitTransform():
 
 def test_suite():
     return unittest.TestSuite((
-        DocTestSuite('plone.transforms.transform'),
         DocTestSuite(setUp=configurationSetUp,
                      tearDown=tearDown,
                      optionflags=doctest.ELLIPSIS | 

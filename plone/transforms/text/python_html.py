@@ -1,6 +1,3 @@
-from zope.interface import implements
-
-from plone.transforms.interfaces import IPipeTransform
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.pipe import PipeTransform
 from plone.transforms.stringiter import StringIter
@@ -10,8 +7,6 @@ class PythonHtmlTransform(PipeTransform):
     """A transform which transforms Python code into HTML with code syntax
     highlighting.
     """
-
-    implements(IPipeTransform)
 
     name = u'plone.transforms.text.python_html.PythonHtmlTransform'
 

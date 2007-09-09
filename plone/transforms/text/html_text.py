@@ -3,9 +3,6 @@ HTML to text transform
 """
 import re
 
-from zope.interface import implements
-
-from plone.transforms.interfaces import ITransform
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.stringiter import StringIter
 from plone.transforms.transform import Transform
@@ -23,15 +20,10 @@ FILTERS = frozenset((SCRIPT_RE, STYLE_RE, HEAD_RE, TEXTFORMAT_RE, TAG_RE))
 class HtmlToTextTransform(Transform):
     """A transform which transforms HTML into Text."""
 
-    implements(ITransform)
-
     name = u'plone.transforms.text.html_text.HtmlToTextTransform'
 
     title = _(u'title_html_to_text_transform',
         default=u'HTML to Text transform')
-
-    description = _(u'description_html_to_text_transform',
-        default=u"A transform which transforms HTML into Text.")
 
     inputs  = ("text/html",)
     output = "text/plain"

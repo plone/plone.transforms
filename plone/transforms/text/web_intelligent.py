@@ -1,9 +1,6 @@
 """
 
 """
-from zope.interface import implements
-
-from plone.transforms.interfaces import ITransform
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.stringiter import StringIter
 from plone.transforms.transform import Transform
@@ -20,8 +17,6 @@ except ImportError:
 
 class WebIntelligentHtmlTransform(Transform):
     """A transform which transforms web intelligent text into HTML."""
-
-    implements(ITransform)
 
     name = u'plone.transforms.text.web_intelligent.WebIntelligentHtmlTransform'
 
@@ -49,8 +44,6 @@ class WebIntelligentHtmlTransform(Transform):
 
 class HtmlWebIntelligentTransform(Transform):
     """A transform which transforms HTML into web intelligent text."""
-
-    implements(ITransform)
 
     name = u'plone.transforms.text.web_intelligent.HtmlWebIntelligentTransform'
 

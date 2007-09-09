@@ -10,13 +10,20 @@ from zope.component.testing import tearDown
 from zope.testing import doctest
 from zope.testing.doctestunit import DocTestSuite
 
-from plone.transforms.interfaces import ITransform
-
 from plone.transforms.tests.utils import configurationSetUp
 
 
 def testIdentityTransform():
     """
+    Let's make sure that this implementation actually fulfills the API.
+
+      >>> from plone.transforms.interfaces import ITransform
+      >>> from plone.transforms.identity import IdentityTransform
+
+      >>> from zope.interface.verify import verifyClass
+      >>> verifyClass(ITransform, IdentityTransform)
+      True
+
     First we get the transform utility.
 
       >>> util = queryUtility(ITransform,
@@ -56,7 +63,6 @@ def testIdentityTransform():
 
 def test_suite():
     return unittest.TestSuite((
-        DocTestSuite('plone.transforms.identity'),
         DocTestSuite(setUp=configurationSetUp,
                      tearDown=tearDown,
                      optionflags=doctest.ELLIPSIS | 

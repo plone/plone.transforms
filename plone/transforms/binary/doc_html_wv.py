@@ -1,7 +1,4 @@
-from zope.interface import implements
-
 from plone.transforms.command import CommandTransform
-from plone.transforms.interfaces import ICommandTransform
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.stringiter import StringIter
 from plone.transforms.utils import html_bodyfinder
@@ -11,8 +8,6 @@ class DocHtmlWvCommandTransform(CommandTransform):
     """A transform which transforms doc into HTML including the images
     as subobjects.
     """
-
-    implements(ICommandTransform)
 
     name = u'plone.transforms.binary.doc_html_wv.DocHtmlWvCommandTransform'
 

@@ -13,13 +13,7 @@ class TransformResult(object):
     
     The data argument takes an object providing Python's iterator protocol.
     In case of textual data, the data has to be Unicode. The same applies
-    to the data return value and the values in the subobjects
-
-    Let's make sure that this implementation actually fulfills the API.
-
-      >>> from zope.interface.verify import verifyClass
-      >>> verifyClass(ITransformResult, TransformResult)
-      True
+    to the data return value and the values in the subobjects.
     """
 
     implements(ITransformResult)
@@ -43,14 +37,7 @@ class TransformResult(object):
 
 
 class Transform(object):
-    """A transform is an utility.
-
-    Let's make sure that this implementation actually fulfills the API.
-
-      >>> from zope.interface.verify import verifyClass
-      >>> verifyClass(ITransform, Transform)
-      True
-    """
+    """A transform is an utility."""
 
     implements(ITransform)
 
@@ -63,9 +50,6 @@ class Transform(object):
     description = None
 
     available = True
-
-    def __init__(self):
-        super(Transform, self).__init__()
 
     def _validate(self, data):
         """Checks if the transform itself is available and the passed in data
@@ -98,24 +82,9 @@ class Transform(object):
 
 
 class PersistentTransform(Transform, Persistent):
-    """A persistent transform is an utility with optional configuration
-    information.
-
-    Let's make sure that this implementation actually fulfills the API.
-
-      >>> from zope.interface.verify import verifyClass
-      >>> verifyClass(ITransform, PersistentTransform)
-      True
+    """A persistent transform is an persistent utility.
     """
-
-    implements(ITransform)
-
-    inputs = (None, )
-    output = None
 
     name = u'plone.transforms.transform.PersistentTransform'
     title = _(u'title_skeleton_transform',
               default=u'A skeleton transform.')
-    description = None
-
-    available = True

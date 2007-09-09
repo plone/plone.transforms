@@ -4,10 +4,7 @@ from zope.interface import implements
 
 from plone.transforms.chain import PersistentTransformChain
 from plone.transforms.command import CommandTransform
-from plone.transforms.interfaces import ICommandTransform
-from plone.transforms.interfaces import IPipeTransform
 from plone.transforms.interfaces import IRankedTransform
-from plone.transforms.interfaces import ITransformChain
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.pipe import PipeTransform
 from plone.transforms.stringiter import StringIter
@@ -24,16 +21,12 @@ class PDFCommandTransform(CommandTransform):
     """A transform which transforms pdf into HTML including the images
     as subobjects."""
 
-    implements(ICommandTransform, IRankedTransform)
+    implements(IRankedTransform)
 
     name = u'plone.transforms.binary.pdf_html.PDFCommandTransform'
 
     title = _(u'title_pdf_html_transform',
         default=u'PDF to HTML transform including images.')
-
-    description = _(u'description_pdf_html_transform',
-        default=u"A transform which transforms a PDF into HTML and "
-                 "provides the images as subobjects.")
 
     inputs  = ("application/pdf",)
     output = "text/html"
@@ -64,15 +57,12 @@ class PDFCommandTransform(CommandTransform):
 class PDFPipeTransform(PipeTransform):
     """A transform which transforms pdf into HTML."""
 
-    implements(IPipeTransform, IRankedTransform)
+    implements(IRankedTransform)
 
     name = u'plone.transforms.binary.pdf_html.PDFPipeTransform'
 
     title = _(u'title_pdf_html_transform',
         default=u'PDF to HTML only transform')
-
-    description = _(u'description_pdf_html_transform',
-        default=u"A transform which transforms a PDF into HTML.")
 
     inputs  = ("application/pdf",)
     output = "text/html"
@@ -89,8 +79,6 @@ class PDFPipeTransform(PipeTransform):
 
 class PDFTextTransform(PersistentTransformChain):
     """A transform chain which transforms pdf into text."""
-
-    implements(ITransformChain)
 
     name = u'plone.transforms.binary.pdf_html.PDFTextTransform'
     title = _(u'title_pdf_text_transform',

@@ -13,11 +13,19 @@ from plone.transforms.image.pil import HAS_PIL
 from plone.transforms.tests.utils import configurationSetUp
 
 
-def testEmptyPILTransform():
+def testPILTransform():
     """
+    Let's make sure that this implementation actually fulfills the API.
+
+      >>> from plone.transforms.interfaces import IPILTransform
+      >>> from plone.transforms.image.pil import PILTransform
+
+      >>> from zope.interface.verify import verifyClass
+      >>> verifyClass(IPILTransform, PILTransform)
+      True
+
     Create a new command transform:
 
-      >>> from plone.transforms.image.pil import PILTransform
       >>> transform = PILTransform()
 
     Set up some test data:
@@ -52,7 +60,6 @@ def testEmptyPILTransform():
 def test_suite():
     if HAS_PIL:
         return unittest.TestSuite((
-            DocTestSuite('plone.transforms.image.pil'),
             DocTestSuite(setUp=configurationSetUp,
                          tearDown=tearDown,
                          optionflags=doctest.ELLIPSIS | 

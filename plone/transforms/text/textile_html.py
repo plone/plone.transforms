@@ -4,9 +4,6 @@ handy work
 
 Based on work from: Tom Lazar <tom@tomster.org> at the archipelago sprint 2006.
 """
-from zope.interface import implements
-
-from plone.transforms.interfaces import ITransform
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.stringiter import StringIter
 from plone.transforms.transform import Transform
@@ -21,8 +18,6 @@ except ImportError:
 
 class TextileTransform(Transform):
     """A transform which transforms textile text into HTML."""
-
-    implements(ITransform)
 
     name = u'plone.transforms.text.textile_html.TextileTransform'
 
