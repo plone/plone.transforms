@@ -31,15 +31,12 @@ TODO
       Here's the current list of transforms only available in PortalTransforms
       right now:
 
-        lynx_dump
         office_com
         office_uno
         office_wvware
         rtf_to_html
         rtf_to_xml
         safe_html
-        text_pre_to_html
-        text_to_html
         build_transforms
         xml
 
