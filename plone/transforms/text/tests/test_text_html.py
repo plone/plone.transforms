@@ -9,7 +9,6 @@ from plone.transforms.interfaces import ITransform
 from plone.transforms.tests.base import TransformTestCase
 from plone.transforms.text.text_html import TextHtmlTransform
 from plone.transforms.text.text_html import TextPreHtmlTransform
-from plone.transforms.text.text_html import HAS_TEXT
 
 
 class TextHtmlTransformTest(TransformTestCase):
@@ -32,7 +31,6 @@ class TextPreHtmlTransformTest(TransformTestCase):
 
 def test_suite():
     suite = TestSuite()
-    if HAS_TEXT:
-        suite.addTest(makeSuite(TextHtmlTransformTest))
-        suite.addTest(makeSuite(TextPreHtmlTransformTest))
+    suite.addTest(makeSuite(TextHtmlTransformTest))
+    suite.addTest(makeSuite(TextPreHtmlTransformTest))
     return suite
