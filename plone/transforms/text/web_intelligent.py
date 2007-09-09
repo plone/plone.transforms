@@ -18,7 +18,7 @@ class WebIntelligentHtmlTransform(Transform):
     title = _(u'title_web_intelligent_html_transform',
         default=u'Web Intelligent Text to HTML transform')
 
-    inputs  = ("text/x-web-intelligent",)
+    inputs = ("text/x-web-intelligent", )
     output = "text/html"
 
     available = False
@@ -29,7 +29,6 @@ class WebIntelligentHtmlTransform(Transform):
             self.available = True
 
     def transform(self, data, options=None):
-        """Returns the transform result."""
         if self._validate(data) is None:
             return None
 
@@ -43,7 +42,7 @@ class HtmlWebIntelligentTransform(Transform):
     title = _(u'title_html_web_intelligent_transform',
         default=u'HTML to Web Intelligent Text transform')
 
-    inputs  = ("text/html",)
+    inputs = ("text/html",)
     output = "text/x-web-intelligent"
 
     available = False
@@ -54,7 +53,6 @@ class HtmlWebIntelligentTransform(Transform):
             self.available = True
 
     def transform(self, data, options=None):
-        """Returns the transform result."""
         if self._validate(data) is None:
             return None
 

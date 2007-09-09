@@ -12,18 +12,13 @@ class DocHtmlWvCommandTransform(CommandTransform):
     title = _(u'title_doc_html_wv_transform',
         default=u'DOC to HTML transform including images.')
 
-    description = _(u'description_doc_html_wv_transform',
-        default=u"A transform which transforms a DOC into HTML and "
-                 "provides the images as subobjects.")
-
-    inputs  = ("application/msword",)
+    inputs = ("application/msword", )
     output = "text/html"
 
     command = 'wvHtml'
     args = "%(infile)s %(infile)s.html --charset=utf-8"
 
     def transform(self, data, options=None):
-        """Returns the transform result."""
         if self._validate(data) is None:
             return None
 

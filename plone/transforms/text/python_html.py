@@ -11,7 +11,7 @@ class PythonHtmlTransform(PipeTransform):
     title = _(u'title_python_html_transform',
         default=u'Python to HTML transform')
 
-    inputs  = ("text/x-python",)
+    inputs = ("text/x-python", )
     output = "text/html"
 
     command = 'source-highlight'

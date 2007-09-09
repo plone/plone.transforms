@@ -4,20 +4,18 @@ from plone.transforms.stringiter import StringIter
 
 
 class DocTxtWvCommandTransform(CommandTransform):
-    """A transform which transforms doc into Text.
-    """
+    """A transform which transforms doc into Text."""
 
     title = _(u'title_doc_txt_wv_transform',
         default=u'DOC to Text transform.')
 
-    inputs  = ("application/msword",)
+    inputs = ("application/msword", )
     output = "text/plain"
 
     command = 'wvText'
     args = "%(infile)s %(infile)s.text "
 
     def transform(self, data, options=None):
-        """Returns the transform result."""
         if self._validate(data) is None:
             return None
 

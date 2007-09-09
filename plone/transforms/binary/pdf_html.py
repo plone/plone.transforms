@@ -26,7 +26,7 @@ class PDFCommandTransform(CommandTransform):
     title = _(u'title_pdf_html_transform',
         default=u'PDF to HTML transform including images.')
 
-    inputs  = ("application/pdf",)
+    inputs = ("application/pdf", )
     output = "text/html"
 
     command = 'pdftohtml'
@@ -40,7 +40,6 @@ class PDFCommandTransform(CommandTransform):
         return html
 
     def transform(self, data, options=None):
-        """Returns the transform result."""
         if self._validate(data) is None:
             return None
 
@@ -60,7 +59,7 @@ class PDFPipeTransform(PipeTransform):
     title = _(u'title_pdf_html_transform',
         default=u'PDF to HTML only transform')
 
-    inputs  = ("application/pdf",)
+    inputs = ("application/pdf", )
     output = "text/html"
 
     command = 'pdftohtml'

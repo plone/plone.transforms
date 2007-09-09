@@ -23,13 +23,12 @@ class HtmlToTextTransform(Transform):
     title = _(u'title_html_to_text_transform',
         default=u'HTML to Text transform')
 
-    inputs  = ("text/html",)
+    inputs = ("text/html", )
     output = "text/plain"
 
     available = True
 
     def transform(self, data, options=None):
-        """Returns the transform result."""
         if self._validate(data) is None:
             return None
 

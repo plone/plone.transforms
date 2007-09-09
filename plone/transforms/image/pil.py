@@ -25,13 +25,10 @@ class PILTransform(PersistentTransform):
     name = u'plone.transforms.image.pil.PILTransform'
     title = _(u'title_skeleton_pil_transform',
               default=u'A skeleton PIL transform.')
-    description = None
 
     inputs = ('image/x-ms-bmp', 'image/gif', 'image/jpeg', 'image/pcx',
               'image/png', 'image/x-portable-pixmap', 'image/tiff')
     output = None
-
-    available = False
 
     format = None
     width = None

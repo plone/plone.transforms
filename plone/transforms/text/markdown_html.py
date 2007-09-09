@@ -22,7 +22,7 @@ class MarkdownTransform(Transform):
     title = _(u'title_markdown_transform',
         default=u'Markdown to HTML transform')
 
-    inputs  = ("text/x-web-markdown",)
+    inputs = ("text/x-web-markdown", )
     output = "text/html"
 
     available = False
@@ -33,7 +33,6 @@ class MarkdownTransform(Transform):
             self.available = True
 
     def transform(self, data, options=None):
-        """Returns the transform result."""
         if self._validate(data) is None:
             return None
 

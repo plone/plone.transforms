@@ -14,11 +14,10 @@ class HtmlBodyTransform(Transform):
     title = _(u'title_html_body_transform',
         default=u'HTML body extractor')
 
-    inputs  = ("text/html",)
+    inputs = ("text/html", )
     output = "text/html"
 
     def transform(self, data, options=None):
-        """Returns the transform result."""
         if self._validate(data) is None:
             return None
 
