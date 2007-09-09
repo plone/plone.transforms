@@ -5,8 +5,7 @@ TODO
 
     - Write an iterator based version of the html_bodyfinder, so the pdf to
       html transforms don't need to load the whole file into memory.
-
-    - Use reversed(iter) (needs __len__ and __getitem__) for the html
+      Use reversed(iter) (needs __len__ and __getitem__) for the html
       bodyfinder? Or collections.deque which has both leftpop and rightpop.
 
     - Make the configuration screen for the engine.
@@ -27,8 +26,6 @@ TODO
     - Make a new plone.app.transforms package which has GenericSetup export/
       import handlers for the engine configuration.
 
-    - Re-evaluate security settings.
-
     - Port and make more transforms ;)
 
       Here's the current list of transforms only available in PortalTransforms
@@ -38,7 +35,6 @@ TODO
         office_com
         office_uno
         office_wvware
-        rest
         rtf_to_html
         rtf_to_xml
         safe_html
