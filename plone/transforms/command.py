@@ -1,6 +1,5 @@
 from logging import DEBUG
 import os
-from os.path import isdir
 import shutil
 import tempfile
 from cStringIO import StringIO as cStringIO
@@ -148,7 +147,7 @@ class CommandTransform(PersistentTransform):
                 fd.close()
                 os.unlink(tmp)
         finally:
-            if isdir(tmpdirpath):
+            if os.path.isdir(tmpdirpath):
                 shutil.rmtree(tmpdirpath)
 
         return result
