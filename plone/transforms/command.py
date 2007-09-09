@@ -15,8 +15,8 @@ from plone.transforms.transform import TransformResult
 from plone.transforms.utils import bin_search
 
 
-# Helper method which can write both directly to a file object an to an integer
-# representing an open file.
+# Helper method which can write both directly to a file object and to an
+# integer representing an open file
 def _write(fd, text, fdint=False):
     if fdint:
         os.write(fd, text)
