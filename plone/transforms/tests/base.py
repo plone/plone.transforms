@@ -46,6 +46,10 @@ class TransformTestCase(TestCase):
 
     def test_transform(self):
         util = queryUtility(ITransform, name=self.name)
+
+        if not util.available:
+            return
+
         result = util.transform(self.input_)
 
         # Make sure we got back a proper result
