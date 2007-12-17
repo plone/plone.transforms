@@ -1,9 +1,3 @@
-"""
-
-"""
-from zope.interface import implements
-
-from plone.transforms.interfaces import ITransform
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.stringiter import StringIter
 from plone.transforms.transform import Transform
@@ -21,14 +15,10 @@ except ImportError:
 class WebIntelligentHtmlTransform(Transform):
     """A transform which transforms web intelligent text into HTML."""
 
-    implements(ITransform)
-
-    name = u'plone.transforms.text.web_intelligent.WebIntelligentHtmlTransform'
-
     title = _(u'title_web_intelligent_html_transform',
         default=u'Web Intelligent Text to HTML transform')
 
-    inputs  = ("text/x-web-intelligent",)
+    inputs = ("text/x-web-intelligent", )
     output = "text/html"
 
     available = False
@@ -38,8 +28,7 @@ class WebIntelligentHtmlTransform(Transform):
         if HAS_WEB_INTELLIGENTTEXT:
             self.available = True
 
-    def transform(self, data):
-        """Returns the transform result."""
+    def transform(self, data, options=None):
         if self._validate(data) is None:
             return None
 
@@ -50,14 +39,10 @@ class WebIntelligentHtmlTransform(Transform):
 class HtmlWebIntelligentTransform(Transform):
     """A transform which transforms HTML into web intelligent text."""
 
-    implements(ITransform)
-
-    name = u'plone.transforms.text.web_intelligent.HtmlWebIntelligentTransform'
-
     title = _(u'title_html_web_intelligent_transform',
         default=u'HTML to Web Intelligent Text transform')
 
-    inputs  = ("text/html",)
+    inputs = ("text/html",)
     output = "text/x-web-intelligent"
 
     available = False
@@ -67,10 +52,10 @@ class HtmlWebIntelligentTransform(Transform):
         if HAS_WEB_INTELLIGENTTEXT:
             self.available = True
 
-    def transform(self, data):
-        """Returns the transform result."""
+    def transform(self, data, options=None):
         if self._validate(data) is None:
             return None
 
-        html = convertHtmlToWebIntelligentPlainText(u''.join(data))
-        return TransformResult(StringIter(html))
+        html = u''.join(data).encode('utf-8')
+        html = convertHtmlToWebIntelligentPlainText(html)
+        return TransformResult(StringIter(unicode(html, 'utf-8')))

@@ -13,6 +13,7 @@ class BinaryLayer:
     def setUp(cls):
         setUp()
         XMLConfig('meta.zcml', zope.component)()
+        XMLConfig('meta.zcml', plone.transforms)()
         XMLConfig('configure.zcml', plone.transforms.binary)()
         XMLConfig('configure.zcml', plone.transforms.text)()
 

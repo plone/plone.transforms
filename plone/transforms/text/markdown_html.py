@@ -4,9 +4,6 @@ handy work
 
 Based on work from: Tom Lazar <tom@tomster.org> at the archipelago sprint 2006.
 """
-from zope.interface import implements
-
-from plone.transforms.interfaces import ITransform
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.stringiter import StringIter
 from plone.transforms.transform import Transform
@@ -22,14 +19,10 @@ except ImportError:
 class MarkdownTransform(Transform):
     """A transform which transforms markdown text into HTML."""
 
-    implements(ITransform)
-
-    name = u'plone.transforms.text.markdown_html.MarkdownTransform'
-
     title = _(u'title_markdown_transform',
         default=u'Markdown to HTML transform')
 
-    inputs  = ("text/x-web-markdown",)
+    inputs = ("text/x-web-markdown", )
     output = "text/html"
 
     available = False
@@ -39,8 +32,7 @@ class MarkdownTransform(Transform):
         if HAS_MARKDOWN:
             self.available = True
 
-    def transform(self, data):
-        """Returns the transform result."""
+    def transform(self, data, options=None):
         if self._validate(data) is None:
             return None
 

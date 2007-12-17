@@ -25,7 +25,6 @@ class PipeTransform(CommandTransform):
     inputs = (None, )
     output = None
 
-    name = u'plone.transforms.transform.PipeTransform'
     title = _(u'title_skeleton_pipe_transform',
               default=u'A skeleton pipe transform.')
     description = None
@@ -45,14 +44,14 @@ class PipeTransform(CommandTransform):
         out.seek(0)
         return out
 
-    def transform(self, data):
+    def transform(self, data, options=None):
         """Returns the transform result."""
         if self._validate(data) is None:
             return None
 
+        commandline = "%s %s" % (self.command, self.args)
         if not self.use_stdin:
             tmpname = self.initialize_tmpfile(data)
-            commandline = "%s %s" % (self.command, self.args)
             commandline = commandline % { 'infile' : tmpname }
 
         child_stdin, child_stdout, child_stderr = os.popen3(commandline, 'b')

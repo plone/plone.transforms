@@ -9,14 +9,23 @@ from zope.component.testing import tearDown
 from zope.testing import doctest
 from zope.testing.doctestunit import DocTestSuite
 
+from plone.transforms.image.pil import HAS_PIL
 from plone.transforms.tests.utils import configurationSetUp
 
 
-def testEmptyPILTransform():
+def testPILTransform():
     """
+    Let's make sure that this implementation actually fulfills the API.
+
+      >>> from plone.transforms.interfaces import IPILTransform
+      >>> from plone.transforms.image.pil import PILTransform
+
+      >>> from zope.interface.verify import verifyClass
+      >>> verifyClass(IPILTransform, PILTransform)
+      True
+
     Create a new command transform:
 
-      >>> from plone.transforms.image.pil import PILTransform
       >>> transform = PILTransform()
 
     Set up some test data:
@@ -49,10 +58,12 @@ def testEmptyPILTransform():
 
 
 def test_suite():
-    return unittest.TestSuite((
-        DocTestSuite('plone.transforms.image.pil'),
-        DocTestSuite(setUp=configurationSetUp,
-                     tearDown=tearDown,
-                     optionflags=doctest.ELLIPSIS | 
-                                 doctest.NORMALIZE_WHITESPACE),
-        ))
+    if HAS_PIL:
+        return unittest.TestSuite((
+            DocTestSuite(setUp=configurationSetUp,
+                         tearDown=tearDown,
+                         optionflags=doctest.ELLIPSIS | 
+                                     doctest.NORMALIZE_WHITESPACE),
+            ))
+    else:
+        return unittest.TestSuite()

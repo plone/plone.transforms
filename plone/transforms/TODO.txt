@@ -1,17 +1,11 @@
 TODO
 ====
 
-    - Write more tests for the engine. Check the use_ranked vs. not use_ranked
-      behavior.
-
-    - Write tests for web.intelligenttext!
-
     - Port the xslt base transform class.
 
     - Write an iterator based version of the html_bodyfinder, so the pdf to
       html transforms don't need to load the whole file into memory.
-
-    - Use reversed(iter) (needs __len__ and __getitem__) for the html
+      Use reversed(iter) (needs __len__ and __getitem__) for the html
       bodyfinder? Or collections.deque which has both leftpop and rightpop.
 
     - Make the configuration screen for the engine.
@@ -25,32 +19,29 @@ TODO
       would be nice.
 
     - Reconsider passing a desired filename argument to the command transforms,
-      make the infile_data_suffix argument more clever or powerful.
+      make the infile_data_suffix argument more clever or powerful. Stuff more
+      things into the new options argument, pass these down to the helper
+      functions.
 
     - Make a new plone.app.transforms package which has GenericSetup export/
       import handlers for the engine configuration.
-
-    - Re-evaluate security settings.
 
     - Port and make more transforms ;)
 
       Here's the current list of transforms only available in PortalTransforms
       right now:
 
-        lynx_dump
         office_com
         office_uno
         office_wvware
-        python
-        rest
         rtf_to_html
         rtf_to_xml
         safe_html
-        st (aka structuredtext)
-        text_pre_to_html
-        text_to_html
         build_transforms
         xml
+
+    - Look into textindexng, smartprintng, AROfficeTransforms, AttachmentField
+      for more or more clever transforms.
 
 Not directly package related tasks
 ----------------------------------

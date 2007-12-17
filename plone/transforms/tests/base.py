@@ -33,7 +33,12 @@ class TransformTestCase(TestCase):
 
     def test_invalid_transform(self):
         util = queryUtility(ITransform, name=self.name)
-        result = util.transform(None)
+        try:
+            result = util.transform(None)
+        except ValueError, e:
+            if e.args[0].endswith('The transform is unavailable.'):
+                return
+            raise
         self.failUnless(result is None)
 
         result = util.transform(u'foo')
@@ -41,11 +46,15 @@ class TransformTestCase(TestCase):
 
     def test_transform(self):
         util = queryUtility(ITransform, name=self.name)
+
+        if not util.available:
+            return
+
         result = util.transform(self.input_)
 
         # Make sure we got back a proper result
         self.failUnless(ITransformResult.providedBy(result))
-        self.failUnless(result.errors is None)
+        self.failUnless(not result.errors)
 
         # Did we get an iterator as the primary result data?
         self.failUnless(getattr(result.data, 'next', None) is not None)

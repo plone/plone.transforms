@@ -29,11 +29,15 @@ class ITransformEngine(Interface):
         be used for a particular input / output mimetype combination.
         """
 
-    def transform(data, input_mimetype, output_mimetype):
+    def transform(data, input_mimetype, output_mimetype, options=None):
         """
         The transform method takes some data in one of the input formats.
         It returns either an ITransformResult including data the output format
         or None if an error occurred.
+
+        The optional options dictonary can be used to provide additional
+        arguments to influence the result of the transform, like image sizes
+        or quality settings.
         """
 
 

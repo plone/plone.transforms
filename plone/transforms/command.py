@@ -1,6 +1,4 @@
-from logging import DEBUG
 import os
-from os.path import isdir
 import shutil
 import tempfile
 from cStringIO import StringIO as cStringIO
@@ -9,11 +7,20 @@ from StringIO import StringIO
 from zope.interface import implements
 
 from plone.transforms.interfaces import ICommandTransform
-from plone.transforms.log import log
+from plone.transforms.log import log_debug
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.transform import PersistentTransform
 from plone.transforms.transform import TransformResult
 from plone.transforms.utils import bin_search
+
+
+# Helper method which can write both directly to a file object and to an
+# integer representing an open file
+def _write(fd, text, fdint=False):
+    if fdint:
+        os.write(fd, text)
+    else:
+        fd.write(text)
 
 
 class CommandTransform(PersistentTransform):
@@ -29,7 +36,6 @@ class CommandTransform(PersistentTransform):
 
     implements(ICommandTransform)
 
-    name = u'plone.transforms.transform.CommandTransform'
     title = _(u'title_skeleton_command_transform',
               default=u'A skeleton command transform.')
     description = None
@@ -45,32 +51,36 @@ class CommandTransform(PersistentTransform):
     def __init__(self):
         super(CommandTransform, self).__init__()
         if self.command is None:
-            log(DEBUG, "There was no command given for the %s transform." %
-                        self.name)
+            log_debug("There was no command given for the %s transform." %
+                      self.name)
         else:
             if bin_search(self.command):
                 self.available = True
             else:
-                log(DEBUG, "The binary %s could not be found, while trying "
-                           "to use the %s transform." % (self.command, self.name))
+                log_debug("The binary %s could not be found, while trying to "
+                          "use the %s transform." % (self.command, self.name))
 
     def write(self, fd, data):
+        if isinstance(fd, int):
+            fdint = True
+        else:
+            fdint = False
         # write data to tmp using a file descriptor
         firstchunk = data.next()
         if isinstance(firstchunk, unicode):
-            self.write_text(fd, firstchunk, data)
+            self.write_text(fd, firstchunk, data, fdint=fdint)
         else:
-            self.write_binary(fd, firstchunk, data)
+            self.write_binary(fd, firstchunk, data, fdint=fdint)
 
-    def write_binary(self, fd, firstchunk, data):
-        os.write(fd, firstchunk)
+    def write_binary(self, fd, firstchunk, data, fdint=False):
+        _write(fd, firstchunk, fdint=fdint)
         for chunk in data:
-            os.write(fd, chunk)
+            _write(fd, chunk, fdint=fdint)
 
-    def write_text(self, fd, firstchunk, data):
-        os.write(fd, firstchunk.encode('utf-8'))
+    def write_text(self, fd, firstchunk, data, fdint=False):
+        _write(fd, firstchunk.encode('utf-8'), fdint=fdint)
         for chunk in data:
-            os.write(fd, chunk.encode('utf-8')) 
+            _write(fd, chunk.encode('utf-8'), fdint=fdint)
 
     def initialize_tmpfile(self, data, directory=None):
         """Create a temporary file and copy input into it.
@@ -95,6 +105,7 @@ class CommandTransform(PersistentTransform):
         The method takes some data in one of the input formats and returns
         a TransformResult with data in the output format.
         """
+        result = TransformResult(None)
         try:
             tmpdirpath = tempfile.mkdtemp()
             tmpfilepath = self.initialize_tmpfile(data, directory=tmpdirpath)
@@ -112,7 +123,6 @@ class CommandTransform(PersistentTransform):
                 commandline = commandline + ' 2>error_log 1>/dev/null'
 
             os.system(commandline)
-            result = TransformResult(None)
 
             for tmpfile in os.listdir(tmpdirpath):
                 tmp = os.path.join(tmpdirpath, tmpfile)
@@ -135,12 +145,12 @@ class CommandTransform(PersistentTransform):
                 fd.close()
                 os.unlink(tmp)
         finally:
-            if isdir(tmpdirpath):
+            if os.path.isdir(tmpdirpath):
                 shutil.rmtree(tmpdirpath)
 
         return result
 
-    def transform(self, data):
+    def transform(self, data, options=None):
         """Returns the transform result."""
         if self._validate(data) is None:
             return None

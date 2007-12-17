@@ -18,3 +18,8 @@ class ICommandTransform(ITransform):
         The temporary directory in which the file is being created can
         optionally be specified via the directory argument.
         """
+
+    def prepare_transform(data, infile_data_suffix=False):
+        """The method takes some data in one of the input formats and returns
+        a TransformResult with data in the output format.
+        """

@@ -5,6 +5,8 @@
 
 import unittest
 
+from plone.transforms.image.pil import HAS_PIL
+
 from plone.transforms.image.bmp import BmpTransform
 from plone.transforms.image.gif import GifTransform
 from plone.transforms.image.jpeg import JpegTransform
@@ -22,33 +24,36 @@ from plone.transforms.interfaces import IPILTransform
 TRANSFORMS = [
     dict(name='plone.transforms.image.bmp.BmpTransform',
          class_=BmpTransform,
-         output='BM'
+         output='BMP',
         ),
     dict(name='plone.transforms.image.gif.GifTransform',
          class_=GifTransform,
-         output='GIF87a\x18'
+         output='GIF',
         ),
     dict(name='plone.transforms.image.jpeg.JpegTransform',
          class_=JpegTransform,
-         output='\xff\xd8\xff\xe0\x00\x10JFIF'
+         output='JPEG',
         ),
     dict(name='plone.transforms.image.pcx.PcxTransform',
          class_=PcxTransform,
-         output='\n\x05\x01\x08\x00\x00\x00\x00\x17\x00'
+         output='PCX',
         ),
     dict(name='plone.transforms.image.png.PngTransform',
          class_=PngTransform,
-         output='\x89PNG\r\n\x1a\n\x00\x00'
+         output='PNG',
         ),
     dict(name='plone.transforms.image.ppm.PpmTransform',
          class_=PpmTransform,
-         output='P6\n24 23\n2'
+         output='PPM',
         ),
     dict(name='plone.transforms.image.tiff.TiffTransform',
          class_=TiffTransform,
-         output='II*\x00\x08\x00\x00\x00\t\x00'
+         output='TIFF',
         ),
 ]
+
+if not HAS_PIL:
+    TRANSFORMS = []
 
 tests = []
 for transform in TRANSFORMS:
@@ -64,9 +69,22 @@ for transform in TRANSFORMS:
 
     tests.append(PILTransformTest)
 
+    class PILSizedTransformTest(PILTransformTestCase):
+
+        name = transform['name']
+        class_ = transform['class_']
+        interface = IPILTransform
+        inputfiles = [input_file_path('logo.' + e) for e in
+                      'bmp', 'gif', 'jpg', 'pcx', 'png', 'ppm', 'tiff']
+        output = transform['output']
+        options = dict(width=10, height=9)
+
+    tests.append(PILSizedTransformTest)
+
 
 def test_suite():
     suite = unittest.TestSuite()
-    for test in tests:
-        suite.addTest(unittest.makeSuite(test))
+    if HAS_PIL:
+        for test in tests:
+            suite.addTest(unittest.makeSuite(test))
     return suite

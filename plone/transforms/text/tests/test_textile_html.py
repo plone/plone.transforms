@@ -7,7 +7,7 @@ from unittest import TestSuite, makeSuite
 
 from plone.transforms.interfaces import ITransform
 from plone.transforms.tests.base import TransformTestCase
-from plone.transforms.text.textile_html import TextileTransform
+from plone.transforms.text.textile_html import TextileTransform, HAS_TEXTILE
 
 
 class TextileTransformTest(TransformTestCase):
@@ -40,5 +40,6 @@ h2. Cheeses
 
 def test_suite():
     suite = TestSuite()
-    suite.addTest(makeSuite(TextileTransformTest))
+    if HAS_TEXTILE:
+        suite.addTest(makeSuite(TextileTransformTest))
     return suite

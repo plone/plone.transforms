@@ -33,10 +33,9 @@ class TestPersistentTransform(PersistentTransform):
 
 class SplitTransform(Transform):
 
-    name = u"plone.transforms.test_transform.SplitTransform"
     title = u"Splitting transform."
 
-    def transform(self, data):
+    def transform(self, data, options=None):
         first = []
         second = []
         while data:
@@ -49,8 +48,26 @@ class SplitTransform(Transform):
                                subobjects=dict(second=iter(second)))
 
 
+def testTransformResult():
+    """
+    Let's make sure that this implementation actually fulfills the API.
+
+      >>> from plone.transforms.interfaces import ITransformResult
+
+      >>> from zope.interface.verify import verifyClass
+      >>> verifyClass(ITransformResult, TransformResult)
+      True
+    """
+
+
 def testEmptyTransform():
     """
+    Let's make sure that this implementation actually fulfills the API.
+
+      >>> from zope.interface.verify import verifyClass
+      >>> verifyClass(ITransform, Transform)
+      True
+
     First we create and register a new transform:
 
       >>> gsm = getGlobalSiteManager()
@@ -86,6 +103,12 @@ def testEmptyTransform():
 
 def testEmptyPersistentTransform():
     """
+    Let's make sure that this implementation actually fulfills the API.
+
+      >>> from zope.interface.verify import verifyClass
+      >>> verifyClass(ITransform, PersistentTransform)
+      True
+
     First we create and register a new transform:
 
       >>> gsm = getGlobalSiteManager()
@@ -128,7 +151,7 @@ def testSplitTransform():
       >>> XMLConfig('configure.zcml', plone.transforms.tests)()
 
       >>> util = queryUtility(ITransform,
-      ...            name='plone.transforms.test_transform.SplitTransform')
+      ...            name='plone.transforms.tests.test_transform.SplitTransform')
       >>> util
       <plone.transforms.tests.test_transform.SplitTransform object at ...>
 
@@ -156,7 +179,6 @@ def testSplitTransform():
 
 def test_suite():
     return unittest.TestSuite((
-        DocTestSuite('plone.transforms.transform'),
         DocTestSuite(setUp=configurationSetUp,
                      tearDown=tearDown,
                      optionflags=doctest.ELLIPSIS | 
