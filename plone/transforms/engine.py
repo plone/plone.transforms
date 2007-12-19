@@ -119,7 +119,11 @@ class TransformEngine(object):
         transform = self.find_transform(input_mimetype, output_mimetype)
         if transform is None:
             return None
-
+        
+        if options is None:
+            options = {}
+        options['input_mimetype'] = input_mimetype
+        
         return transform.transform(data, options=options)
 
 
