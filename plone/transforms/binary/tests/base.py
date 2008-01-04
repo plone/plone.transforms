@@ -41,7 +41,7 @@ class BinaryTransformTestCase(TransformTestCase):
         # Did we get an iterator as the primary result data?
         self.failUnless(getattr(result.data, 'next', None) is not None)
 
-        # Check the beginning of the file only
+        # Check only the beginning of the file
         result_string = ''.join(result.data)
         self.failUnless(result_string.startswith(self.output))
 

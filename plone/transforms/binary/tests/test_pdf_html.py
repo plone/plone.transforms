@@ -29,8 +29,12 @@ TRANSFORMS = [
     dict(name='plone.transforms.binary.pdf_html.PDFPipeTransform',
          class_=PDFPipeTransform,
          inputfile='test_pdf_html.pdf',
-         output=u"""\n<A name=1></a>test_pdf_html.py<br>\n2007-08-03<br>
-# -*- coding: UTF-8 -*-<br>&quot;&quot;&quot;<br>    Tests for the pdf to html transform.<br>&quot;&quot;&quot;<br>
+         output=u"""\n<A name=1></a>test_pdf_html.py<br>
+2007-08-03<br>
+# -*- coding: UTF-8 -*-<br>
+&quot;&quot;&quot;<br>
+Tests for the pdf to html transform.<br>
+&quot;&quot;&quot;<br>
 """,
          subobjects=0
         ),
@@ -38,8 +42,12 @@ TRANSFORMS = [
          class_=PDFTextTransform,
          inputfile='test_pdf_html.pdf',
          output=u"""
-  test_pdf_html.py \n2007-08-03 
-# -*- coding: UTF-8 -*- &quot;&quot;&quot;     Tests for the pdf to html transform. &quot;&quot;&quot;""",
+  test_pdf_html.py 
+2007-08-03 
+# -*- coding: UTF-8 -*- 
+&quot;&quot;&quot; 
+Tests for the pdf to html transform. 
+&quot;&quot;&quot;""",
          subobjects=0
         ),
 ]
