@@ -38,6 +38,9 @@ class ITransformEngine(Interface):
         The optional options dictonary can be used to provide additional
         arguments to influence the result of the transform, like image sizes
         or quality settings.
+        
+        Per default it will contain both the input_mimetype and output_mimetype
+        values provided to this method.
         """
 
 

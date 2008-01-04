@@ -4,6 +4,19 @@ Changelog for plone.transforms
 
 plone.transforms - 0.1 Unreleased
 
+    - Added both the input_mimetype and output_mimetype values provided to the
+      transform method of the engine to the options dictionary which is passed
+      on to the individual transforms.
+      
+      For example multimedia transforms which can handle different formats can
+      be implemented as single transforms this way, without having to guess the
+      input format again.
+      
+      The output_mimetype can be useful in optimizing the transform result
+      when a transform is used in a transform chain and the output format of
+      the current transform is not the desired end result.
+      [drjnut, hannosch]
+
     - Initial design and work. Lots of work has been done on the Pastisprint
       in Aix-en-Provence in August 2007. Thx to atReal and Thierry Benita for
       organizing it and his whole family for hosting us.

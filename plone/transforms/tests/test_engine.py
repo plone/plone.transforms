@@ -43,6 +43,22 @@ class IAmSecondTransform(Transform):
     output = 'bar'
 
 
+class OptionsTransform(Transform):
+
+    name = u'OptionsTransform'
+
+    inputs = ('spam', )
+    output = 'spam/options'
+
+    def transform(self, data, options=None):
+        result = super(OptionsTransform, self).transform(data, options=options)
+        if options is not None:
+            data = u''.join(result.data)
+            data += u', '.join(['[%s : %s]' % (k,v) for k,v in options.items()])
+            result.data = iter(data)
+        return result
+
+
 def testTransformEngineInstallation():
     """
     Try to get the global transform engine:
@@ -251,6 +267,48 @@ def testTransformOrder():
       >>> engine.find_transform('foo', 'bar')
       <plone.transforms.tests.test_engine.IAmSecondTransform object at ...>
     """
+
+def testTransformOptions():
+    """
+    Get the global transform engine:
+
+      >>> engine = queryUtility(ITransformEngine)
+      >>> engine
+      <plone.transforms.engine.TransformEngine object at ...>
+
+    Register our new test transform:
+
+      >>> gsm = getGlobalSiteManager()
+      >>> gsm.registerUtility(OptionsTransform(),
+      ...     ITransform,
+      ...     name='OptionsTransform')
+
+      >>> engine.find_transform('spam', 'spam/options')
+      <plone.transforms.tests.test_engine.OptionsTransform object at ...>
+
+      >>> result = engine.transform(iter(u'origtext'), 'spam', 'spam/options',
+      ...                           options=dict(foo='bar'))
+
+    Our transform should have preserved the original data:
+
+      >>> data = u''.join(result.data)
+      >>> data.startswith(u'origtext')
+      True
+
+    And it should also have put all passed in options at the end:
+
+      >>> u'[foo : bar]' in data
+      True
+
+    As well as the two default options put in by the engine itself:
+
+      >>> u'[input_mimetype : spam]' in data
+      True
+
+      >>> u'[output_mimetype : spam/options]' in data
+      True
+    """
+
 
 def test_suite():
     return unittest.TestSuite((

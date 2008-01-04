@@ -120,6 +120,11 @@ class TransformEngine(object):
         if transform is None:
             return None
 
+        if options is None:
+            options = {}
+        options['input_mimetype'] = input_mimetype
+        options['output_mimetype'] = output_mimetype
+
         return transform.transform(data, options=options)
 
 
