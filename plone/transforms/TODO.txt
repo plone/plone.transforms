@@ -43,8 +43,26 @@ TODO
     - Look into textindexng, smartprintng, AROfficeTransforms, AttachmentField
       for more or more clever transforms.
 
+    - Make a decorator for the _validate call, so:
+
+        def transform(self, data, options=None):
+            if self._validate(data) is None:
+                return None
+            return TransformResult(data)
+
+      becomes:
+
+        @validate_input
+        def transform(self, data, options=None):
+            return TransformResult(data)
+
+      and raise the log level for invalid input from debug to warn.
+
 Not directly package related tasks
 ----------------------------------
 
     - Make PortalTransforms into a wrapper around plone.transforms and use it
       directly from Archetypes.
+
+    - Port the Unicode aware cStringIO from Python 3.0 back into a separate
+      package and use it in stringiter?
