@@ -2,7 +2,10 @@ Changelog for plone.transforms
 
     (name of developer listed in brackets)
 
-plone.transforms 1.0a1 - Released February 11, 2008
+1.0a2 - Unreleased
+
+
+1.0a1 - Released February 11, 2008
 
     - Removed the unfinished engine configuration which had a Zope2 dependency.
       [hannosch]
