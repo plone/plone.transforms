@@ -2,7 +2,10 @@ Changelog for plone.transforms
 
     (name of developer listed in brackets)
 
-plone.transforms - 0.1 Unreleased
+plone.transforms 1.0a1 - Released February 11, 2008
+
+    - Removed the unfinished engine configuration which had a Zope2 dependency.
+      [hannosch]
 
     - Added both the input_mimetype and output_mimetype values provided to the
       transform method of the engine to the options dictionary which is passed
