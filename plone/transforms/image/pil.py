@@ -72,6 +72,8 @@ class PILTransform(PersistentTransform):
                           (str(e), self.name))
                 return result
 
+            transparency = pil_image.info.get("transparency", False)
+            
             if self.format in ['jpeg', 'ppm']:
                 pil_image.draft("RGB", pil_image.size)
                 pil_image = pil_image.convert("RGB")
@@ -80,7 +82,7 @@ class PILTransform(PersistentTransform):
                 pil_image.thumbnail((width, height), Image.ANTIALIAS)
 
             transformed = StringIO()
-            pil_image.save(transformed, self.format)
+            pil_image.save(transformed, self.format, transparency=transparency)
             transformed.seek(0)
 
         finally:
