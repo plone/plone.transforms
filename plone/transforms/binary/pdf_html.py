@@ -44,11 +44,13 @@ class PDFCommandTransform(CommandTransform):
             return None
 
         result = self.prepare_transform(data, infile_data_suffix='.html')
-        if result.data is not None:
-            text = ''.join(result.data).decode('utf-8', 'ignore')
-            # workaround because of bug in pdftohtml
-            text = self.fixBrokenStyles(text)
-            result.data = StringIter(html_bodyfinder(text))
+        if result.data is None:
+            return None
+
+        text = ''.join(result.data).decode('utf-8', 'ignore')
+        # workaround because of bug in pdftohtml
+        text = self.fixBrokenStyles(text)
+        result.data = StringIter(html_bodyfinder(text))
         return result
 
 
