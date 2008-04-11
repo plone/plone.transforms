@@ -4,6 +4,8 @@ Changelog for plone.transforms
 
 1.0a2 - Unreleased
 
+    - Guard against empty input in pdf_html transform.
+      [hannosch]
 
 1.0a1 - Released February 11, 2008
 
