@@ -73,16 +73,29 @@ class PILTransform(PersistentTransform):
                 return result
 
             transparency = pil_image.info.get("transparency", False)
-            
+
             if self.format in ['jpeg', 'ppm']:
                 pil_image.draft("RGB", pil_image.size)
                 pil_image = pil_image.convert("RGB")
+
+            if width is None:
+                width = pil_image.size[0]
+            if height is None:
+                height = pil_image.size[1]
 
             if width and height:
                 pil_image.thumbnail((width, height), Image.ANTIALIAS)
 
             transformed = StringIO()
-            pil_image.save(transformed, self.format, transparency=transparency)
+
+            # Only use transparency in the supported modes
+            if self.format == 'png' and pil_image.mode not in ('P', 'L'):
+                pil_image.save(transformed, self.format)
+            else:
+                pil_image.save(transformed,
+                               self.format,
+                               transparency=transparency)
+
             transformed.seek(0)
 
         finally:

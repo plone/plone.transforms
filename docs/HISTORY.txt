@@ -4,6 +4,12 @@ Changelog for plone.transforms
 
 1.0a2 - Unreleased
 
+    - Updated image transforms. Allow resizing with only one size argument.
+      The other one will be calculated to keep the aspect ratio. Also guarded
+      against errors when trying to use transparency on PNG images in modes
+      which do not support it.
+      [hannosch]
+
     - Guard against empty input in pdf_html transform.
       [hannosch]
 
