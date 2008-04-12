@@ -4,6 +4,18 @@ Changelog for plone.transforms
 
 1.0a2 - Unreleased
 
+    - Use the new arguments flexibility to extend the pdf_to_html command
+      transform with a `output_image_format` option. This controls the format
+      of the extracted images. It defaults to `png16m` and can be changed to
+      any value supported by `gs -h`, for example `jpeg`.
+      [hannosch]
+
+    - Changed the signature of prepare_transform. It has a general arguments
+      argument now, instead of one hardcoded infile_data_suffix argument.
+      This allows transforms to push arbitrary arguments down to the actual
+      command line.
+      [hannosch]
+
     - Updated image transforms. Allow resizing with only one size argument.
       The other one will be calculated to keep the aspect ratio. Also guarded
       against errors when trying to use transparency on PNG images in modes

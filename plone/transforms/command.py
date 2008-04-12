@@ -99,12 +99,15 @@ class CommandTransform(PersistentTransform):
         os.close(fd)
         return tmpfilepath
 
-    # XXX Provide more control arguments, like %(outfile)s
-    def prepare_transform(self, data, infile_data_suffix=False):
+    def prepare_transform(self, data, arguments=None):
         """
         The method takes some data in one of the input formats and returns
         a TransformResult with data in the output format.
         """
+        if arguments is not None:
+            infile_data_suffix = arguments.get('infile_data_suffix', False)
+            del arguments['infile_data_suffix']
+
         result = TransformResult(None)
         try:
             tmpdirpath = tempfile.mkdtemp()
@@ -115,7 +118,9 @@ class CommandTransform(PersistentTransform):
             commandline = 'cd "%s" && %s %s' % (
                 tmpdirpath, self.command, self.args)
 
-            commandline = commandline % { 'infile' : tmpfilepath }
+            arguments['infile'] = tmpfilepath
+            commandline = commandline % arguments
+
             if os.name=='posix':
                 # TODO: tbenita suggests to remove 1>/dev/null as some commands
                 # return result in flow. Maybe turn this into another subobject

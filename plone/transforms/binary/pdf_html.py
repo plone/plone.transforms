@@ -30,7 +30,8 @@ class PDFCommandTransform(CommandTransform):
     output = "text/html"
 
     command = 'pdftohtml'
-    args = "%(infile)s -q -c -noframes -enc UTF-8"
+    args = "%(infile)s -q -c -noframes -enc UTF-8 %(dev)s"
+    dev = 'png16m'
 
     rank = 50
 
@@ -43,7 +44,16 @@ class PDFCommandTransform(CommandTransform):
         if self._validate(data) is None:
             return None
 
-        result = self.prepare_transform(data, infile_data_suffix='.html')
+        dev = self.dev
+        if options is not None:
+            dev = options.get('output_image_format', self.dev)
+
+        arguments = {
+            'infile_data_suffix' : '.html',
+            'dev' : '-dev %s' % dev
+            }
+
+        result = self.prepare_transform(data, arguments=arguments)
         if result.data is None:
             return None
 

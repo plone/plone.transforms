@@ -22,7 +22,9 @@ class DocHtmlWvCommandTransform(CommandTransform):
         if self._validate(data) is None:
             return None
 
-        result = self.prepare_transform(data, infile_data_suffix='.html')
+        arguments = { 'infile_data_suffix' : '.html' }
+
+        result = self.prepare_transform(data, arguments=arguments)
         text = ''.join(result.data).decode('utf-8', 'ignore')
         result.data = StringIter(html_bodyfinder(text))
         return result

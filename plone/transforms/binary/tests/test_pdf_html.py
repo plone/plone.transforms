@@ -5,6 +5,8 @@
 
 import unittest
 
+from zope.component import queryUtility
+
 from plone.transforms.binary.pdf_html import PDFCommandTransform
 from plone.transforms.binary.pdf_html import PDFPipeTransform
 from plone.transforms.binary.pdf_html import PDFTextTransform
@@ -64,6 +66,27 @@ for transform in TRANSFORMS:
         output = transform['output']
         subobjects = transform['subobjects']
 
+        def test_subobjects(self):
+            util = queryUtility(ITransform, name=self.name)
+            result = None
+
+            if not util.available:
+                return
+
+            try:
+                data = file(self.inputfile, 'rb')
+                options = { 'output_image_format' : 'jpeg' }
+                result = util.transform(data, options=options)
+            finally:
+                data.close()
+
+            # Check the subobjects
+            if self.subobjects is not None:
+                self.failUnless(self.subobjects==len(result.subobjects))
+
+                for key in result.subobjects.keys():
+                    self.failUnless(key.endswith('jpeg'))
+ 
     tests.append(BinaryTransformTest)
 
 

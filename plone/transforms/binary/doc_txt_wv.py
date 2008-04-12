@@ -19,7 +19,9 @@ class DocTxtWvCommandTransform(CommandTransform):
         if self._validate(data) is None:
             return None
 
-        result = self.prepare_transform(data, infile_data_suffix='.text')
+        arguments = { 'infile_data_suffix' : '.text' }
+
+        result = self.prepare_transform(data, arguments=arguments)
         text = u''.join(result.data).decode('utf-8', 'ignore')
         result.data = StringIter(text)
         return result
