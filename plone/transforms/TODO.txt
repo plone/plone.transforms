@@ -1,6 +1,9 @@
 TODO
 ====
 
+    - Add more metadata to the results. For example the image mimetypes for all
+      images extracted by a transform.
+
     - When passing in a file instance instead of just an iterator to the
       transform method, reuse the file directly in binary transforms, instead
       of writing it out to a tempfile.

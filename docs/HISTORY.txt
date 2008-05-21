@@ -2,7 +2,7 @@ Changelog for plone.transforms
 
     (name of developer listed in brackets)
 
-1.0a2 - Unreleased
+1.0a2 - Released May 21, 2008
 
     - Use the new arguments flexibility to extend the pdf_to_html command
       transform with a `output_image_format` option. This controls the format
@@ -24,6 +24,9 @@ Changelog for plone.transforms
 
     - Guard against empty input in pdf_html transform.
       [hannosch]
+
+    - We do want to preserve image transparency; because it's so cool!
+      [mborch]
 
 1.0a1 - Released February 11, 2008
 
