@@ -2,6 +2,9 @@ Changelog for plone.transforms
 
     (name of developer listed in brackets)
 
+1.0a3 - Unreleased
+
+
 1.0a2 - Released May 21, 2008
 
     - Use the new arguments flexibility to extend the pdf_to_html command
