@@ -20,6 +20,6 @@ class XlsHtmlXlhtmlCommandTransform(PipeTransform):
             return None
 
         result = self.prepare_transform(data, infile_data_suffix='.html')
-        text = u''.join(result.data).decode('utf-8', 'ignore')
+        text = u''.join(result.data.read().decode('utf-8', 'ignore'))
         result.data = StringIter(text)
         return result

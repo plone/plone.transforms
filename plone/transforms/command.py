@@ -119,8 +119,8 @@ class CommandTransform(PersistentTransform):
             if os.name=='posix':
                 # TODO: tbenita suggests to remove 1>/dev/null as some commands
                 # return result in flow. Maybe turn this into another subobject
-                # commandline = commandline + ' 2>error_log'
-                commandline = commandline + ' 2>error_log 1>/dev/null'
+                commandline = commandline + ' 2>error_log'
+                # commandline = commandline + ' 2>error_log 1>/dev/null'
 
             os.system(commandline)
 
