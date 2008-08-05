@@ -30,7 +30,8 @@ class PDFCommandTransform(CommandTransform):
     output = "text/html"
 
     command = 'pdftohtml'
-    args = "%(infile)s -q -c -noframes -enc UTF-8"
+    # max 50 pages converted in high quality ; fair enough ;)
+    args = "%(infile)s -q -c -noframes -l 50 -enc UTF-8"
 
     rank = 50
 

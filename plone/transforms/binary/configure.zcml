@@ -3,9 +3,11 @@
 
   <plone:transform factory=".doc_html_wv.DocHtmlWvCommandTransform" />
   <plone:transform factory=".doc_txt_wv.DocTxtWvCommandTransform" />
-  <plone:transform factory=".pdf_html.PDFCommandTransform" />
-  <plone:transform factory=".pdf_html.PDFPipeTransform" />
-  <plone:transform factory=".pdf_html.PDFTextTransform" /> 
+  <plone:transform factory=".pdf_html_pdftohtml.PDFCommandTransform" />
+  <plone:transform factory=".pdf_html_pdftohtml.PDFPipeTransform" />
+  <plone:transform factory=".pdf_text_pdftotext.PDFTextCommandTransform" />
   <plone:transform factory=".xls_html_xlhtml.XlsHtmlXlhtmlCommandTransform" />
+  <plone:transform factory=".xls_csv_xls2csv.XlsCsvXls2csvCommandTransform" />
+  <plone:transform factory=".xls_csv_xls2csv.XlsTextTransform" />
 
 </configure>
