@@ -3,6 +3,11 @@ Changelog for plone.transforms
     (name of developer listed in brackets)
 
 1.0a3 - Unreleased
+    
+    - after fighting with meta.zcml includes hannosch pointed out, inclusion
+      need to be done in buildout, not in the configure.zcml. I added some
+      lines of documentation and reverted my inclusion in configure.zcml.
+      [jensens]
 
 
 1.0a2 - Released May 21, 2008
