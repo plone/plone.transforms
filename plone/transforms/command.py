@@ -11,7 +11,7 @@ from plone.transforms.log import log_debug
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.transform import PersistentTransform
 from plone.transforms.transform import TransformResult
-from plone.transforms.utils import bin_search
+from plone.transforms.utils import bin_search, systemUntil
 
 
 # Helper method which can write both directly to a file object and to an
@@ -47,6 +47,8 @@ class CommandTransform(PersistentTransform):
 
     command = None
     args = None
+
+    timeout = 120
 
     def __init__(self):
         super(CommandTransform, self).__init__()
@@ -122,7 +124,10 @@ class CommandTransform(PersistentTransform):
                 commandline = commandline + ' 2>error_log'
                 # commandline = commandline + ' 2>error_log 1>/dev/null'
 
-            os.system(commandline)
+            #status = os.system(commandline)
+            status = systemUntil(commandline, self.timeout)
+	    if status != 0:
+	    	print "STATUS is", status
 
             for tmpfile in os.listdir(tmpdirpath):
                 tmp = os.path.join(tmpdirpath, tmpfile)

@@ -1,5 +1,8 @@
 import os
 import sys
+import time
+import popen2
+import select
 
 # Use the PATH environment variable to look for binaries
 BIN_SEARCH_PATH = [path for path in os.environ['PATH'].split(os.pathsep)
@@ -43,4 +46,33 @@ def html_bodyfinder(text):
     if bodyend == -1:
         return text
     return text[bodystart:bodyend]
+
+def systemUntil(cmd, timeout):
+    started = time.time()
+    deadline = started + timeout
+    pop = popen2.Popen3(cmd)
+    fd = pop.fromchild.fileno()
+    while 1:
+        now = time.time()
+        timeout = deadline - now
+        if timeout < 0:
+            #timeouted
+            break
+        #print "selecting for %7.2f sec" % timeout
+        ready = bool(select.select((fd,), (), (), timeout)[0])
+        if not ready:
+            #timeouted
+            break
+        data = pop.fromchild.read()
+        #print "READ %d bytes" % len(data)
+        if len(data) == 0:
+            #EOF on .fromchild
+            break
+    status = pop.poll()
+    if status == -1:
+        os.kill(pop.pid, 9)
+        pop.wait()
+    #print "ELAPSED: %7.2f sec" % (time.time() - now)
+    return status
+
 
