@@ -9,5 +9,6 @@
   <plone:transform factory=".xls_html_xlhtml.XlsHtmlXlhtmlCommandTransform" />
   <plone:transform factory=".xls_csv_xls2csv.XlsCsvXls2csvCommandTransform" />
   <plone:transform factory=".xls_csv_xls2csv.XlsTextTransform" />
+  <plone:transform factory=".ppt_html_ppthtml.PptHtmlPpthtmlCommandTransform" />
 
 </configure>
