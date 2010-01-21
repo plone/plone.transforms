@@ -109,6 +109,7 @@ class CommandTransform(PersistentTransform):
             del arguments['infile_data_suffix']
 
         result = TransformResult(None)
+        tmpfilepath = None
         try:
             tmpdirpath = tempfile.mkdtemp()
             tmpfilepath = self.initialize_tmpfile(data, directory=tmpdirpath)
@@ -150,7 +151,7 @@ class CommandTransform(PersistentTransform):
                 fd.close()
                 os.unlink(tmp)
         finally:
-            if os.path.isdir(tmpdirpath):
+            if tmpfilepath is not None and os.path.isdir(tmpdirpath):   
                 shutil.rmtree(tmpdirpath)
 
         return result
