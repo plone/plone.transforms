@@ -4,10 +4,8 @@ Changelog
 1.0a3 - Unreleased
 ------------------
 
-- After fighting with meta.zcml includes hannosch pointed out, inclusion need to
-  be done in buildout, not in the configure.zcml. I added some lines of
-  documentation and reverted my inclusion in configure.zcml.
-  [jensens]
+- Defined tmfilepath outside try: to make finally: clause not fail.
+  [martior]
 
 1.0a2 - 2008-05-21
 ------------------
@@ -45,11 +43,11 @@ Changelog
 - Added both the input_mimetype and output_mimetype values provided to the
   transform method of the engine to the options dictionary which is passed
   on to the individual transforms.
-  
+
   For example multimedia transforms which can handle different formats can
   be implemented as single transforms this way, without having to guess the
   input format again.
-  
+
   The output_mimetype can be useful in optimizing the transform result
   when a transform is used in a transform chain and the output format of
   the current transform is not the desired end result.
@@ -68,6 +66,3 @@ Changelog
   Kudos to Benjamin Saller, Sidnei da Silva and Sylvain Thénault for the
   PortalTransforms product which this work has been heavily based upon.
   [drjnut, hannosch, nouri, tbenita, tiazma]
-
-- Initial package structure.
-  [zopeskel]
