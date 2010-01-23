@@ -42,8 +42,8 @@ class BinaryTransformTestCase(TransformTestCase):
         self.failUnless(getattr(result.data, 'next', None) is not None)
 
         # Check only the beginning of the file
-        result_string = ''.join(result.data)
-        self.failUnless(result_string.startswith(self.output))
+        result_string = ''.join(result.data).strip()
+        self.failUnless(result_string.startswith(self.output.strip()))
 
         # Check the subobjects
         if self.subobjects is not None:
