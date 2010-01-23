@@ -4,6 +4,9 @@ Changelog
 1.0a4 - unreleased
 ------------------
 
+- Removed test dependency on zope.app.publisher in favor of zope.security.
+  [hannosch]
+
 - Adjusted expected test output to latest version of poppler.
   [hannosch]
 
