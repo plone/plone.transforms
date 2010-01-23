@@ -5,8 +5,10 @@ version = '1.0a3'
 setup(name='plone.transforms',
       version=version,
       description="Transformation registry and utilities.",
-      long_description="""\
-""",
+      long_description=(
+              open('README.txt').read() + '\n' +
+              open('CHANGES.txt').read()
+      ),
       classifiers=[
         "Framework :: Plone",
         "Framework :: Zope2",

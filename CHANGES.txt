@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0a3 - Unreleased
+1.0a3 - 2010-01-23
 ------------------
 
 - Defined tmfilepath outside try: to make finally: clause not fail.
