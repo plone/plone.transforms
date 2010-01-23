@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages
-import sys, os
 
 version = '1.0a3'
 
@@ -11,7 +10,6 @@ setup(name='plone.transforms',
       classifiers=[
         "Framework :: Plone",
         "Framework :: Zope2",
-        "Framework :: Zope3",
         "Programming Language :: Python",
         ],
       keywords='Plone Transformation',
