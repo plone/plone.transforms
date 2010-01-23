@@ -2,70 +2,72 @@ Changelog
 =========
 
 1.0a3 - Unreleased
+------------------
 
-    - after fighting with meta.zcml includes hannosch pointed out, inclusion
-      need to be done in buildout, not in the configure.zcml. I added some
-      lines of documentation and reverted my inclusion in configure.zcml.
-      [jensens]
+- After fighting with meta.zcml includes hannosch pointed out, inclusion need to
+  be done in buildout, not in the configure.zcml. I added some lines of
+  documentation and reverted my inclusion in configure.zcml.
+  [jensens]
 
+1.0a2 - 2008-05-21
+------------------
 
-1.0a2 - Released May 21, 2008
+- Use the new arguments flexibility to extend the pdf_to_html command
+  transform with a `output_image_format` option. This controls the format
+  of the extracted images. It defaults to `png16m` and can be changed to
+  any value supported by `gs -h`, for example `jpeg`.
+  [hannosch]
 
-    - Use the new arguments flexibility to extend the pdf_to_html command
-      transform with a `output_image_format` option. This controls the format
-      of the extracted images. It defaults to `png16m` and can be changed to
-      any value supported by `gs -h`, for example `jpeg`.
-      [hannosch]
+- Changed the signature of prepare_transform. It has a general arguments
+  argument now, instead of one hardcoded infile_data_suffix argument.
+  This allows transforms to push arbitrary arguments down to the actual
+  command line.
+  [hannosch]
 
-    - Changed the signature of prepare_transform. It has a general arguments
-      argument now, instead of one hardcoded infile_data_suffix argument.
-      This allows transforms to push arbitrary arguments down to the actual
-      command line.
-      [hannosch]
+- Updated image transforms. Allow resizing with only one size argument.
+  The other one will be calculated to keep the aspect ratio. Also guarded
+  against errors when trying to use transparency on PNG images in modes
+  which do not support it.
+  [hannosch]
 
-    - Updated image transforms. Allow resizing with only one size argument.
-      The other one will be calculated to keep the aspect ratio. Also guarded
-      against errors when trying to use transparency on PNG images in modes
-      which do not support it.
-      [hannosch]
+- Guard against empty input in pdf_html transform.
+  [hannosch]
 
-    - Guard against empty input in pdf_html transform.
-      [hannosch]
+- We do want to preserve image transparency; because it's so cool!
+  [mborch]
 
-    - We do want to preserve image transparency; because it's so cool!
-      [mborch]
+1.0a1 - 2008-02-11
+------------------
 
-1.0a1 - Released February 11, 2008
+- Removed the unfinished engine configuration which had a Zope2 dependency.
+  [hannosch]
 
-    - Removed the unfinished engine configuration which had a Zope2 dependency.
-      [hannosch]
+- Added both the input_mimetype and output_mimetype values provided to the
+  transform method of the engine to the options dictionary which is passed
+  on to the individual transforms.
+  
+  For example multimedia transforms which can handle different formats can
+  be implemented as single transforms this way, without having to guess the
+  input format again.
+  
+  The output_mimetype can be useful in optimizing the transform result
+  when a transform is used in a transform chain and the output format of
+  the current transform is not the desired end result.
+  [drjnut, hannosch]
 
-    - Added both the input_mimetype and output_mimetype values provided to the
-      transform method of the engine to the options dictionary which is passed
-      on to the individual transforms.
-      
-      For example multimedia transforms which can handle different formats can
-      be implemented as single transforms this way, without having to guess the
-      input format again.
-      
-      The output_mimetype can be useful in optimizing the transform result
-      when a transform is used in a transform chain and the output format of
-      the current transform is not the desired end result.
-      [drjnut, hannosch]
+- Initial design and work. Lots of work has been done on the Pastisprint
+  in Aix-en-Provence in August 2007. Thx to atReal and Thierry Benita for
+  organizing it and his whole family for hosting us.
 
-    - Initial design and work. Lots of work has been done on the Pastisprint
-      in Aix-en-Provence in August 2007. Thx to atReal and Thierry Benita for
-      organizing it and his whole family for hosting us.
+  Special thanks to 'Focus-man' and his special powers which let us focus
+  on the work ;)
 
-      Special thanks to 'Focus-man' and his special powers which let us focus
-      on the work ;)
+  Also thanks to Google for its Summer of Code project which sponsored
+  hannosch for his work.
 
-      Also thanks to Google for its Summer of Code project which sponsored
-      hannosch for his work.
+  Kudos to Benjamin Saller, Sidnei da Silva and Sylvain Thénault for the
+  PortalTransforms product which this work has been heavily based upon.
+  [drjnut, hannosch, nouri, tbenita, tiazma]
 
-      Kudos to Benjamin Saller, Sidnei da Silva and Sylvain Thénault for the
-      PortalTransforms product which this work has been heavily based upon.
-      [drjnut, hannosch, nouri, tbenita, tiazma]
-
-    - Initial package structure.
-      [zopeskel]
+- Initial package structure.
+  [zopeskel]
