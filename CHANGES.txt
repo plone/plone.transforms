@@ -4,6 +4,8 @@ Changelog
 1.0a4 - unreleased
 ------------------
 
+- Added z3c.autoinclude entry point.
+  [hannosch]
 
 1.0a3 - 2010-01-23
 ------------------

@@ -34,4 +34,8 @@ setup(name='plone.transforms',
           'zope.testing',
           'ZODB3',
       ],
+      entry_points="""
+      [z3c.autoinclude.plugin]
+      target = plone
+      """,
       )
