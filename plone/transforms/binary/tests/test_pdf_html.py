@@ -22,34 +22,28 @@ TRANSFORMS = [
          class_=PDFCommandTransform,
          inputfile='test_pdf_html_complex.pdf',
          output=u"""
-<!-- Page 1 -->\n<a name="1"></a>
-<DIV style="position:relative;width:1200;height:900;">
-<STYLE type="text/css">\n<!--\n-->\n</STYLE>
-""",
+<!-- Page 1 -->
+<a name="1"></a>
+<DIV style="position:relative;width:800;height:600;">
+<STYLE type="text/css">""",
          subobjects=2
         ),
     dict(name='plone.transforms.binary.pdf_html.PDFPipeTransform',
          class_=PDFPipeTransform,
          inputfile='test_pdf_html.pdf',
-         output=u"""\n<A name=1></a>test_pdf_html.py<br>
+         output=u"""
+<A name=1></a>test_pdf_html.py<br>
 2007-08-03<br>
-# -*- coding: UTF-8 -*-<br>
-&quot;&quot;&quot;<br>
-Tests for the pdf to html transform.<br>
-&quot;&quot;&quot;<br>
-""",
+# -*- coding: UTF-8 -*-<br>""",
          subobjects=0
         ),
     dict(name='plone.transforms.binary.pdf_html.PDFTextTransform',
          class_=PDFTextTransform,
          inputfile='test_pdf_html.pdf',
          output=u"""
-  test_pdf_html.py 
+test_pdf_html.py 
 2007-08-03 
-# -*- coding: UTF-8 -*- 
-&quot;&quot;&quot; 
-Tests for the pdf to html transform. 
-&quot;&quot;&quot;""",
+# -*- coding: UTF-8 -*- &quot;""",
          subobjects=0
         ),
 ]
