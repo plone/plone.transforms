@@ -1,70 +1,70 @@
 TODO
 ====
 
-    - Add more metadata to the results. For example the image mimetypes for all
-      images extracted by a transform.
+- Add more metadata to the results. For example the image mimetypes for all
+  images extracted by a transform.
 
-    - When passing in a file instance instead of just an iterator to the
-      transform method, reuse the file directly in binary transforms, instead
-      of writing it out to a tempfile.
+- When passing in a file instance instead of just an iterator to the
+  transform method, reuse the file directly in binary transforms, instead
+  of writing it out to a tempfile.
 
-    - Port the xslt base transform class.
+- Port the xslt base transform class.
 
-    - Write an iterator based version of the html_bodyfinder, so the pdf to
-      html transforms don't need to load the whole file into memory.
-      Use reversed(iter) (needs __len__ and __getitem__) for the html
-      bodyfinder? Or collections.deque which has both leftpop and rightpop.
+- Write an iterator based version of the html_bodyfinder, so the pdf to
+  html transforms don't need to load the whole file into memory.
+  Use reversed(iter) (needs __len__ and __getitem__) for the html
+  bodyfinder? Or collections.deque which has both leftpop and rightpop.
 
-    - Make the configuration screen for the engine.
+- Make the configuration screen for the engine.
 
-    - Add an example of a TTW configurable transform and provide a base helper
-      class for those (probably schema and formlib-based).
+- Add an example of a TTW configurable transform and provide a base helper
+  class for those (probably schema and formlib-based).
 
-    - Figure out a way to use a NamedTemporayFile or 'NamedTemporayDirectory'
-      for returning subobjects, so these don't need to be loaded into memory.
-      Some self cleaning temporary directory (on close and garbage collection)
-      would be nice.
+- Figure out a way to use a NamedTemporayFile or 'NamedTemporayDirectory'
+  for returning subobjects, so these don't need to be loaded into memory.
+  Some self cleaning temporary directory (on close and garbage collection)
+  would be nice.
 
-    - Make a new plone.app.transforms package which has GenericSetup export/
-      import handlers for the engine configuration.
+- Make a new plone.app.transforms package which has GenericSetup export/
+  import handlers for the engine configuration.
 
-    - Port and make more transforms ;)
+- Port and make more transforms ;)
 
-      Here's the current list of transforms only available in PortalTransforms
-      right now:
+  Here's the current list of transforms only available in PortalTransforms
+  right now:
 
-        office_com
-        office_uno
-        office_wvware
-        rtf_to_html
-        rtf_to_xml
-        safe_html
-        build_transforms
-        xml
+    office_com
+    office_uno
+    office_wvware
+    rtf_to_html
+    rtf_to_xml
+    safe_html
+    build_transforms
+    xml
 
-    - Look into textindexng, smartprintng, AROfficeTransforms, AttachmentField
-      for more or more clever transforms.
+- Look into textindexng, smartprintng, AROfficeTransforms, AttachmentField
+  for more or more clever transforms.
 
-    - Make a decorator for the _validate call, so:
+- Make a decorator for the _validate call, so:
 
-        def transform(self, data, options=None):
-            if self._validate(data) is None:
-                return None
-            return TransformResult(data)
+    def transform(self, data, options=None):
+        if self._validate(data) is None:
+            return None
+        return TransformResult(data)
 
-      becomes:
+  becomes:
 
-        @validate_input
-        def transform(self, data, options=None):
-            return TransformResult(data)
+    @validate_input
+    def transform(self, data, options=None):
+        return TransformResult(data)
 
-      and raise the log level for invalid input from debug to warn.
+  and raise the log level for invalid input from debug to warn.
 
 Not directly package related tasks
 ----------------------------------
 
-    - Make PortalTransforms into a wrapper around plone.transforms and use it
-      directly from Archetypes.
+- Make PortalTransforms into a wrapper around plone.transforms and use it
+  directly from Archetypes.
 
-    - Port the Unicode aware cStringIO from Python 3.0 back into a separate
-      package and use it in stringiter?
+- Port the Unicode aware cStringIO from Python 3.0 back into a separate
+  package and use it in stringiter?
