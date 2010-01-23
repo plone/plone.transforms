@@ -63,6 +63,6 @@ Changelog
   Also thanks to Google for its Summer of Code project which sponsored
   hannosch for his work.
 
-  Kudos to Benjamin Saller, Sidnei da Silva and Sylvain Thénault for the
+  Kudos to Benjamin Saller, Sidnei da Silva and Sylvain Thenault for the
   PortalTransforms product which this work has been heavily based upon.
   [drjnut, hannosch, nouri, tbenita, tiazma]
