@@ -1,6 +1,5 @@
 from persistent.interfaces import IPersistent
 
-from zope.component.zcml import PublicPermission
 from zope.component.zcml import utility
 from zope.interface import providedBy
 
@@ -15,6 +14,9 @@ KNOWN_BASE_NAMES = frozenset((
     ('plone.transforms.chain'),
     ('plone.transforms.image.pil'),
     ))
+
+PublicPermission = 'zope.Public'
+
 
 def transformDirective(_context, provides=None, component=None, factory=None,
                        permission=None, name=None):

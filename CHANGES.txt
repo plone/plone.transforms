@@ -4,6 +4,9 @@ Changelog
 1.0a4 - unreleased
 ------------------
 
+- Avoid import problem for `PublicPermission` in Plone 4.
+  [hannosch]
+
 - Removed test dependency on zope.app.publisher in favor of zope.security.
   [hannosch]
 
