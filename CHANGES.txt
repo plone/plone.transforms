@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0a4 - unreleased
+1.1a1 - 2011-08-25
 ------------------
 
 - Avoid import problem for `PublicPermission` in Plone 4.
